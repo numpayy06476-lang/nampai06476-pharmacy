@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ระบบเภสัชกรรมปฐมภูมิ - รพ.สต.น้ำปาย</title>
+    
+    <!-- High-Quality Vector Favicon & Mobile Touch Icon (Medical Cross + Leaf & Pill Emblem) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='128' fill='%23059669'/><path d='M300 96h-88c-13.3 0-24 10.7-24 24v88h-88c-13.3 0-24 10.7-24 24v88c0 13.3 10.7 24 24 24h88v88c0 13.3 10.7 24 24 24h88c13.3 0 24-10.7 24-24v-88h88c13.3 0 24-10.7 24-24v-88c0-13.3-10.7-24-24-24h-88v-88c0-13.3-10.7-24-24-24z' fill='%23ffffff'/><path d='M256 160c-53 0-96 43-96 96 0 53 43 96 96 96s96-43 96-96c0-53-43-96-96-96zm0 144c-26.5 0-48-21.5-48-48s21.5-48 48-48 48 21.5 48 48-21.5 48-48 48z' fill='%2310b981'/><circle cx='256' cy='256' r='24' fill='%23047857'/></svg>">
+    <link rel="apple-touch-icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='128' fill='%23059669'/><path d='M300 96h-88c-13.3 0-24 10.7-24 24v88h-88c-13.3 0-24 10.7-24 24v88c0 13.3 10.7 24 24 24h88v88c0 13.3 10.7 24 24 24h88c13.3 0 24-10.7 24-24v-88h88c13.3 0 24-10.7 24-24v-88c0-13.3-10.7-24-24-24h-88v-88c0-13.3-10.7-24-24-24z' fill='%23ffffff'/></svg>">
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome Icons -->
@@ -258,8 +263,14 @@
             <div>
                 <!-- Brand Header -->
                 <div class="p-4 border-b border-emerald-100 flex items-center space-x-3 bg-gradient-to-r from-emerald-800 to-emerald-900 text-white">
-                    <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-emerald-800 font-bold shadow-md">
-                        <i class="fa-solid fa-notes-medical text-xl"></i>
+                    <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-md p-1.5 flex-shrink-0">
+                        <!-- SVG Emblem Icon matching Favicon -->
+                        <svg class="w-full h-full text-emerald-700" viewBox="0 0 512 512" fill="currentColor">
+                            <rect width="512" height="512" rx="128" fill="#059669"/>
+                            <path d="M300 96h-88c-13.3 0-24 10.7-24 24v88h-88c-13.3 0-24 10.7-24 24v88c0 13.3 10.7 24 24 24h88v88c0 13.3 10.7 24 24 24h88c13.3 0 24-10.7 24-24v-88h88c13.3 0 24-10.7 24-24v-88c0-13.3-10.7-24-24-24h-88v-88c0-13.3-10.7-24-24-24z" fill="#ffffff"/>
+                            <path d="M256 160c-53 0-96 43-96 96 0 53 43 96 96 96s96-43 96-96c0-53-43-96-96-96zm0 144c-26.5 0-48-21.5-48-48s21.5-48 48-48 48 21.5 48 48-21.5 48-48 48z" fill="#10b981"/>
+                            <circle cx="256" cy="256" r="24" fill="#047857"/>
+                        </svg>
                     </div>
                     <div>
                         <h1 class="text-sm font-bold leading-tight">รพ.สต.น้ำปาย</h1>
@@ -869,13 +880,13 @@
                     <!-- Print Signatures Block -->
                     <div class="mt-12 pt-6 border-t border-gray-300 grid grid-cols-2 gap-8 text-center text-xs signature-block">
                         <div>
-                            <p class="mb-8">ลงชื่อ............................................ผู้รายงาน</p>
+                            <p class="mb-8">ลงชื่อ......................................................ผู้รายงาน</p>
                             <p class="font-bold">น.ส.รัชฎาวรรณ จันทร์สุข</p>
                             <p class="text-gray-600">นักวิชาการสาธารณสุขปฏิบัติการ</p>
                             <p class="mt-2 text-[10px] text-gray-500">วันที่........../..................../..........</p>
                         </div>
                         <div>
-                            <p class="mb-8">ลงชื่อ............................................ผู้ตรวจสอบ</p>
+                            <p class="mb-8">ลงชื่อ......................................................ผู้ตรวจสอบ</p>
                             <p class="font-bold">นายปรัชญา วัฒนะ</p>
                             <p class="text-gray-600">ผู้อำนวยการ รพ.สต.น้ำปาย</p>
                             <p class="mt-2 text-[10px] text-gray-500">วันที่........../..................../..........</p>
