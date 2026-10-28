@@ -4,1524 +4,921 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ระบบเภสัชกรรมปฐมภูมิ - รพ.สต.น้ำปาย</title>
+    <!-- Favicon & Bookmark Icons -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23059669'/%3E%3Cpath d='M32 14v36M14 32h36' stroke='%23ffffff' stroke-width='8' stroke-linecap='round'/%3E%3Ccircle cx='32' cy='32' r='8' fill='%2310b981'/%3E%3C/svg%3E">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23059669'/%3E%3Cpath d='M32 14v36M14 32h36' stroke='%23ffffff' stroke-width='8' stroke-linecap='round'/%3E%3Ccircle cx='32' cy='32' r='8' fill='%2310b981'/%3E%3C/svg%3E">
+    <meta name="theme-color" content="#065f46">
+    <meta name="msapplication-TileImage" content="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23059669'/%3E%3Cpath d='M32 14v36M14 32h36' stroke='%23ffffff' stroke-width='8' stroke-linecap='round'/%3E%3Ccircle cx='32' cy='32' r='8' fill='%2310b981'/%3E%3C/svg%3E">
     
-    <!-- High-Quality Vector Favicon & Mobile Touch Icon (Medical Cross + Leaf & Pill Emblem) -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='128' fill='%23059669'/><path d='M300 96h-88c-13.3 0-24 10.7-24 24v88h-88c-13.3 0-24 10.7-24 24v88c0 13.3 10.7 24 24 24h88v88c0 13.3 10.7 24 24 24h88c13.3 0 24-10.7 24-24v-88h88c13.3 0 24-10.7 24-24v-88c0-13.3-10.7-24-24-24h-88v-88c0-13.3-10.7-24-24-24z' fill='%23ffffff'/><path d='M256 160c-53 0-96 43-96 96 0 53 43 96 96 96s96-43 96-96c0-53-43-96-96-96zm0 144c-26.5 0-48-21.5-48-48s21.5-48 48-48 48 21.5 48 48-21.5 48-48 48z' fill='%2310b981'/><circle cx='256' cy='256' r='24' fill='%23047857'/></svg>">
-    <link rel="apple-touch-icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='128' fill='%23059669'/><path d='M300 96h-88c-13.3 0-24 10.7-24 24v88h-88c-13.3 0-24 10.7-24 24v88c0 13.3 10.7 24 24 24h88v88c0 13.3 10.7 24 24 24h88c13.3 0 24-10.7 24-24v-88h88c13.3 0 24-10.7 24-24v-88c0-13.3-10.7-24-24-24h-88v-88c0-13.3-10.7-24-24-24z' fill='%23ffffff'/></svg>">
-
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts: Sarabun & Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        emerald: {
-                            50: '#ecfdf5',
-                            100: '#d1fae5',
-                            500: '#10b981',
-                            600: '#059669',
-                            700: '#047857',
-                            800: '#065f46',
-                            900: '#064e3b',
-                        },
-                        teal: {
-                            700: '#0f766e',
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Sarabun', 'Inter', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Sarabun', sans-serif;
-            background-color: #f3f7f5;
-        }
-        
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #10b981;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #059669;
-        }
-
-        /* Improved Print Settings for A4 */
+        body { font-family: 'Sarabun', sans-serif; }
         @media print {
-            @page {
-                size: A4 portrait;
-                margin: 12mm 10mm 12mm 10mm;
-            }
-            body {
-                background: white !important;
-                color: black !important;
-                font-size: 10pt;
-                line-height: 1.3;
-            }
-            .no-print, 
-            #auth-modal, 
-            aside, 
-            form, 
-            button, 
-            .pagination-container,
-            #stock-card-selector-container {
-                display: none !important;
-            }
-
-            #app-content {
-                display: block !important;
-                padding: 0 !important;
-                margin: 0 !important;
-                background: transparent !important;
-            }
-
-            main {
-                display: block !important;
-                padding: 0 !important;
-                margin: 0 !important;
-                background: transparent !important;
-                overflow: visible !important;
-            }
-
-            .tab-content {
-                display: block !important;
-                page-break-inside: auto;
-            }
-
-            .tab-content.hidden {
-                display: none !important;
-            }
-
-            .bg-white {
-                background: transparent !important;
-                border: none !important;
-                box-shadow: none !important;
-                padding: 0 !important;
-                margin-bottom: 10px !important;
-            }
-
-            table {
-                width: 100% !important;
-                border-collapse: collapse !important;
-                font-size: 9.5pt !important;
-                margin-top: 10px !important;
-                page-break-inside: auto;
-            }
-
-            tr {
-                page-break-inside: avoid;
-                page-break-after: auto;
-            }
-
-            th, td {
-                border: 1px solid #333 !important;
-                padding: 5px 6px !important;
-                color: #000 !important;
-                background: transparent !important;
-            }
-
-            th {
-                background-color: #f0f0f0 !important;
-                font-weight: bold !important;
-            }
-
-            .signature-block, .summary-block {
-                page-break-inside: avoid !important;
-                break-inside: avoid !important;
-            }
-
-            .print-header {
-                display: block !important;
-                text-align: center;
-                margin-bottom: 15px;
-                border-bottom: 2px solid #000;
-                padding-bottom: 8px;
-            }
-        }
-
-        .print-header {
-            display: none;
+            body * { visibility: hidden; }
+            .print-container, .print-container * { visibility: visible; }
+            .print-container { position: absolute; left: 0; top: 0; width: 100%; }
+            .no-print { display: none !important; }
         }
     </style>
 </head>
-<body class="text-gray-800 antialiased flex flex-col min-h-screen">
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col">
 
-    <!-- Auth Container Overlay -->
-    <div id="auth-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-70 backdrop-blur-md">
-        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden transform transition-all p-8 relative">
-            
-            <div class="text-center mb-6">
-                <div class="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-3 shadow-inner text-emerald-600 border-2 border-emerald-500">
-                    <i class="fa-solid fa-hospital-user text-3xl"></i>
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-emerald-600 text-white px-6 py-3 rounded-xl shadow-2xl flex items-center gap-3">
+        <svg class="w-6 h-6 text-emerald-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+        <span id="toast-message" class="font-medium text-sm">บันทึกข้อมูลสำเร็จ</span>
+    </div>
+
+    <!-- Login Modal / Screen -->
+    <div id="auth-screen" class="fixed inset-0 z-50 bg-gradient-to-br from-emerald-900 via-teal-900 to-slate-900 flex items-center justify-center p-4">
+        <div class="bg-white/95 backdrop-blur-md rounded-3xl shadow-2xl w-full max-w-md p-8 border border-emerald-100">
+            <div class="text-center mb-8">
+                <div class="inline-flex items-center justify-center w-16 h-16 bg-emerald-100 rounded-2xl text-emerald-600 mb-4 shadow-inner">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
                 </div>
-                <h2 class="text-xl font-bold text-emerald-900">ระบบเภสัชกรรมปฐมภูมิ</h2>
-                <p class="text-xs text-emerald-600 font-medium mt-1">รพ.สต.น้ำปาย อ.แม่จริม จ.น่าน</p>
+                <h1 class="text-2xl font-bold text-slate-900">ระบบเภสัชกรรมปฐมภูมิ</h1>
+                <p class="text-sm text-emerald-700 font-medium mt-1">รพ.สต.น้ำปาย อ.แม่จริม จ.น่าน</p>
             </div>
 
             <!-- Login Form -->
-            <form id="form-login" onsubmit="handleLogin(event)" class="space-y-4">
-                <h3 class="text-base font-bold text-gray-700 mb-2 flex items-center">
-                    <i class="fa-solid fa-right-to-bracket text-emerald-600 mr-2"></i> เข้าสู่ระบบปฏิบัติงาน
-                </h3>
+            <form id="login-form" onsubmit="handleLogin(event)" class="space-y-4">
                 <div>
-                    <label class="block text-xs font-semibold text-gray-600 mb-1">ชื่อผู้ใช้งาน (Username / Email)</label>
-                    <div class="relative">
-                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
-                            <i class="fa-solid fa-user"></i>
-                        </span>
-                        <input type="text" id="login-username" value="admin" required class="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="admin@nampai.go.th">
-                    </div>
+                    <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">ชื่อผู้ใช้งาน (Username)</label>
+                    <input type="text" id="login-user" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-emerald-500 focus:outline-none text-sm bg-slate-50" placeholder="ระบุชื่อผู้ใช้งาน">
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-gray-600 mb-1">รหัสผ่าน (Password)</label>
-                    <div class="relative">
-                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
-                            <i class="fa-solid fa-lock"></i>
-                        </span>
-                        <input type="password" id="login-password" value="1234" required class="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="••••••••">
-                    </div>
+                    <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">รหัสผ่าน (Password)</label>
+                    <input type="password" id="login-pass" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-emerald-500 focus:outline-none text-sm bg-slate-50" placeholder="••••••••">
                 </div>
-                <div class="flex justify-between items-center text-xs">
-                    <label class="flex items-center text-gray-600 cursor-pointer">
-                        <input type="checkbox" checked class="rounded text-emerald-600 focus:ring-emerald-500 mr-1"> บันทึกการเข้าสู่ระบบ
-                    </label>
-                    <button type="button" onclick="switchAuthView('forgot')" class="text-emerald-600 font-medium hover:underline">ลืมรหัสผ่าน?</button>
+                <div class="flex items-center justify-between text-xs pt-1">
+                    <button type="button" onclick="switchAuthTab('forgot')" class="text-emerald-600 hover:underline font-medium">ลืมรหัสผ่าน?</button>
+                    <button type="button" onclick="switchAuthTab('register')" class="text-emerald-600 hover:underline font-medium">ลงทะเบียนผู้ใช้ใหม่</button>
                 </div>
-                <button type="submit" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition text-sm">
-                    <i class="fa-solid fa-arrow-right-to-bracket mr-1"></i> เข้าสู่ระบบ
-                </button>
-                <div class="text-center pt-2 text-xs text-gray-500">
-                    ยังไม่มีบัญชีผู้ใช้งาน? <button type="button" onclick="switchAuthView('register')" class="text-emerald-600 font-semibold hover:underline">ลงทะเบียนผู้ใช้ใหม่ผ่านอีเมล</button>
+                <button type="submit" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl shadow-lg shadow-emerald-600/30 transition-all text-sm">เข้าสู่ระบบ</button>
+                <div class="pt-2 text-center">
+                    <button type="button" onclick="loadDemoData()" class="text-xs text-slate-400 hover:text-emerald-600 underline">โหลดข้อมูลตัวอย่างเพื่อทดลองใช้</button>
                 </div>
             </form>
 
             <!-- Register Form -->
-            <form id="form-register" onsubmit="handleRegister(event)" class="space-y-4 hidden">
-                <h3 class="text-base font-bold text-gray-700 mb-2 flex items-center">
-                    <i class="fa-solid fa-user-plus text-emerald-600 mr-2"></i> ลงทะเบียนผู้ใช้งานรายใหม่
-                </h3>
+            <form id="register-form" onsubmit="handleRegister(event)" class="space-y-4 hidden">
                 <div>
-                    <label class="block text-xs font-semibold text-gray-600 mb-1">ชื่อ-นามสกุล</label>
-                    <input type="text" id="reg-fullname" required class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="น.ส.รัชฎาวรรณ จันทร์สุข">
+                    <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">อีเมลสำหรับลงทะเบียน</label>
+                    <input type="email" id="reg-email" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-emerald-500 focus:outline-none text-sm bg-slate-50" placeholder="name@example.com">
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-gray-600 mb-1">อีเมลยืนยัน (Email)</label>
-                    <input type="email" id="reg-email" required class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="user@nampai.go.th">
+                    <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">ตั้งชื่อผู้ใช้งาน (Username)</label>
+                    <input type="text" id="reg-user" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-emerald-500 focus:outline-none text-sm bg-slate-50" placeholder="username">
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-gray-600 mb-1">ตั้งรหัสผ่าน</label>
-                    <input type="password" id="reg-password" required class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="••••••••">
+                    <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">ตั้งรหัสผ่าน</label>
+                    <input type="password" id="reg-pass" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-emerald-500 focus:outline-none text-sm bg-slate-50" placeholder="••••••••">
                 </div>
-                <button type="submit" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg shadow-md transition text-sm">
-                    <i class="fa-solid fa-paper-plane mr-1"></i> ยืนยันการลงทะเบียนผ่านอีเมล
-                </button>
-                <div class="text-center pt-2 text-xs text-gray-500">
-                    มีบัญชีอยู่แล้ว? <button type="button" onclick="switchAuthView('login')" class="text-emerald-600 font-semibold hover:underline">กลับไปหน้าเข้าสู่ระบบ</button>
+                <div class="flex items-center justify-between text-xs pt-1">
+                    <button type="button" onclick="switchAuthTab('login')" class="text-emerald-600 hover:underline font-medium">← กลับไปหน้าเข้าสู่ระบบ</button>
                 </div>
+                <button type="submit" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl shadow-lg shadow-emerald-600/30 transition-all text-sm">ลงทะเบียนใช้งาน</button>
             </form>
 
             <!-- Forgot Password Form -->
-            <form id="form-forgot" onsubmit="handleForgot(event)" class="space-y-4 hidden">
-                <h3 class="text-base font-bold text-gray-700 mb-2 flex items-center">
-                    <i class="fa-solid fa-key text-emerald-600 mr-2"></i> กู้คืนรหัสผ่าน
-                </h3>
-                <p class="text-xs text-gray-500">กรอกอีเมลที่ลงทะเบียนไว้ ระบบจะส่งลิงก์กู้คืนรหัสผ่านไปยังอีเมลของคุณ</p>
+            <form id="forgot-form" onsubmit="handleForgot(event)" class="space-y-4 hidden">
                 <div>
-                    <label class="block text-xs font-semibold text-gray-600 mb-1">อีเมลที่ลงทะเบียน</label>
-                    <input type="email" id="forgot-email" required class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="user@nampai.go.th">
+                    <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">กรอกอีเมลที่ลงทะเบียนไว้</label>
+                    <input type="email" id="forgot-email" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-emerald-500 focus:outline-none text-sm bg-slate-50" placeholder="name@example.com">
                 </div>
-                <button type="submit" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg shadow-md transition text-sm">
-                    <i class="fa-solid fa-envelope-open-text mr-1"></i> ส่งลิงก์กู้คืนรหัสผ่านผ่านอีเมล
+                <p class="text-xs text-slate-500">ระบบจะส่งลิงก์กู้คืนรหัสผ่านไปยังอีเมลของคุณ</p>
+                <div class="flex items-center justify-between text-xs pt-1">
+                    <button type="button" onclick="switchAuthTab('login')" class="text-emerald-600 hover:underline font-medium">← กลับไปหน้าเข้าสู่ระบบ</button>
+                </div>
+                <button type="submit" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl shadow-lg shadow-emerald-600/30 transition-all text-sm">ส่งลิงก์กู้คืนรหัสผ่าน</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Application Layout -->
+    <div id="app-container" class="flex flex-1 hidden">
+        <!-- Sidebar -->
+        <aside class="w-72 bg-emerald-900 text-white flex flex-col shadow-xl no-print z-20">
+            <div class="p-6 border-b border-emerald-800/60 flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-emerald-800 flex items-center justify-center text-emerald-300 font-bold shadow-inner">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                </div>
+                <div>
+                    <h2 class="font-bold text-sm tracking-wide">รพ.สต.น้ำปาย</h2>
+                    <p class="text-[11px] text-emerald-300 font-medium">ระบบเภสัชกรรมปฐมภูมิ</p>
+                </div>
+            </div>
+            
+            <nav class="flex-1 p-4 space-y-1.5 overflow-y-auto">
+                <button onclick="switchTab('dashboard')" id="nav-dashboard" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all bg-emerald-800 text-white shadow-md">
+                    <span class="text-lg">📊</span> แดชบอร์ดภาพรวม
                 </button>
-                <div class="text-center pt-2 text-xs text-gray-500">
-                    ย้อนกลับไปหน้า <button type="button" onclick="switchAuthView('login')" class="text-emerald-600 font-semibold hover:underline">เข้าสู่ระบบ</button>
+                <button onclick="switchTab('main-stock')" id="nav-main-stock" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all text-emerald-200 hover:bg-emerald-800/50 hover:text-white">
+                    <span class="text-lg">📦</span> คลังใหญ่
+                </button>
+                <button onclick="switchTab('sub-stock')" id="nav-sub-stock" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all text-emerald-200 hover:bg-emerald-800/50 hover:text-white">
+                    <span class="text-lg">💊</span> คลังย่อย
+                </button>
+                <button onclick="switchTab('stock-card')" id="nav-stock-card" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all text-emerald-200 hover:bg-emerald-800/50 hover:text-white">
+                    <span class="text-lg">📑</span> Stock Card
+                </button>
+            </nav>
+
+            <div class="p-4 border-t border-emerald-800/60">
+                <button onclick="handleLogout()" class="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-800/50 hover:bg-red-600/80 text-emerald-200 hover:text-white text-xs font-semibold transition-all">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                    ออกจากระบบ
+                </button>
+            </div>
+        </aside>
+
+        <!-- Content Area -->
+        <main class="flex-1 flex flex-col min-w-0 overflow-y-auto bg-slate-50">
+            <!-- Top Bar with Real Date/Time -->
+            <header class="bg-white border-b border-slate-200 h-16 flex items-center justify-between px-8 no-print shadow-xs z-10">
+                <div class="flex items-center gap-3 text-slate-600 text-sm font-medium">
+                    <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    อำเภอแม่จริม จังหวัดน่าน
+                </div>
+                <div class="flex items-center gap-4 text-xs font-semibold text-slate-700 bg-slate-100 px-4 py-2 rounded-xl border border-slate-200">
+                    📅 วันที่ปัจจุบัน: <span id="real-current-date" class="text-emerald-700 font-bold"></span>
+                </div>
+            </header>
+
+            <div class="p-8 max-w-7xl w-full mx-auto flex-1">
+                
+                <!-- 1. DASHBOARD TAB -->
+                <div id="tab-content-dashboard" class="space-y-6">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                        <div>
+                            <h2 class="text-xl font-bold text-slate-900">แดชบอร์ดสรุปภาพรวมระบบยาและเวชภัณฑ์</h2>
+                            <p class="text-xs text-slate-500 mt-0.5">โรงพยาบาลส่งเสริมสุขภาพตำบลน้ำปาย</p>
+                        </div>
+                        <div class="flex items-center gap-3 no-print">
+                            <select id="dash-year" onchange="renderDashboard()" class="px-4 py-2 rounded-xl border border-slate-200 text-xs font-semibold bg-slate-50 focus:ring-2 focus:ring-emerald-500">
+                                <option value="2570">ปีงบประมาณ 2570</option>
+                                <option value="2571">ปีงบประมาณ 2571</option>
+                                <option value="2572">ปีงบประมาณ 2572</option>
+                                <option value="2573">ปีงบประมาณ 2573</option>
+                                <option value="2574">ปีงบประมาณ 2574</option>
+                            </select>
+                            <button onclick="window.print()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold shadow-md flex items-center gap-2">🖨️ พิมพ์หน้านี้</button>
+                        </div>
+                    </div>
+
+                    <!-- Summary Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-gradient-to-br from-emerald-600 to-teal-700 text-white p-6 rounded-2xl shadow-lg">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="text-xs font-semibold uppercase tracking-wider text-emerald-200">มูลค่ารวมคลังใหญ่</span>
+                                <span class="p-2.5 bg-white/10 rounded-xl text-xl">📦</span>
+                            </div>
+                            <div class="text-3xl font-bold" id="dash-main-total">0.00 บาท</div>
+                            <div class="mt-4 pt-4 border-t border-white/10 flex justify-between text-xs text-emerald-100">
+                                <span id="dash-main-items">0 รายการในคลัง</span>
+                                <span class="font-medium">อัปเดตแบบเรียลไทม์</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-gradient-to-br from-teal-700 to-cyan-800 text-white p-6 rounded-2xl shadow-lg">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="text-xs font-semibold uppercase tracking-wider text-teal-200">มูลค่ารวมคลังย่อย</span>
+                                <span class="p-2.5 bg-white/10 rounded-xl text-xl">💊</span>
+                            </div>
+                            <div class="text-3xl font-bold" id="dash-sub-total">0.00 บาท</div>
+                            <div class="mt-4 pt-4 border-t border-white/10 flex justify-between text-xs text-teal-100">
+                                <span id="dash-sub-items">0 รายการในคลัง</span>
+                                <span class="font-medium">อัปเดตแบบเรียลไทม์</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Expiring Alert Warning (3 Months) -->
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="text-xl">⚠️</span>
+                            <div>
+                                <h3 class="font-bold text-slate-900 text-sm">แจ้งเตือนรายการยาและเวชภัณฑ์ใกล้หมดอายุ (ภายใน 3 เดือน)</h3>
+                                <p class="text-xs text-slate-500">ตรวจสอบวันหมดอายุ (Exp.) ทั้งคลังใหญ่และคลังย่อยเพื่อความปลอดภัย</p>
+                            </div>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse text-xs">
+                                <thead>
+                                    <tr class="bg-slate-100 text-slate-700 border-b border-slate-200">
+                                        <th class="p-3 font-semibold">คลัง</th>
+                                        <th class="p-3 font-semibold">ชื่อรายการ</th>
+                                        <th class="p-3 font-semibold">Lot No.</th>
+                                        <th class="p-3 font-semibold">วันหมดอายุ (Exp.)</th>
+                                        <th class="p-3 font-semibold text-right">คงเหลือ</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="dash-expiry-tbody">
+                                    <tr><td colspan="5" class="p-4 text-center text-slate-400">ไม่พบรายการใกล้หมดอายุในระยะเวลา 3 เดือนนี้</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. MAIN STOCK TAB -->
+                <div id="tab-content-main-stock" class="space-y-6 hidden">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                        <div>
+                            <h2 class="text-xl font-bold text-slate-900">ระบบเบิก-จ่าย คลังใหญ่</h2>
+                            <p class="text-xs text-slate-500 mt-0.5">บันทึกรับ/จ่าย รายการยา เวชภัณฑ์ และวัสดุการแพทย์</p>
+                        </div>
+                        <div class="flex items-center gap-3 no-print">
+                            <select id="main-filter-year" onchange="renderMainStock()" class="px-3 py-2 rounded-xl border border-slate-200 text-xs font-semibold bg-slate-50">
+                                <option value="2570">2570</option><option value="2571">2571</option><option value="2572">2572</option><option value="2573">2573</option><option value="2574">2574</option>
+                            </select>
+                            <select id="main-filter-month" onchange="renderMainStock()" class="px-3 py-2 rounded-xl border border-slate-200 text-xs font-semibold bg-slate-50">
+                                <option value="all">ทุกเดือน</option>
+                                <option value="01">มกราคม</option><option value="02">กุมภาพันธ์</option><option value="03">มีนาคม</option><option value="04">เมษายน</option><option value="05">พฤษภาคม</option><option value="06">มิถุนายน</option>
+                                <option value="07">กรกฎาคม</option><option value="08">สิงหาคม</option><option value="09">กันยายน</option><option value="10">ตุลาคม</option><option value="11">พฤศจิกายน</option><option value="12">ธันวาคม</option>
+                            </select>
+                            <button onclick="openEntryModal('main')" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold shadow-md">+ เพิ่มรายการรับ/จ่าย</button>
+                        </div>
+                    </div>
+
+                    <!-- Printable Container -->
+                    <div class="print-container bg-white rounded-2xl shadow-sm border border-slate-200 p-6 space-y-6">
+                        <div class="hidden print:block text-center mb-6">
+                            <h2 class="text-lg font-bold">โรงพยาบาลส่งเสริมสุขภาพตำบลน้ำปาย อำเภอแม่จริม จังหวัดน่าน</h2>
+                            <p id="print-title-main" class="text-sm font-semibold text-slate-700 mt-1">รายงานการรับ-จ่าย คลังใหญ่ ประจำเดือน</p>
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse text-xs">
+                                <thead>
+                                    <tr class="bg-slate-100 text-slate-700 border-b border-slate-200">
+                                        <th class="p-3 font-semibold">วัน/เดือน/ปี</th>
+                                        <th class="p-3 font-semibold">ประเภท</th>
+                                        <th class="p-3 font-semibold">ชื่อรายการ</th>
+                                        <th class="p-3 font-semibold text-center">ช่องรายการ</th>
+                                        <th class="p-3 font-semibold text-right">จำนวน</th>
+                                        <th class="p-3 font-semibold">หน่วยนับ</th>
+                                        <th class="p-3 font-semibold text-right">ราคา/หน่วย</th>
+                                        <th class="p-3 font-semibold text-right">มูลค่ารวม</th>
+                                        <th class="p-3 font-semibold">Lot No. / Exp.</th>
+                                        <th class="p-3 font-semibold text-center no-print">จัดการ</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="main-stock-tbody"></tbody>
+                            </table>
+                        </div>
+
+                        <!-- Pagination -->
+                        <div class="flex items-center justify-between pt-2 border-t border-slate-100 text-xs text-slate-500 no-print">
+                            <span id="main-pagination-info">แสดง 0 ถึง 0 จาก 0 รายการ</span>
+                            <div class="flex gap-1" id="main-pagination-buttons"></div>
+                        </div>
+
+                        <!-- Summary Block by Category -->
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 grid grid-cols-2 md:grid-cols-4 gap-4 text-xs font-medium">
+                            <div><span class="text-slate-500 block">มูลค่า ยา:</span><strong id="sum-main-drug" class="text-sm text-slate-900">0.00 บาท</strong></div>
+                            <div><span class="text-slate-500 block">มูลค่า เวชภัณฑ์:</span><strong id="sum-main-supply" class="text-sm text-slate-900">0.00 บาท</strong></div>
+                            <div><span class="text-slate-500 block">มูลค่า วัสดุการแพทย์:</span><strong id="sum-main-material" class="text-sm text-slate-900">0.00 บาท</strong></div>
+                            <div class="border-l pl-4 border-slate-200"><span class="text-emerald-700 block font-bold">รวมมูลค่าทั้งหมด:</span><strong id="sum-main-total" class="text-base text-emerald-700 font-bold">0.00 บาท</strong></div>
+                        </div>
+
+                        <!-- Signature Block -->
+                        <div class="pt-8 grid grid-cols-3 gap-6 text-center text-xs mt-6 break-inside-avoid">
+                            <div class="space-y-12">
+                                <p>ลงชื่อ............................................ผู้รับ<br>(น.ส.รัชฎาวรรณ จันทร์สุข)<br>นักวิชาการสาธารณสุขปฏิบัติการ</p>
+                            </div>
+                            <div class="space-y-12">
+                                <p>ลงชื่อ............................................ผู้ตรวจสอบ<br>(น.ส.วรรณิสา จอยสุข)<br>นักวิชาการสาธารณสุข</p>
+                            </div>
+                            <div class="space-y-12">
+                                <p>ลงชื่อ............................................ผู้รับรองความถูกต้อง<br>(นายปรัชญา วัฒนะ)<br>ผู้อำนวยการ รพ.สต.น้ำปาย</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. SUB STOCK TAB -->
+                <div id="tab-content-sub-stock" class="space-y-6 hidden">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                        <div>
+                            <h2 class="text-xl font-bold text-slate-900">ระบบเบิก-จ่าย คลังย่อย</h2>
+                            <p class="text-xs text-slate-500 mt-0.5">รายการรับอัตโนมัติจากคลังใหญ่และการเบิกจ่ายใช้งานจริง</p>
+                        </div>
+                        <div class="flex items-center gap-3 no-print">
+                            <select id="sub-filter-year" onchange="renderSubStock()" class="px-3 py-2 rounded-xl border border-slate-200 text-xs font-semibold bg-slate-50">
+                                <option value="2570">2570</option><option value="2571">2571</option><option value="2572">2572</option><option value="2573">2573</option><option value="2574">2574</option>
+                            </select>
+                            <select id="sub-filter-month" onchange="renderSubStock()" class="px-3 py-2 rounded-xl border border-slate-200 text-xs font-semibold bg-slate-50">
+                                <option value="all">ทุกเดือน</option>
+                                <option value="01">มกราคม</option><option value="02">กุมภาพันธ์</option><option value="03">มีนาคม</option><option value="04">เมษายน</option><option value="05">พฤษภาคม</option><option value="06">มิถุนายน</option>
+                                <option value="07">กรกฎาคม</option><option value="08">สิงหาคม</option><option value="09">กันยายน</option><option value="10">ตุลาคม</option><option value="11">พฤศจิกายน</option><option value="12">ธันวาคม</option>
+                            </select>
+                            <button onclick="openEntryModal('sub')" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold shadow-md">+ เพิ่มรายการเบิกจ่าย</button>
+                        </div>
+                    </div>
+
+                    <!-- Printable Container -->
+                    <div class="print-container bg-white rounded-2xl shadow-sm border border-slate-200 p-6 space-y-6">
+                        <div class="hidden print:block text-center mb-6">
+                            <h2 class="text-lg font-bold">โรงพยาบาลส่งเสริมสุขภาพตำบลน้ำปาย อำเภอแม่จริม จังหวัดน่าน</h2>
+                            <p id="print-title-sub" class="text-sm font-semibold text-slate-700 mt-1">รายงานการรับ-จ่าย คลังย่อย ประจำเดือน</p>
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse text-xs">
+                                <thead>
+                                    <tr class="bg-slate-100 text-slate-700 border-b border-slate-200">
+                                        <th class="p-3 font-semibold">วัน/เดือน/ปี</th>
+                                        <th class="p-3 font-semibold">ประเภท</th>
+                                        <th class="p-3 font-semibold">ชื่อรายการ</th>
+                                        <th class="p-3 font-semibold text-center">ช่องรายการ</th>
+                                        <th class="p-3 font-semibold text-right">จำนวน</th>
+                                        <th class="p-3 font-semibold">หน่วยนับ</th>
+                                        <th class="p-3 font-semibold text-right">ราคา/หน่วย</th>
+                                        <th class="p-3 font-semibold text-right">มูลค่ารวม</th>
+                                        <th class="p-3 font-semibold">Lot No. / Exp.</th>
+                                        <th class="p-3 font-semibold text-center no-print">จัดการ</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="sub-stock-tbody"></tbody>
+                            </table>
+                        </div>
+
+                        <!-- Pagination -->
+                        <div class="flex items-center justify-between pt-2 border-t border-slate-100 text-xs text-slate-500 no-print">
+                            <span id="sub-pagination-info">แสดง 0 ถึง 0 จาก 0 รายการ</span>
+                            <div class="flex gap-1" id="sub-pagination-buttons"></div>
+                        </div>
+
+                        <!-- Summary Block by Category -->
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 grid grid-cols-2 md:grid-cols-4 gap-4 text-xs font-medium">
+                            <div><span class="text-slate-500 block">มูลค่า ยา:</span><strong id="sum-sub-drug" class="text-sm text-slate-900">0.00 บาท</strong></div>
+                            <div><span class="text-slate-500 block">มูลค่า เวชภัณฑ์:</span><strong id="sum-sub-supply" class="text-sm text-slate-900">0.00 บาท</strong></div>
+                            <div><span class="text-slate-500 block">มูลค่า วัสดุการแพทย์:</span><strong id="sum-sub-material" class="text-sm text-slate-900">0.00 บาท</strong></div>
+                            <div class="border-l pl-4 border-slate-200"><span class="text-emerald-700 block font-bold">รวมมูลค่าทั้งหมด:</span><strong id="sum-sub-total" class="text-base text-emerald-700 font-bold">0.00 บาท</strong></div>
+                        </div>
+
+                        <!-- Signature Block -->
+                        <div class="pt-8 grid grid-cols-3 gap-6 text-center text-xs mt-6 break-inside-avoid">
+                            <div class="space-y-12">
+                                <p>ลงชื่อ............................................ผู้เบิก<br>(นางกิตติกา วัฒนะ)<br>พยาบาลวิชาชีพชำนาญการ</p>
+                            </div>
+                            <div class="space-y-12">
+                                <p>ลงชื่อ............................................ผู้จ่าย<br>(น.ส.รัชฎาวรรณ จันทร์สุข)<br>นักวิชาการสาธารณสุขปฏิบัติการ</p>
+                            </div>
+                            <div class="space-y-12">
+                                <p>ลงชื่อ............................................ผู้อนุมัติ<br>(นายปรัชญา วัฒนะ)<br>ผู้อำนวยการ รพ.สต.น้ำปาย</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. STOCK CARD TAB -->
+                <div id="tab-content-stock-card" class="space-y-6 hidden">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                        <div>
+                            <h2 class="text-xl font-bold text-slate-900">Stock Card คุมยอดคงเหลือรายตัวยา</h2>
+                            <p class="text-xs text-slate-500 mt-0.5">ตารางประวัติการรับเข้า จ่ายออก และคงเหลือสะสม</p>
+                        </div>
+                        <div class="no-print">
+                            <button onclick="window.print()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold shadow-md">🖨️ พิมพ์ Stock Card</button>
+                        </div>
+                    </div>
+
+                    <!-- Printable Container -->
+                    <div class="print-container bg-white rounded-2xl shadow-sm border border-slate-200 p-6 space-y-6">
+                        <div class="hidden print:block text-center mb-6">
+                            <h2 class="text-lg font-bold">โรงพยาบาลส่งเสริมสุขภาพตำบลน้ำปาย อำเภอแม่จริม จังหวัดน่าน</h2>
+                            <p class="text-sm font-semibold text-slate-700 mt-1">Stock Card คุมคลังสินค้าและเวชภัณฑ์</p>
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse text-xs">
+                                <thead>
+                                    <tr class="bg-slate-100 text-slate-700 border-b border-slate-200">
+                                        <th class="p-3 font-semibold">วัน/เดือน/ปี</th>
+                                        <th class="p-3 font-semibold">ชื่อรายการ</th>
+                                        <th class="p-3 font-semibold text-right">รับเข้า</th>
+                                        <th class="p-3 font-semibold text-right">จ่ายออก</th>
+                                        <th class="p-3 font-semibold text-right">คงเหลือ</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="stock-card-tbody"></tbody>
+                            </table>
+                        </div>
+
+                        <!-- Pagination -->
+                        <div class="flex items-center justify-between pt-2 border-t border-slate-100 text-xs text-slate-500 no-print">
+                            <span id="card-pagination-info">แสดง 0 ถึง 0 จาก 0 รายการ</span>
+                            <div class="flex gap-1" id="card-pagination-buttons"></div>
+                        </div>
+
+                        <!-- Signature Block -->
+                        <div class="pt-8 grid grid-cols-2 gap-12 text-center text-xs mt-6 break-inside-avoid">
+                            <div class="space-y-12">
+                                <p>ลงชื่อ......................................................ผู้รายงาน<br>(น.ส.รัชฎาวรรณ จันทร์สุข)<br>นักวิชาการสาธารณสุขปฏิบัติการ</p>
+                            </div>
+                            <div class="space-y-12">
+                                <p>ลงชื่อ......................................................ผู้ตรวจสอบ<br>(นายปรัชญา วัฒนะ)<br>ผู้อำนวยการ รพ.สต.น้ำปาย</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal Form Add/Edit -->
+    <div id="entry-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-lg p-6 border border-slate-200 animate-in fade-in zoom-in duration-200">
+            <div class="flex justify-between items-center mb-4 pb-2 border-b border-slate-100">
+                <h3 id="modal-title" class="font-bold text-slate-900 text-base">เพิ่มรายการ</h3>
+                <button onclick="closeEntryModal()" class="text-slate-400 hover:text-slate-600 text-xl font-bold">&times;</button>
+            </div>
+            <form onsubmit="handleSaveEntry(event)" class="space-y-4 text-xs">
+                <input type="hidden" id="form-stock-type">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-semibold text-slate-600 uppercase mb-1">ประเภท</label>
+                        <select id="form-category" required class="w-full px-3 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-emerald-500 bg-slate-50">
+                            <option value="ยา">ยา</option>
+                            <option value="เวชภัณฑ์">เวชภัณฑ์</option>
+                            <option value="วัสดุการแพทย์">วัสดุการแพทย์</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-600 uppercase mb-1">ช่องรายการ (รับ/จ่าย)</label>
+                        <select id="form-action-type" required class="w-full px-3 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-emerald-500 bg-slate-50">
+                            <option value="รับเข้า">รับเข้า</option>
+                            <option value="จ่ายออก">จ่ายออก</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block font-semibold text-slate-600 uppercase mb-1">ชื่อรายการ</label>
+                    <input type="text" id="form-name" list="drug-suggestions" required class="w-full px-3 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-emerald-500 bg-slate-50" placeholder="พิมพ์หรือเลือกชื่อยา/เวชภัณฑ์">
+                    <datalist id="drug-suggestions"></datalist>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-semibold text-slate-600 uppercase mb-1">จำนวน</label>
+                        <input type="number" id="form-qty" min="1" required class="w-full px-3 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-emerald-500 bg-slate-50" placeholder="0">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-600 uppercase mb-1">หน่วยนับ</label>
+                        <select id="form-unit" required class="w-full px-3 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-emerald-500 bg-slate-50">
+                            <option value="กล่อง">กล่อง</option><option value="กระปุก">กระปุก</option><option value="ขวด">ขวด</option><option value="เม็ด">เม็ด</option><option value="อัน">อัน</option><option value="ชิ้น">ชิ้น</option><option value="เส้น">เส้น</option><option value="ชุด">ชุด</option><option value="ม้วน">ม้วน</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-semibold text-slate-600 uppercase mb-1">ราคาต่อหน่วย (2 หลัก)</label>
+                        <input type="number" step="0.01" id="form-price" min="0" required class="w-full px-3 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-emerald-500 bg-slate-50" placeholder="0.00">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-600 uppercase mb-1">วันที่บันทึก (ว/ด/ป)</label>
+                        <input type="date" id="form-date" required class="w-full px-3 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-emerald-500 bg-slate-50">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-semibold text-slate-600 uppercase mb-1">Lot No.</label>
+                        <input type="text" id="form-lot" required class="w-full px-3 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-emerald-500 bg-slate-50" placeholder="เลขล็อต">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-600 uppercase mb-1">วันหมดอายุ (Exp.)</label>
+                        <input type="date" id="form-exp" required class="w-full px-3 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-emerald-500 bg-slate-50">
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-3 pt-4 border-t border-slate-100">
+                    <button type="button" onclick="closeEntryModal()" class="px-4 py-2.5 rounded-xl border border-slate-200 text-slate-600 font-semibold hover:bg-slate-50">ยกเลิก</button>
+                    <button type="submit" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl shadow-md">บันทึกรายการ</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Main Application Wrapper -->
-    <div id="app-content" class="flex-1 flex flex-col md:flex-row">
-        
-        <!-- Left Sidebar Navigation -->
-        <aside class="w-full md:w-64 bg-white border-r border-emerald-100 flex flex-col justify-between shadow-sm flex-shrink-0 no-print">
-            <div>
-                <!-- Brand Header -->
-                <div class="p-4 border-b border-emerald-100 flex items-center space-x-3 bg-gradient-to-r from-emerald-800 to-emerald-900 text-white">
-                    <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-md p-1.5 flex-shrink-0">
-                        <!-- SVG Emblem Icon matching Favicon -->
-                        <svg class="w-full h-full text-emerald-700" viewBox="0 0 512 512" fill="currentColor">
-                            <rect width="512" height="512" rx="128" fill="#059669"/>
-                            <path d="M300 96h-88c-13.3 0-24 10.7-24 24v88h-88c-13.3 0-24 10.7-24 24v88c0 13.3 10.7 24 24 24h88v88c0 13.3 10.7 24 24 24h88c13.3 0 24-10.7 24-24v-88h88c13.3 0 24-10.7 24-24v-88c0-13.3-10.7-24-24-24h-88v-88c0-13.3-10.7-24-24-24z" fill="#ffffff"/>
-                            <path d="M256 160c-53 0-96 43-96 96 0 53 43 96 96 96s96-43 96-96c0-53-43-96-96-96zm0 144c-26.5 0-48-21.5-48-48s21.5-48 48-48 48 21.5 48 48-21.5 48-48 48z" fill="#10b981"/>
-                            <circle cx="256" cy="256" r="24" fill="#047857"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <h1 class="text-sm font-bold leading-tight">รพ.สต.น้ำปาย</h1>
-                        <p class="text-[11px] text-emerald-200">ระบบเภสัชกรรมปฐมภูมิ</p>
-                    </div>
-                </div>
-
-                <!-- Navigation Links -->
-                <nav class="p-3 space-y-1">
-                    <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium transition text-gray-600 hover:bg-emerald-50 hover:text-emerald-700">
-                        <div class="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center">
-                            <i class="fa-solid fa-chart-line"></i>
-                        </div>
-                        <span>แดชบอร์ดสรุปภาพรวม</span>
-                    </button>
-
-                    <button onclick="switchTab('main-store')" id="nav-main-store" class="nav-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium transition text-gray-600 hover:bg-emerald-50 hover:text-emerald-700">
-                        <div class="w-7 h-7 rounded-lg bg-teal-100 text-teal-700 flex items-center justify-center">
-                            <i class="fa-solid fa-warehouse"></i>
-                        </div>
-                        <span>คลังใหญ่</span>
-                    </button>
-
-                    <button onclick="switchTab('sub-store')" id="nav-sub-store" class="nav-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium transition text-gray-600 hover:bg-emerald-50 hover:text-emerald-700">
-                        <div class="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center">
-                            <i class="fa-solid fa-clinic-medical"></i>
-                        </div>
-                        <span>คลังย่อย</span>
-                    </button>
-
-                    <button onclick="switchTab('stock-card')" id="nav-stock-card" class="nav-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium transition text-gray-600 hover:bg-emerald-50 hover:text-emerald-700">
-                        <div class="w-7 h-7 rounded-lg bg-cyan-100 text-cyan-700 flex items-center justify-center">
-                            <i class="fa-solid fa-receipt"></i>
-                        </div>
-                        <span>Stock Card</span>
-                    </button>
-                </nav>
-            </div>
-
-            <!-- Footer User Profile Info -->
-            <div class="p-3 border-t border-emerald-100 bg-emerald-50/50">
-                <div class="flex items-center justify-between p-2 rounded-lg bg-white shadow-sm border border-emerald-100">
-                    <div class="flex items-center space-x-2 overflow-hidden">
-                        <div class="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center text-xs font-bold">
-                            <i class="fa-solid fa-user-nurse"></i>
-                        </div>
-                        <div class="truncate">
-                            <p id="user-display-name" class="text-xs font-bold text-gray-800 truncate">เจ้าหน้าที่เภสัชกรรม</p>
-                            <p class="text-[10px] text-emerald-600">รพ.สต.น้ำปาย</p>
-                        </div>
-                    </div>
-                    <button onclick="logout()" class="text-gray-400 hover:text-red-500 p-1.5 rounded-lg transition" title="ออกจากระบบ">
-                        <i class="fa-solid fa-right-from-bracket"></i>
-                    </button>
-                </div>
-            </div>
-        </aside>
-
-        <!-- Main Workspace Area -->
-        <main class="flex-1 overflow-y-auto p-4 md:p-6 bg-slate-50">
-            
-            <!-- Top Controls Header -->
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 bg-white p-4 rounded-xl shadow-sm border border-emerald-100 no-print">
-                <div>
-                    <h2 id="page-title" class="text-xl font-bold text-emerald-900">แดชบอร์ดสรุปภาพรวม</h2>
-                    <p class="text-xs text-gray-500">โรงพยาบาลส่งเสริมสุขภาพตำบลน้ำปาย อ.แม่จริม จ.น่าน</p>
-                </div>
-                <div class="flex items-center space-x-2">
-                    <button onclick="loadDemoData()" class="px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 text-xs font-medium rounded-lg transition flex items-center space-x-1">
-                        <i class="fa-solid fa-database"></i>
-                        <span>โหลดข้อมูลตัวอย่าง</span>
-                    </button>
-                    <button onclick="triggerPrint()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-lg shadow transition flex items-center space-x-2">
-                        <i class="fa-solid fa-print"></i>
-                        <span>สั่งพิมพ์เอกสาร A4</span>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Print Document Header -->
-            <div class="print-header">
-                <h1 class="text-lg font-bold">โรงพยาบาลส่งเสริมสุขภาพตำบลน้ำปาย อำเภอแม่จริม จังหวัดน่าน</h1>
-                <p class="text-xs text-gray-700" id="print-doc-title">รายงานระบบเภสัชกรรมปฐมภูมิ</p>
-            </div>
-
-            <!-- DASHBOARD SECTION -->
-            <section id="sec-dashboard" class="tab-content space-y-6">
-                <!-- Year & Month Filter Controls -->
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-emerald-100 flex flex-wrap items-center gap-4 no-print">
-                    <div class="flex items-center space-x-2">
-                        <i class="fa-solid fa-calendar-alt text-emerald-600"></i>
-                        <span class="text-xs font-bold text-gray-700">เลือกปีงบประมาณ พ.ศ.:</span>
-                        <select id="dash-year" onchange="updateDashboardView()" class="border border-gray-300 rounded-lg px-3 py-1.5 text-xs focus:ring-2 focus:ring-emerald-500">
-                            <option value="2574">2574</option>
-                            <option value="2573">2573</option>
-                            <option value="2572">2572</option>
-                            <option value="2571">2571</option>
-                            <option value="2570" selected>2570</option>
-                        </select>
-                    </div>
-                    <div class="flex items-center space-x-2">
-                        <span class="text-xs font-bold text-gray-700">ประจำเดือน:</span>
-                        <select id="dash-month" onchange="updateDashboardView()" class="border border-gray-300 rounded-lg px-3 py-1.5 text-xs focus:ring-2 focus:ring-emerald-500">
-                            <option value="all">ทุกเดือน (รวมทั้งปีงบประมาณ)</option>
-                            <option value="10">ตุลาคม</option>
-                            <option value="11">พฤศจิกายน</option>
-                            <option value="12">ธันวาคม</option>
-                            <option value="1">มกราคม</option>
-                            <option value="2">กุมภาพันธ์</option>
-                            <option value="3">มีนาคม</option>
-                            <option value="4">เมษายน</option>
-                            <option value="5">พฤษภาคม</option>
-                            <option value="6">มิถุนายน</option>
-                            <option value="7">กรกฎาคม</option>
-                            <option value="8">สิงหาคม</option>
-                            <option value="9">กันยายน</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- KPI Overview Cards -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-                    <div class="bg-white p-5 rounded-2xl border border-emerald-100 shadow-sm relative overflow-hidden">
-                        <div class="absolute right-3 top-3 w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center text-emerald-600">
-                            <i class="fa-solid fa-boxes-packing text-xl"></i>
-                        </div>
-                        <p class="text-xs font-medium text-gray-500">มูลค่ารวมคลังใหญ่</p>
-                        <h3 id="dash-main-val" class="text-2xl font-bold text-emerald-900 mt-2">฿0.00</h3>
-                        <p class="text-[11px] text-emerald-600 mt-2"><i class="fa-solid fa-circle-check"></i> คลังหลัก รพ.สต.น้ำปาย</p>
-                    </div>
-
-                    <div class="bg-white p-5 rounded-2xl border border-teal-100 shadow-sm relative overflow-hidden">
-                        <div class="absolute right-3 top-3 w-12 h-12 bg-teal-50 rounded-xl flex items-center justify-center text-teal-600">
-                            <i class="fa-solid fa-shop text-xl"></i>
-                        </div>
-                        <p class="text-xs font-medium text-gray-500">มูลค่ารวมคลังย่อย</p>
-                        <h3 id="dash-sub-val" class="text-2xl font-bold text-teal-900 mt-2">฿0.00</h3>
-                        <p class="text-[11px] text-teal-600 mt-2"><i class="fa-solid fa-circle-check"></i> คลังประจำจุดบริการจ่ายยา</p>
-                    </div>
-
-                    <div class="bg-white p-5 rounded-2xl border border-amber-100 shadow-sm relative overflow-hidden">
-                        <div class="absolute right-3 top-3 w-12 h-12 bg-amber-50 rounded-xl flex items-center justify-center text-amber-600">
-                            <i class="fa-solid fa-triangle-exclamation text-xl"></i>
-                        </div>
-                        <p class="text-xs font-medium text-gray-500">รายการหมดอายุภายใน 3 เดือน</p>
-                        <h3 id="dash-expiring-count" class="text-2xl font-bold text-amber-800 mt-2">0 รายการ</h3>
-                        <p class="text-[11px] text-amber-600 mt-2"><i class="fa-solid fa-clock"></i> ต้องรีบดำเนินการจ่าย/เคลียร์คลัง</p>
-                    </div>
-                </div>
-
-                <!-- Expiring Items Detail Table -->
-                <div class="bg-white rounded-xl shadow-sm border border-emerald-100 overflow-hidden p-4">
-                    <h3 class="text-sm font-bold text-emerald-900 mb-3 flex items-center">
-                        <i class="fa-solid fa-bell text-amber-500 mr-2"></i> รายการแจ้งเตือนยา/เวชภัณฑ์ ที่จะหมดอายุภายใน 3 เดือน
-                    </h3>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-xs text-left border-collapse">
-                            <thead>
-                                <tr class="bg-emerald-50/70 text-emerald-900 border-b border-emerald-100">
-                                    <th class="p-2.5">คลัง</th>
-                                    <th class="p-2.5">ประเภท</th>
-                                    <th class="p-2.5">ชื่อรายการ</th>
-                                    <th class="p-2.5">Lot No.</th>
-                                    <th class="p-2.5 text-center">วันหมดอายุ (Exp.)</th>
-                                    <th class="p-2.5 text-right">จำนวนคงเหลือ</th>
-                                </tr>
-                            </thead>
-                            <tbody id="dash-expiring-list" class="divide-y divide-gray-100">
-                                <tr>
-                                    <td colspan="6" class="p-4 text-center text-gray-400">ไม่มีรายการยาใกล้หมดอายุ</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
-
-            <!-- MAIN STORE SECTION (คลังใหญ่) -->
-            <section id="sec-main-store" class="tab-content space-y-6 hidden">
-                <!-- Main Store Filter Bar -->
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-emerald-100 flex flex-wrap items-center justify-between gap-4 no-print">
-                    <div class="flex flex-wrap items-center gap-3">
-                        <div class="flex items-center space-x-2">
-                            <i class="fa-solid fa-filter text-emerald-600"></i>
-                            <span class="text-xs font-bold text-gray-700">กรองข้อมูลคลังใหญ่:</span>
-                        </div>
-                        <div class="flex items-center space-x-1.5">
-                            <label class="text-xs text-gray-600">ปีงบประมาณ:</label>
-                            <select id="main-filter-year" onchange="currentPageMain=1; renderMainStoreTable();" class="border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs focus:ring-2 focus:ring-emerald-500">
-                                <option value="all">ทุกปีงบประมาณ</option>
-                                <option value="2574">2574</option>
-                                <option value="2573">2573</option>
-                                <option value="2572">2572</option>
-                                <option value="2571">2571</option>
-                                <option value="2570" selected>2570</option>
-                            </select>
-                        </div>
-                        <div class="flex items-center space-x-1.5">
-                            <label class="text-xs text-gray-600">ประจำเดือน:</label>
-                            <select id="main-filter-month" onchange="currentPageMain=1; renderMainStoreTable();" class="border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs focus:ring-2 focus:ring-emerald-500">
-                                <option value="all">ทุกเดือน (รวมทั้งปี)</option>
-                                <option value="10">ตุลาคม</option>
-                                <option value="11">พฤศจิกายน</option>
-                                <option value="12">ธันวาคม</option>
-                                <option value="1">มกราคม</option>
-                                <option value="2">กุมภาพันธ์</option>
-                                <option value="3">มีนาคม</option>
-                                <option value="4">เมษายน</option>
-                                <option value="5">พฤษภาคม</option>
-                                <option value="6">มิถุนายน</option>
-                                <option value="7">กรกฎาคม</option>
-                                <option value="8">สิงหาคม</option>
-                                <option value="9">กันยายน</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Add Transaction Form -->
-                <div class="bg-white p-5 rounded-xl shadow-sm border border-emerald-100 no-print">
-                    <h3 class="text-sm font-bold text-emerald-900 mb-4 flex items-center">
-                        <i class="fa-solid fa-circle-plus text-emerald-600 mr-2"></i> บันทึกรายการ รับเข้า / จ่ายออก คลังใหญ่
-                    </h3>
-                    <form id="form-main-store" onsubmit="addMainStoreTransaction(event)" class="grid grid-cols-1 md:grid-cols-4 gap-4 text-xs">
-                        <div>
-                            <label class="block font-semibold mb-1 text-gray-600">วันที่ (วัน/เดือน/ปี พ.ศ.)</label>
-                            <input type="date" id="main-date" required class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500">
-                        </div>
-                        <div>
-                            <label class="block font-semibold mb-1 text-gray-600">ประเภทการทำรายการ</label>
-                            <select id="main-action" required class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500">
-                                <option value="IN">รับเข้าคลังใหญ่</option>
-                                <option value="OUT">จ่ายออก (อัตโนมัติรับเข้าคลังย่อย)</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block font-semibold mb-1 text-gray-600">ประเภทสินค้า</label>
-                            <select id="main-type" required class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500">
-                                <option value="ยา">ยา</option>
-                                <option value="เวชภัณฑ์">เวชภัณฑ์</option>
-                                <option value="วัสดุการแพทย์">วัสดุการแพทย์</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block font-semibold mb-1 text-gray-600">ชื่อรายการ</label>
-                            <input type="text" id="main-name" list="item-suggestions" required class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500" placeholder="พิมพ์หรือเลือกรายการ...">
-                            <datalist id="item-suggestions"></datalist>
-                        </div>
-                        <div>
-                            <label class="block font-semibold mb-1 text-gray-600">จำนวน</label>
-                            <input type="number" id="main-qty" min="1" step="1" required class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500" placeholder="0">
-                        </div>
-                        <div>
-                            <label class="block font-semibold mb-1 text-gray-600">หน่วยนับ</label>
-                            <select id="main-unit" required class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500">
-                                <option value="กล่อง">กล่อง</option>
-                                <option value="กระปุก">กระปุก</option>
-                                <option value="ขวด">ขวด</option>
-                                <option value="เม็ด">เม็ด</option>
-                                <option value="อัน">อัน</option>
-                                <option value="ชิ้น">ชิ้น</option>
-                                <option value="เส้น">เส้น</option>
-                                <option value="ชุด">ชุด</option>
-                                <option value="ม้วน">ม้วน</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block font-semibold mb-1 text-gray-600">ราคาต่อหน่วย (บาท)</label>
-                            <input type="number" id="main-price" step="0.01" min="0" required class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500" placeholder="0.00">
-                        </div>
-                        <div>
-                            <label class="block font-semibold mb-1 text-gray-600">Lot No.</label>
-                            <input type="text" id="main-lot" required class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500" placeholder="LOT-xxxx">
-                        </div>
-                        <div>
-                            <label class="block font-semibold mb-1 text-gray-600">วันหมดอายุ (Exp Date)</label>
-                            <input type="date" id="main-exp" required class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500">
-                        </div>
-                        <div class="md:col-span-3 flex items-end">
-                            <button type="submit" class="w-full py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg shadow transition">
-                                <i class="fa-solid fa-save mr-1"></i> บันทึกรายการคลังใหญ่
-                            </button>
-                        </div>
-                    </form>
-                </div>
-
-                <!-- Table Display Section -->
-                <div class="bg-white rounded-xl shadow-sm border border-emerald-100 p-4">
-                    <div class="flex justify-between items-center mb-3">
-                        <h3 class="text-sm font-bold text-gray-800">ตารางแสดงรายการคลังใหญ่</h3>
-                        <span class="text-xs text-gray-500">แสดง 10 รายการต่อหน้า</span>
-                    </div>
-
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-xs text-left border-collapse border border-gray-200">
-                            <thead>
-                                <tr class="bg-emerald-100/60 text-emerald-900 border-b border-gray-300">
-                                    <th class="p-2 border border-gray-200">วัน/เดือน/ปี</th>
-                                    <th class="p-2 border border-gray-200">ประเภท</th>
-                                    <th class="p-2 border border-gray-200">ชื่อรายการ</th>
-                                    <th class="p-2 border border-gray-200">รายการ</th>
-                                    <th class="p-2 border border-gray-200 text-right">จำนวน</th>
-                                    <th class="p-2 border border-gray-200">หน่วยนับ</th>
-                                    <th class="p-2 border border-gray-200 text-right">ราคา/หน่วย</th>
-                                    <th class="p-2 border border-gray-200 text-right">ราคารวม</th>
-                                    <th class="p-2 border border-gray-200">Lot No.</th>
-                                    <th class="p-2 border border-gray-200">Exp.</th>
-                                    <th class="p-2 border border-gray-200 text-center no-print">จัดการ</th>
-                                </tr>
-                            </thead>
-                            <tbody id="main-store-table-body"></tbody>
-                        </table>
-                    </div>
-
-                    <!-- Pagination -->
-                    <div class="flex justify-between items-center mt-4 text-xs no-print pagination-container">
-                        <span id="main-page-info" class="text-gray-500">หน้า 1 จาก 1</span>
-                        <div class="space-x-1">
-                            <button onclick="changePage('main', -1)" class="px-3 py-1 bg-gray-100 hover:bg-gray-200 rounded text-gray-700">ก่อนหน้า</button>
-                            <button onclick="changePage('main', 1)" class="px-3 py-1 bg-gray-100 hover:bg-gray-200 rounded text-gray-700">ถัดไป</button>
-                        </div>
-                    </div>
-
-                    <!-- Summary Category Total -->
-                    <div class="mt-6 p-4 bg-emerald-50 rounded-xl border border-emerald-100 summary-block">
-                        <h4 class="text-xs font-bold text-emerald-900 mb-2">สรุปมูลค่าคลังใหญ่แยกตามประเภท</h4>
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
-                            <div class="bg-white p-2.5 rounded-lg border border-emerald-200">
-                                <span class="text-gray-500 block">รวมมูลค่ายา:</span>
-                                <span id="main-sum-drug" class="font-bold text-emerald-700">0.00 บาท</span>
-                            </div>
-                            <div class="bg-white p-2.5 rounded-lg border border-emerald-200">
-                                <span class="text-gray-500 block">รวมมูลค่าเวชภัณฑ์:</span>
-                                <span id="main-sum-supplies" class="font-bold text-emerald-700">0.00 บาท</span>
-                            </div>
-                            <div class="bg-white p-2.5 rounded-lg border border-emerald-200">
-                                <span class="text-gray-500 block">รวมมูลค่าวัสดุการแพทย์:</span>
-                                <span id="main-sum-equipment" class="font-bold text-emerald-700">0.00 บาท</span>
-                            </div>
-                            <div class="bg-emerald-700 text-white p-2.5 rounded-lg shadow-sm">
-                                <span class="text-emerald-100 block">รวมมูลค่าทั้ง 3 ประเภท:</span>
-                                <span id="main-sum-total" class="font-bold text-base">0.00 บาท</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Print Signatures Block -->
-                    <div class="mt-12 pt-6 border-t border-gray-300 grid grid-cols-3 gap-4 text-center text-xs signature-block">
-                        <div>
-                            <p class="mb-8">ลงชื่อ............................................ผู้รับ</p>
-                            <p class="font-bold">น.ส.รัชฎาวรรณ จันทร์สุข</p>
-                            <p class="text-gray-600">นักวิชาการสาธารณสุขปฏิบัติการ</p>
-                            <p class="mt-2 text-[10px] text-gray-500">วันที่........../..................../..........</p>
-                        </div>
-                        <div>
-                            <p class="mb-8">ลงชื่อ............................................ผู้ตรวจสอบ</p>
-                            <p class="font-bold">น.ส.วรรณิสา จอยสุข</p>
-                            <p class="text-gray-600">นักวิชาการสาธารณสุข</p>
-                            <p class="mt-2 text-[10px] text-gray-500">วันที่........../..................../..........</p>
-                        </div>
-                        <div>
-                            <p class="mb-8">ลงชื่อ............................................ผู้รับรองความถูกต้อง</p>
-                            <p class="font-bold">นายปรัชญา วัฒนะ</p>
-                            <p class="text-gray-600">ผู้อำนวยการ รพ.สต.น้ำปาย</p>
-                            <p class="mt-2 text-[10px] text-gray-500">วันที่........../..................../..........</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- SUB STORE SECTION (คลังย่อย) -->
-            <section id="sec-sub-store" class="tab-content space-y-6 hidden">
-                <!-- Sub Store Filter Bar -->
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-teal-100 flex flex-wrap items-center justify-between gap-4 no-print">
-                    <div class="flex flex-wrap items-center gap-3">
-                        <div class="flex items-center space-x-2">
-                            <i class="fa-solid fa-filter text-teal-600"></i>
-                            <span class="text-xs font-bold text-gray-700">กรองข้อมูลคลังย่อย:</span>
-                        </div>
-                        <div class="flex items-center space-x-1.5">
-                            <label class="text-xs text-gray-600">ปีงบประมาณ:</label>
-                            <select id="sub-filter-year" onchange="currentPageSub=1; renderSubStoreTable();" class="border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs focus:ring-2 focus:ring-teal-500">
-                                <option value="all">ทุกปีงบประมาณ</option>
-                                <option value="2574">2574</option>
-                                <option value="2573">2573</option>
-                                <option value="2572">2572</option>
-                                <option value="2571">2571</option>
-                                <option value="2570" selected>2570</option>
-                            </select>
-                        </div>
-                        <div class="flex items-center space-x-1.5">
-                            <label class="text-xs text-gray-600">ประจำเดือน:</label>
-                            <select id="sub-filter-month" onchange="currentPageSub=1; renderSubStoreTable();" class="border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs focus:ring-2 focus:ring-teal-500">
-                                <option value="all">ทุกเดือน (รวมทั้งปี)</option>
-                                <option value="10">ตุลาคม</option>
-                                <option value="11">พฤศจิกายน</option>
-                                <option value="12">ธันวาคม</option>
-                                <option value="1">มกราคม</option>
-                                <option value="2">กุมภาพันธ์</option>
-                                <option value="3">มีนาคม</option>
-                                <option value="4">เมษายน</option>
-                                <option value="5">พฤษภาคม</option>
-                                <option value="6">มิถุนายน</option>
-                                <option value="7">กรกฎาคม</option>
-                                <option value="8">สิงหาคม</option>
-                                <option value="9">กันยายน</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Add Sub store Form -->
-                <div class="bg-white p-5 rounded-xl shadow-sm border border-teal-100 no-print">
-                    <h3 class="text-sm font-bold text-teal-900 mb-4 flex items-center">
-                        <i class="fa-solid fa-circle-plus text-teal-600 mr-2"></i> บันทึกรายการ รับเข้า / จ่ายออก คลังย่อย
-                    </h3>
-                    <form id="form-sub-store" onsubmit="addSubStoreTransaction(event)" class="grid grid-cols-1 md:grid-cols-4 gap-4 text-xs">
-                        <div>
-                            <label class="block font-semibold mb-1 text-gray-600">วันที่ (วัน/เดือน/ปี พ.ศ.)</label>
-                            <input type="date" id="sub-date" required class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500">
-                        </div>
-                        <div>
-                            <label class="block font-semibold mb-1 text-gray-600">ประเภทการทำรายการ</label>
-                            <select id="sub-action" required class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500">
-                                <option value="IN">รับเข้าคลังย่อย</option>
-                                <option value="OUT">จ่ายออกให้ผู้ป่วย/บริการ</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block font-semibold mb-1 text-gray-600">ประเภทสินค้า</label>
-                            <select id="sub-type" required class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500">
-                                <option value="ยา">ยา</option>
-                                <option value="เวชภัณฑ์">เวชภัณฑ์</option>
-                                <option value="วัสดุการแพทย์">วัสดุการแพทย์</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block font-semibold mb-1 text-gray-600">ชื่อรายการ</label>
-                            <input type="text" id="sub-name" list="item-suggestions" required class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500" placeholder="พิมพ์หรือเลือกรายการ...">
-                        </div>
-                        <div>
-                            <label class="block font-semibold mb-1 text-gray-600">จำนวน</label>
-                            <input type="number" id="sub-qty" min="1" step="1" required class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500" placeholder="0">
-                        </div>
-                        <div>
-                            <label class="block font-semibold mb-1 text-gray-600">หน่วยนับ</label>
-                            <select id="sub-unit" required class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500">
-                                <option value="กล่อง">กล่อง</option>
-                                <option value="กระปุก">กระปุก</option>
-                                <option value="ขวด">ขวด</option>
-                                <option value="เม็ด">เม็ด</option>
-                                <option value="อัน">อัน</option>
-                                <option value="ชิ้น">ชิ้น</option>
-                                <option value="เส้น">เส้น</option>
-                                <option value="ชุด">ชุด</option>
-                                <option value="ม้วน">ม้วน</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block font-semibold mb-1 text-gray-600">ราคาต่อหน่วย (บาท)</label>
-                            <input type="number" id="sub-price" step="0.01" min="0" required class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500" placeholder="0.00">
-                        </div>
-                        <div>
-                            <label class="block font-semibold mb-1 text-gray-600">Lot No.</label>
-                            <input type="text" id="sub-lot" required class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500" placeholder="LOT-xxxx">
-                        </div>
-                        <div>
-                            <label class="block font-semibold mb-1 text-gray-600">วันหมดอายุ (Exp Date)</label>
-                            <input type="date" id="sub-exp" required class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500">
-                        </div>
-                        <div class="md:col-span-3 flex items-end">
-                            <button type="submit" class="w-full py-2 bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded-lg shadow transition">
-                                <i class="fa-solid fa-save mr-1"></i> บันทึกรายการคลังย่อย
-                            </button>
-                        </div>
-                    </form>
-                </div>
-
-                <!-- Sub Store Table -->
-                <div class="bg-white rounded-xl shadow-sm border border-teal-100 p-4">
-                    <div class="flex justify-between items-center mb-3">
-                        <h3 class="text-sm font-bold text-gray-800">ตารางแสดงรายการคลังย่อย</h3>
-                        <span class="text-xs text-gray-500">แสดง 10 รายการต่อหน้า</span>
-                    </div>
-
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-xs text-left border-collapse border border-gray-200">
-                            <thead>
-                                <tr class="bg-teal-100/60 text-teal-900 border-b border-gray-300">
-                                    <th class="p-2 border border-gray-200">วัน/เดือน/ปี</th>
-                                    <th class="p-2 border border-gray-200">ประเภท</th>
-                                    <th class="p-2 border border-gray-200">ชื่อรายการ</th>
-                                    <th class="p-2 border border-gray-200">รายการ</th>
-                                    <th class="p-2 border border-gray-200 text-right">จำนวน</th>
-                                    <th class="p-2 border border-gray-200">หน่วยนับ</th>
-                                    <th class="p-2 border border-gray-200 text-right">ราคา/หน่วย</th>
-                                    <th class="p-2 border border-gray-200 text-right">ราคารวม</th>
-                                    <th class="p-2 border border-gray-200">Lot No.</th>
-                                    <th class="p-2 border border-gray-200">Exp.</th>
-                                    <th class="p-2 border border-gray-200 text-center no-print">จัดการ</th>
-                                </tr>
-                            </thead>
-                            <tbody id="sub-store-table-body"></tbody>
-                        </table>
-                    </div>
-
-                    <!-- Pagination -->
-                    <div class="flex justify-between items-center mt-4 text-xs no-print pagination-container">
-                        <span id="sub-page-info" class="text-gray-500">หน้า 1 จาก 1</span>
-                        <div class="space-x-1">
-                            <button onclick="changePage('sub', -1)" class="px-3 py-1 bg-gray-100 hover:bg-gray-200 rounded text-gray-700">ก่อนหน้า</button>
-                            <button onclick="changePage('sub', 1)" class="px-3 py-1 bg-gray-100 hover:bg-gray-200 rounded text-gray-700">ถัดไป</button>
-                        </div>
-                    </div>
-
-                    <!-- Category Totals -->
-                    <div class="mt-6 p-4 bg-teal-50 rounded-xl border border-teal-100 summary-block">
-                        <h4 class="text-xs font-bold text-teal-900 mb-2">สรุปมูลค่าคลังย่อยแยกตามประเภท</h4>
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
-                            <div class="bg-white p-2.5 rounded-lg border border-teal-200">
-                                <span class="text-gray-500 block">รวมมูลค่ายา:</span>
-                                <span id="sub-sum-drug" class="font-bold text-teal-700">0.00 บาท</span>
-                            </div>
-                            <div class="bg-white p-2.5 rounded-lg border border-teal-200">
-                                <span class="text-gray-500 block">รวมมูลค่าเวชภัณฑ์:</span>
-                                <span id="sub-sum-supplies" class="font-bold text-teal-700">0.00 บาท</span>
-                            </div>
-                            <div class="bg-white p-2.5 rounded-lg border border-teal-200">
-                                <span class="text-gray-500 block">รวมมูลค่าวัสดุการแพทย์:</span>
-                                <span id="sub-sum-equipment" class="font-bold text-teal-700">0.00 บาท</span>
-                            </div>
-                            <div class="bg-teal-700 text-white p-2.5 rounded-lg shadow-sm">
-                                <span class="text-teal-100 block">รวมมูลค่าทั้ง 3 ประเภท:</span>
-                                <span id="sub-sum-total" class="font-bold text-base">0.00 บาท</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Print Signatures Block -->
-                    <div class="mt-12 pt-6 border-t border-gray-300 grid grid-cols-3 gap-4 text-center text-xs signature-block">
-                        <div>
-                            <p class="mb-8">ลงชื่อ............................................ผู้เบิก</p>
-                            <p class="font-bold">นางกิตติกา วัฒนะ</p>
-                            <p class="text-gray-600">พยาบาลวิชาชีพชำนาญการ</p>
-                            <p class="mt-2 text-[10px] text-gray-500">วันที่........../..................../..........</p>
-                        </div>
-                        <div>
-                            <p class="mb-8">ลงชื่อ............................................ผู้จ่าย</p>
-                            <p class="font-bold">น.ส.รัชฎาวรรณ จันทร์สุข</p>
-                            <p class="text-gray-600">นักวิชาการสาธารณสุขปฏิบัติการ</p>
-                            <p class="mt-2 text-[10px] text-gray-500">วันที่........../..................../..........</p>
-                        </div>
-                        <div>
-                            <p class="mb-8">ลงชื่อ............................................ผู้อนุมัติ</p>
-                            <p class="font-bold">นายปรัชญา วัฒนะ</p>
-                            <p class="text-gray-600">ผู้อำนวยการ รพ.สต.น้ำปาย</p>
-                            <p class="mt-2 text-[10px] text-gray-500">วันที่........../..................../..........</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- STOCK CARD SECTION -->
-            <section id="sec-stock-card" class="tab-content space-y-6 hidden">
-                <!-- Stock Card Item Selector -->
-                <div id="stock-card-selector-container" class="bg-white p-4 rounded-xl shadow-sm border border-cyan-100 flex items-center space-x-4 no-print">
-                    <label class="text-xs font-bold text-gray-700">เลือกชื่อรายการเพื่อดู Stock Card:</label>
-                    <select id="stock-card-selector" onchange="currentPageStock=1; renderStockCardTable();" class="border border-gray-300 rounded-lg px-3 py-1.5 text-xs focus:ring-2 focus:ring-cyan-500 flex-1 max-w-xs">
-                        <option value="">-- กรุณาเลือกรายการ --</option>
-                    </select>
-                </div>
-
-                <div class="bg-white rounded-xl shadow-sm border border-cyan-100 p-4">
-                    <div class="flex justify-between items-center mb-3">
-                        <h3 class="text-sm font-bold text-cyan-900">บัญชีคุมยาและเวชภัณฑ์ (Stock Card)</h3>
-                        <span class="text-xs text-gray-500 no-print">แสดง 10 รายการต่อหน้า</span>
-                    </div>
-
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-xs text-left border-collapse border border-gray-200">
-                            <thead>
-                                <tr class="bg-cyan-100/60 text-cyan-900 border-b border-gray-300">
-                                    <th class="p-2.5 border border-gray-200 text-center">วัน/เดือน/ปี</th>
-                                    <th class="p-2.5 border border-gray-200">ชื่อรายการ</th>
-                                    <th class="p-2.5 border border-gray-200 text-right text-emerald-700">รับเข้า</th>
-                                    <th class="p-2.5 border border-gray-200 text-right text-red-600">จ่ายออก</th>
-                                    <th class="p-2.5 border border-gray-200 text-right font-bold text-cyan-900">คงเหลือ</th>
-                                </tr>
-                            </thead>
-                            <tbody id="stock-card-table-body">
-                                <tr>
-                                    <td colspan="5" class="p-4 text-center text-gray-400">กรุณาเลือกรายการยาด้านบนเพื่อแสดงข้อมูล</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <!-- Pagination -->
-                    <div class="flex justify-between items-center mt-4 text-xs no-print pagination-container">
-                        <span id="stock-page-info" class="text-gray-500">หน้า 1 จาก 1</span>
-                        <div class="space-x-1">
-                            <button onclick="changePage('stock', -1)" class="px-3 py-1 bg-gray-100 hover:bg-gray-200 rounded text-gray-700">ก่อนหน้า</button>
-                            <button onclick="changePage('stock', 1)" class="px-3 py-1 bg-gray-100 hover:bg-gray-200 rounded text-gray-700">ถัดไป</button>
-                        </div>
-                    </div>
-
-                    <!-- Print Signatures Block -->
-                    <div class="mt-12 pt-6 border-t border-gray-300 grid grid-cols-2 gap-8 text-center text-xs signature-block">
-                        <div>
-                            <p class="mb-8">ลงชื่อ......................................................ผู้รายงาน</p>
-                            <p class="font-bold">น.ส.รัชฎาวรรณ จันทร์สุข</p>
-                            <p class="text-gray-600">นักวิชาการสาธารณสุขปฏิบัติการ</p>
-                            <p class="mt-2 text-[10px] text-gray-500">วันที่........../..................../..........</p>
-                        </div>
-                        <div>
-                            <p class="mb-8">ลงชื่อ......................................................ผู้ตรวจสอบ</p>
-                            <p class="font-bold">นายปรัชญา วัฒนะ</p>
-                            <p class="text-gray-600">ผู้อำนวยการ รพ.สต.น้ำปาย</p>
-                            <p class="mt-2 text-[10px] text-gray-500">วันที่........../..................../..........</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </main>
-    </div>
-
-    <!-- Application JavaScript Logic -->
+    <!-- Application Script -->
     <script>
-        const STORAGE_KEY_MAIN = 'nampai_main_store_v1';
-        const STORAGE_KEY_SUB = 'nampai_sub_store_v1';
-        const STORAGE_KEY_ITEMS = 'nampai_items_catalog_v1';
-        const STORAGE_KEY_USER = 'nampai_user_session_v1';
+        let mainStock = JSON.parse(localStorage.getItem('nampai_main_stock')) || [];
+        let subStock = JSON.parse(localStorage.getItem('nampai_sub_stock')) || [];
+        let users = JSON.parse(localStorage.getItem('nampai_users')) || [{email: 'admin@nampai.go.th', user: 'admin', pass: '1234'}];
+        
+        let mainPage = 1, subPage = 1, cardPage = 1;
+        const rowsPerPage = 10;
 
-        let mainStore = [];
-        let subStore = [];
-        let itemCatalog = new Set();
-        let currentUser = null;
-
-        let currentPageMain = 1;
-        let currentPageSub = 1;
-        let currentPageStock = 1;
-        const ITEMS_PER_PAGE = 10;
-
-        const monthNames = {
-            "1": "มกราคม", "2": "กุมภาพันธ์", "3": "มีนาคม", "4": "เมษายน",
-            "5": "พฤษภาคม", "6": "มิถุนายน", "7": "กรกฎาคม", "8": "สิงหาคม",
-            "9": "กันยายน", "10": "ตุลาคม", "11": "พฤศจิกายน", "12": "ธันวาคม"
-        };
+        const monthsThai = ["", "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
 
         window.onload = function() {
-            loadStoredData();
-            checkUserSession();
-            setDefaultDates();
-            updateItemSuggestions();
-            switchTab('dashboard');
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('real-current-date').innerText = new Date().toLocaleDateString('th-TH', { year: 'numeric', month: 'long', day: 'numeric' });
+            
+            // Check session
+            if (localStorage.getItem('nampai_logged_in') === 'true') {
+                showApp();
+            }
         };
 
-        // --- AUTHENTICATION MODULE ---
-        function checkUserSession() {
-            const savedUser = localStorage.getItem(STORAGE_KEY_USER);
-            if (savedUser) {
-                try {
-                    currentUser = JSON.parse(savedUser);
-                    document.getElementById('auth-modal').classList.add('hidden');
-                    document.getElementById('user-display-name').textContent = currentUser.fullname || currentUser.username;
-                } catch(e) {
-                    showAuthModal();
-                }
-            } else {
-                showAuthModal();
-            }
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-message').innerText = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
         }
 
-        function showAuthModal() {
-            document.getElementById('auth-modal').classList.remove('hidden');
-        }
-
-        function switchAuthView(view) {
-            document.getElementById('form-login').classList.add('hidden');
-            document.getElementById('form-register').classList.add('hidden');
-            document.getElementById('form-forgot').classList.add('hidden');
-
-            if (view === 'login') document.getElementById('form-login').classList.remove('hidden');
-            if (view === 'register') document.getElementById('form-register').classList.remove('hidden');
-            if (view === 'forgot') document.getElementById('form-forgot').classList.remove('hidden');
+        function switchAuthTab(tab) {
+            document.getElementById('login-form').classList.add('hidden');
+            document.getElementById('register-form').classList.add('hidden');
+            document.getElementById('forgot-form').classList.add('hidden');
+            document.getElementById(tab + '-form').classList.remove('hidden');
         }
 
         function handleLogin(e) {
-            if (e) e.preventDefault();
-            const usernameInput = document.getElementById('login-username').value.trim();
-            if (!usernameInput) {
-                showToast('กรุณากรอกชื่อผู้ใช้งาน', 'error');
-                return;
+            e.preventDefault();
+            const u = document.getElementById('login-user').value;
+            const p = document.getElementById('login-pass').value;
+            const found = users.find(x => x.user === u && x.pass === p);
+            if (found || (u === 'admin' && p === '1234')) {
+                localStorage.setItem('nampai_logged_in', 'true');
+                showApp();
+                showToast('เข้าสู่ระบบสำเร็จ ยินดีต้อนรับ');
+            } else {
+                alert('ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง');
             }
-
-            currentUser = { 
-                username: usernameInput, 
-                fullname: usernameInput === 'admin' ? 'น.ส.รัชฎาวรรณ จันทร์สุข' : (usernameInput.split('@')[0] || 'ผู้ใช้งานระบบ') 
-            };
-            
-            localStorage.setItem(STORAGE_KEY_USER, JSON.stringify(currentUser));
-            document.getElementById('auth-modal').classList.add('hidden');
-            document.getElementById('user-display-name').textContent = currentUser.fullname;
-            showToast('เข้าสู่ระบบสำเร็จแล้ว');
-            updateDashboardView();
         }
 
         function handleRegister(e) {
-            if (e) e.preventDefault();
-            const fullname = document.getElementById('reg-fullname').value.trim();
-            const email = document.getElementById('reg-email').value.trim();
-
-            if (!email) {
-                showToast('กรุณากรอกอีเมล', 'error');
-                return;
-            }
-
-            showToast(`ส่งลิงก์ยืนยันไปยังอีเมล ${email} แล้ว`);
-            switchAuthView('login');
+            e.preventDefault();
+            const email = document.getElementById('reg-email').value;
+            const u = document.getElementById('reg-user').value;
+            const p = document.getElementById('reg-pass').value;
+            users.push({email, user: u, pass: p});
+            localStorage.setItem('nampai_users', JSON.stringify(users));
+            showToast('ลงทะเบียนสำเร็จ! กรุณาเข้าสู่ระบบ');
+            switchAuthTab('login');
         }
 
         function handleForgot(e) {
-            if (e) e.preventDefault();
-            const email = document.getElementById('forgot-email').value.trim();
-
-            if (!email) {
-                showToast('กรุณากรอกอีเมล', 'error');
-                return;
-            }
-
-            showToast(`ส่งลิงก์กู้คืนรหัสผ่านไปยัง ${email} แล้ว`);
-            switchAuthView('login');
+            e.preventDefault();
+            const email = document.getElementById('forgot-email').value;
+            showToast('ส่งลิงก์กู้คืนรหัสผ่านไปยัง ' + email + ' เรียบร้อยแล้ว');
+            switchAuthTab('login');
         }
 
-        function logout() {
-            localStorage.removeItem(STORAGE_KEY_USER);
-            location.reload();
+        function handleLogout() {
+            localStorage.removeItem('nampai_logged_in');
+            document.getElementById('app-container').classList.add('hidden');
+            document.getElementById('auth-screen').classList.remove('hidden');
+            showToast('ออกจากระบบแล้ว');
         }
 
-        // --- THAI DATE HELPER FUNCTIONS ---
-        function formatThaiDate(isoDateStr) {
-            if (!isoDateStr) return '-';
-            const date = new Date(isoDateStr);
-            if (isNaN(date.getTime())) return isoDateStr;
-            const day = String(date.getDate()).padStart(2, '0');
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            const yearBE = date.getFullYear() + 543;
-            return `${day}/${month}/${yearBE}`;
+        function showApp() {
+            document.getElementById('auth-screen').classList.add('hidden');
+            document.getElementById('app-container').classList.remove('hidden');
+            switchTab('dashboard');
         }
 
-        function setDefaultDates() {
-            const today = new Date().toISOString().split('T')[0];
-            const mainDate = document.getElementById('main-date');
-            const subDate = document.getElementById('sub-date');
-            if (mainDate) mainDate.value = today;
-            if (subDate) subDate.value = today;
-        }
-
-        // --- NAVIGATION MODULE ---
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('bg-emerald-100', 'text-emerald-800', 'font-bold');
+        function switchTab(tab) {
+            ['dashboard', 'main-stock', 'sub-stock', 'stock-card'].forEach(t => {
+                document.getElementById('tab-content-' + t).classList.add('hidden');
+                document.getElementById('nav-' + t).className = "w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all text-emerald-200 hover:bg-emerald-800/50 hover:text-white";
             });
-
-            const currentTab = document.getElementById(`sec-${tabId}`);
-            if (currentTab) currentTab.classList.remove('hidden');
-
-            const currentBtn = document.getElementById(`nav-${tabId}`);
-            if (currentBtn) currentBtn.classList.add('bg-emerald-100', 'text-emerald-800', 'font-bold');
-
-            const titles = {
-                'dashboard': 'แดชบอร์ดสรุปภาพรวม',
-                'main-store': 'ระบบจัดการคลังใหญ่',
-                'sub-store': 'ระบบจัดการคลังย่อย',
-                'stock-card': 'ระบบ Stock Card'
-            };
-            document.getElementById('page-title').textContent = titles[tabId] || 'ระบบเภสัชกรรมปฐมภูมิ';
-
-            if (tabId === 'dashboard') updateDashboardView();
-            if (tabId === 'main-store') renderMainStoreTable();
-            if (tabId === 'sub-store') renderSubStoreTable();
-            if (tabId === 'stock-card') populateStockCardDropdown();
+            document.getElementById('tab-content-' + tab).classList.remove('hidden');
+            document.getElementById('nav-' + tab).className = "w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all bg-emerald-800 text-white shadow-md";
+            
+            if (tab === 'dashboard') renderDashboard();
+            if (tab === 'main-stock') renderMainStock();
+            if (tab === 'sub-stock') renderSubStock();
+            if (tab === 'stock-card') renderStockCard();
         }
 
-        // --- DATA STORAGE & SYNC ---
-        function loadStoredData() {
-            const savedMain = localStorage.getItem(STORAGE_KEY_MAIN);
-            const savedSub = localStorage.getItem(STORAGE_KEY_SUB);
-            const savedItems = localStorage.getItem(STORAGE_KEY_ITEMS);
-
-            if (savedMain) mainStore = JSON.parse(savedMain);
-            if (savedSub) subStore = JSON.parse(savedSub);
-            if (savedItems) itemCatalog = new Set(JSON.parse(savedItems));
-        }
-
-        function saveData() {
-            localStorage.setItem(STORAGE_KEY_MAIN, JSON.stringify(mainStore));
-            localStorage.setItem(STORAGE_KEY_SUB, JSON.stringify(subStore));
-            localStorage.setItem(STORAGE_KEY_ITEMS, JSON.stringify(Array.from(itemCatalog)));
-            updateItemSuggestions();
-        }
-
-        function updateItemSuggestions() {
-            const datalist = document.getElementById('item-suggestions');
-            if (!datalist) return;
+        function openEntryModal(type) {
+            document.getElementById('form-stock-type').value = type;
+            document.getElementById('modal-title').innerText = type === 'main' ? 'เพิ่มรายการ คลังใหญ่' : 'เพิ่มรายการ คลังย่อย';
+            document.getElementById('form-date').value = new Date().toISOString().split('T')[0];
+            
+            // Populate auto-complete suggestions
+            const datalist = document.getElementById('drug-suggestions');
             datalist.innerHTML = '';
-            itemCatalog.forEach(item => {
+            const allNames = [...new Set([...mainStock.map(x => x.name), ...subStock.map(x => x.name)])];
+            allNames.forEach(n => {
                 const opt = document.createElement('option');
-                opt.value = item;
+                opt.value = n;
                 datalist.appendChild(opt);
             });
+
+            document.getElementById('entry-modal').classList.remove('hidden');
         }
 
-        // --- TRANSACTIONS LOGIC ---
-        function addMainStoreTransaction(e) {
+        function closeEntryModal() {
+            document.getElementById('entry-modal').classList.add('hidden');
+        }
+
+        function handleSaveEntry(e) {
             e.preventDefault();
-            const date = document.getElementById('main-date').value;
-            const action = document.getElementById('main-action').value;
-            const type = document.getElementById('main-type').value;
-            const name = document.getElementById('main-name').value.trim();
-            const qty = parseInt(document.getElementById('main-qty').value);
-            const unit = document.getElementById('main-unit').value;
-            const price = parseFloat(document.getElementById('main-price').value);
-            const lot = document.getElementById('main-lot').value.trim();
-            const exp = document.getElementById('main-exp').value;
-
-            if (!name || isNaN(qty) || isNaN(price)) return;
-
-            const record = {
+            const type = document.getElementById('form-stock-type').value;
+            const item = {
                 id: Date.now(),
-                date, action, type, name, qty, unit, price, lot, exp,
-                totalPrice: qty * price
+                category: document.getElementById('form-category').value,
+                action: document.getElementById('form-action-type').value,
+                name: document.getElementById('form-name').value,
+                qty: parseInt(document.getElementById('form-qty').value),
+                unit: document.getElementById('form-unit').value,
+                price: parseFloat(document.getElementById('form-price').value).toFixed(2),
+                date: document.getElementById('form-date').value,
+                lot: document.getElementById('form-lot').value,
+                exp: document.getElementById('form-exp').value
             };
 
-            mainStore.push(record);
-            itemCatalog.add(name);
-
-            // Automated transfer if main store issues item (OUT) -> Sub store receives item (IN)
-            if (action === 'OUT') {
-                const subRecord = {
-                    id: Date.now() + 1,
-                    date,
-                    action: 'IN',
-                    type, name, qty, unit, price, lot, exp,
-                    totalPrice: qty * price,
-                    autoTransferred: true
-                };
-                subStore.push(subRecord);
-                showToast('เบิกจ่ายจากคลังใหญ่ และรับเข้าคลังย่อยอัตโนมัติแล้ว');
-            } else {
-                showToast('บันทึกรายการคลังใหญ่เรียบร้อย');
-            }
-
-            saveData();
-            document.getElementById('form-main-store').reset();
-            setDefaultDates();
-            renderMainStoreTable();
-        }
-
-        function addSubStoreTransaction(e) {
-            e.preventDefault();
-            const date = document.getElementById('sub-date').value;
-            const action = document.getElementById('sub-action').value;
-            const type = document.getElementById('sub-type').value;
-            const name = document.getElementById('sub-name').value.trim();
-            const qty = parseInt(document.getElementById('sub-qty').value);
-            const unit = document.getElementById('sub-unit').value;
-            const price = parseFloat(document.getElementById('sub-price').value);
-            const lot = document.getElementById('sub-lot').value.trim();
-            const exp = document.getElementById('sub-exp').value;
-
-            if (!name || isNaN(qty) || isNaN(price)) return;
-
-            const record = {
-                id: Date.now(),
-                date, action, type, name, qty, unit, price, lot, exp,
-                totalPrice: qty * price
-            };
-
-            subStore.push(record);
-            itemCatalog.add(name);
-
-            saveData();
-            document.getElementById('form-sub-store').reset();
-            setDefaultDates();
-            renderSubStoreTable();
-            showToast('บันทึกรายการคลังย่อยเรียบร้อย');
-        }
-
-        function deleteRecord(storeType, id) {
-            if (confirm('คุณต้องการลบรายการนี้ใช่หรือไม่?')) {
-                if (storeType === 'main') {
-                    mainStore = mainStore.filter(item => item.id !== id);
-                } else {
-                    subStore = subStore.filter(item => item.id !== id);
-                }
-                saveData();
-                renderMainStoreTable();
-                renderSubStoreTable();
-                showToast('ลบรายการเรียบร้อย');
-            }
-        }
-
-        // --- FILTER HELPERS ---
-        function getFilteredStoreData(storeType) {
-            const data = storeType === 'main' ? mainStore : subStore;
-            const yearElem = document.getElementById(`${storeType}-filter-year`);
-            const monthElem = document.getElementById(`${storeType}-filter-month`);
-
-            if (!yearElem || !monthElem) return data;
-
-            const selectedYear = yearElem.value;
-            const selectedMonth = monthElem.value;
-
-            return data.filter(item => {
-                const d = new Date(item.date);
-                if (isNaN(d.getTime())) return false;
-                const thaiYear = String(d.getFullYear() + 543);
-                const month = String(d.getMonth() + 1);
-
-                if (selectedYear !== 'all' && thaiYear !== selectedYear) return false;
-                if (selectedMonth !== 'all' && month !== selectedMonth) return false;
-                return true;
-            });
-        }
-
-        // --- RENDERING MODULES ---
-        function renderMainStoreTable() {
-            const tbody = document.getElementById('main-store-table-body');
-            if (!tbody) return;
-            tbody.innerHTML = '';
-
-            const filteredData = getFilteredStoreData('main');
-            const totalPages = Math.ceil(filteredData.length / ITEMS_PER_PAGE) || 1;
-            if (currentPageMain > totalPages) currentPageMain = totalPages;
-
-            const start = (currentPageMain - 1) * ITEMS_PER_PAGE;
-            const pageData = filteredData.slice(start, start + ITEMS_PER_PAGE);
-
-            if (pageData.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="11" class="p-4 text-center text-gray-400">ไม่พบข้อมูลตามเงื่อนไขประจำเดือน/ปีที่เลือก</td></tr>`;
-            } else {
-                pageData.forEach(item => {
-                    const tr = document.createElement('tr');
-                    tr.className = 'border-b border-gray-100 hover:bg-gray-50';
-                    tr.innerHTML = `
-                        <td class="p-2 border border-gray-200 whitespace-nowrap">${formatThaiDate(item.date)}</td>
-                        <td class="p-2 border border-gray-200"><span class="px-1.5 py-0.5 rounded text-[10px] ${item.type === 'ยา' ? 'bg-emerald-100 text-emerald-800' : item.type === 'เวชภัณฑ์' ? 'bg-blue-100 text-blue-800' : 'bg-purple-100 text-purple-800'}">${item.type}</span></td>
-                        <td class="p-2 border border-gray-200 font-medium">${item.name}</td>
-                        <td class="p-2 border border-gray-200"><span class="font-bold ${item.action === 'IN' ? 'text-emerald-600' : 'text-red-600'}">${item.action === 'IN' ? 'รับเข้า' : 'จ่ายออก'}</span></td>
-                        <td class="p-2 border border-gray-200 text-right font-medium">${item.qty.toLocaleString()}</td>
-                        <td class="p-2 border border-gray-200">${item.unit}</td>
-                        <td class="p-2 border border-gray-200 text-right">${item.price.toFixed(2)}</td>
-                        <td class="p-2 border border-gray-200 text-right font-bold text-gray-700">${item.totalPrice.toFixed(2)}</td>
-                        <td class="p-2 border border-gray-200">${item.lot}</td>
-                        <td class="p-2 border border-gray-200 whitespace-nowrap">${formatThaiDate(item.exp)}</td>
-                        <td class="p-2 border border-gray-200 text-center no-print">
-                            <button onclick="deleteRecord('main', ${item.id})" class="text-red-500 hover:text-red-700 p-1"><i class="fa-solid fa-trash-can"></i></button>
-                        </td>
-                    `;
-                    tbody.appendChild(tr);
-                });
-            }
-
-            document.getElementById('main-page-info').textContent = `หน้า ${currentPageMain} จาก ${totalPages}`;
-            calculateCategoryTotals('main');
-        }
-
-        function renderSubStoreTable() {
-            const tbody = document.getElementById('sub-store-table-body');
-            if (!tbody) return;
-            tbody.innerHTML = '';
-
-            const filteredData = getFilteredStoreData('sub');
-            const totalPages = Math.ceil(filteredData.length / ITEMS_PER_PAGE) || 1;
-            if (currentPageSub > totalPages) currentPageSub = totalPages;
-
-            const start = (currentPageSub - 1) * ITEMS_PER_PAGE;
-            const pageData = filteredData.slice(start, start + ITEMS_PER_PAGE);
-
-            if (pageData.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="11" class="p-4 text-center text-gray-400">ไม่พบข้อมูลตามเงื่อนไขประจำเดือน/ปีที่เลือก</td></tr>`;
-            } else {
-                pageData.forEach(item => {
-                    const tr = document.createElement('tr');
-                    tr.className = 'border-b border-gray-100 hover:bg-gray-50';
-                    tr.innerHTML = `
-                        <td class="p-2 border border-gray-200 whitespace-nowrap">${formatThaiDate(item.date)}</td>
-                        <td class="p-2 border border-gray-200"><span class="px-1.5 py-0.5 rounded text-[10px] ${item.type === 'ยา' ? 'bg-teal-100 text-teal-800' : item.type === 'เวชภัณฑ์' ? 'bg-blue-100 text-blue-800' : 'bg-purple-100 text-purple-800'}">${item.type}</span></td>
-                        <td class="p-2 border border-gray-200 font-medium">${item.name} ${item.autoTransferred ? '<span class="text-[9px] bg-teal-50 text-teal-700 border border-teal-200 px-1 rounded">อัตโนมัติ</span>' : ''}</td>
-                        <td class="p-2 border border-gray-200"><span class="font-bold ${item.action === 'IN' ? 'text-emerald-600' : 'text-red-600'}">${item.action === 'IN' ? 'รับเข้า' : 'จ่ายออก'}</span></td>
-                        <td class="p-2 border border-gray-200 text-right font-medium">${item.qty.toLocaleString()}</td>
-                        <td class="p-2 border border-gray-200">${item.unit}</td>
-                        <td class="p-2 border border-gray-200 text-right">${item.price.toFixed(2)}</td>
-                        <td class="p-2 border border-gray-200 text-right font-bold text-gray-700">${item.totalPrice.toFixed(2)}</td>
-                        <td class="p-2 border border-gray-200">${item.lot}</td>
-                        <td class="p-2 border border-gray-200 whitespace-nowrap">${formatThaiDate(item.exp)}</td>
-                        <td class="p-2 border border-gray-200 text-center no-print">
-                            <button onclick="deleteRecord('sub', ${item.id})" class="text-red-500 hover:text-red-700 p-1"><i class="fa-solid fa-trash-can"></i></button>
-                        </td>
-                    `;
-                    tbody.appendChild(tr);
-                });
-            }
-
-            document.getElementById('sub-page-info').textContent = `หน้า ${currentPageSub} จาก ${totalPages}`;
-            calculateCategoryTotals('sub');
-        }
-
-        function populateStockCardDropdown() {
-            const selector = document.getElementById('stock-card-selector');
-            if (!selector) return;
-            const currentVal = selector.value;
-            selector.innerHTML = '<option value="">-- กรุณาเลือกรายการ --</option>';
-            itemCatalog.forEach(item => {
-                const opt = document.createElement('option');
-                opt.value = item;
-                opt.textContent = item;
-                selector.appendChild(opt);
-            });
-            selector.value = currentVal;
-            renderStockCardTable();
-        }
-
-        function renderStockCardTable() {
-            const selector = document.getElementById('stock-card-selector');
-            const tbody = document.getElementById('stock-card-table-body');
-            if (!selector || !tbody) return;
-
-            const selectedItem = selector.value;
-            if (!selectedItem) {
-                tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-gray-400">กรุณาเลือกรายการยาด้านบนเพื่อแสดงข้อมูล</td></tr>`;
-                document.getElementById('stock-page-info').textContent = `หน้า 1 จาก 1`;
-                return;
-            }
-
-            // Combine both stores for selected item
-            const allRecords = [...mainStore, ...subStore]
-                .filter(i => i.name === selectedItem)
-                .sort((a, b) => new Date(a.date) - new Date(b.date));
-
-            let currentBalance = 0;
-            const processedRecords = allRecords.map(rec => {
-                if (rec.action === 'IN') currentBalance += rec.qty;
-                else currentBalance -= rec.qty;
-                return { ...rec, balance: currentBalance };
-            });
-
-            const totalPages = Math.ceil(processedRecords.length / ITEMS_PER_PAGE) || 1;
-            if (currentPageStock > totalPages) currentPageStock = totalPages;
-
-            const start = (currentPageStock - 1) * ITEMS_PER_PAGE;
-            const pageData = processedRecords.slice(start, start + ITEMS_PER_PAGE);
-
-            tbody.innerHTML = '';
-            if (pageData.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-gray-400">ไม่มีประวัติเคลื่อนไหวของรายการนี้</td></tr>`;
-            } else {
-                pageData.forEach(item => {
-                    const tr = document.createElement('tr');
-                    tr.className = 'border-b border-gray-100 hover:bg-gray-50';
-                    tr.innerHTML = `
-                        <td class="p-2.5 border border-gray-200 text-center whitespace-nowrap">${formatThaiDate(item.date)}</td>
-                        <td class="p-2.5 border border-gray-200 font-medium">${item.name}</td>
-                        <td class="p-2.5 border border-gray-200 text-right text-emerald-700 font-bold">${item.action === 'IN' ? item.qty.toLocaleString() : '-'}</td>
-                        <td class="p-2.5 border border-gray-200 text-right text-red-600 font-bold">${item.action === 'OUT' ? item.qty.toLocaleString() : '-'}</td>
-                        <td class="p-2.5 border border-gray-200 text-right font-bold text-cyan-900">${item.balance.toLocaleString()} ${item.unit}</td>
-                    `;
-                    tbody.appendChild(tr);
-                });
-            }
-
-            document.getElementById('stock-page-info').textContent = `หน้า ${currentPageStock} จาก ${totalPages}`;
-        }
-
-        function changePage(type, delta) {
             if (type === 'main') {
-                const filteredData = getFilteredStoreData('main');
-                const totalPages = Math.ceil(filteredData.length / ITEMS_PER_PAGE) || 1;
-                currentPageMain = Math.min(Math.max(1, currentPageMain + delta), totalPages);
-                renderMainStoreTable();
-            } else if (type === 'sub') {
-                const filteredData = getFilteredStoreData('sub');
-                const totalPages = Math.ceil(filteredData.length / ITEMS_PER_PAGE) || 1;
-                currentPageSub = Math.min(Math.max(1, currentPageSub + delta), totalPages);
-                renderSubStoreTable();
-            } else if (type === 'stock') {
-                const itemName = document.getElementById('stock-card-selector').value;
-                if (!itemName) return;
-                const filtered = [...mainStore, ...subStore].filter(i => i.name === itemName);
-                const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE) || 1;
-                currentPageStock = Math.min(Math.max(1, currentPageStock + delta), totalPages);
-                renderStockCardTable();
+                mainStock.push(item);
+                localStorage.setItem('nampai_main_stock', JSON.stringify(mainStock));
+                
+                // Rule: Automatic Sub-stock intake when Main stock "จ่ายออก"
+                if (item.action === 'จ่ายออก') {
+                    const subItem = {...item, id: Date.now() + 1, action: 'รับเข้า'};
+                    subStock.push(subItem);
+                    localStorage.setItem('nampai_sub_stock', JSON.stringify(subStock));
+                }
+                renderMainStock();
+            } else {
+                subStock.push(item);
+                localStorage.setItem('nampai_sub_stock', JSON.stringify(subStock));
+                renderSubStock();
+            }
+
+            closeEntryModal();
+            showToast('บันทึกรายการสำเร็จ');
+        }
+
+        function deleteItem(type, id) {
+            if (confirm('คุณต้องการลบรายการนี้ใช่หรือไม่?')) {
+                if (type === 'main') {
+                    mainStock = mainStock.filter(x => x.id !== id);
+                    localStorage.setItem('nampai_main_stock', JSON.stringify(mainStock));
+                    renderMainStock();
+                } else {
+                    subStock = subStock.filter(x => x.id !== id);
+                    localStorage.setItem('nampai_sub_stock', JSON.stringify(subStock));
+                    renderSubStock();
+                }
+                showToast('ลบรายการสำเร็จ');
             }
         }
 
-        function calculateCategoryTotals(storeType) {
-            const data = getFilteredStoreData(storeType);
-            let sumDrug = 0;
-            let sumSupplies = 0;
-            let sumEquipment = 0;
+        function renderDashboard() {
+            const totalMainVal = mainStock.reduce((acc, cur) => acc + (cur.action === 'รับเข้า' ? (cur.qty * cur.price) : -(cur.qty * cur.price)), 0);
+            const totalSubVal = subStock.reduce((acc, cur) => acc + (cur.action === 'รับเข้า' ? (cur.qty * cur.price) : -(cur.qty * cur.price)), 0);
 
-            data.forEach(item => {
-                const factor = item.action === 'IN' ? 1 : -1;
-                const value = item.totalPrice * factor;
+            document.getElementById('dash-main-total').innerText = totalMainVal.toLocaleString('th-TH', {minimumFractionDigits: 2}) + ' บาท';
+            document.getElementById('dash-main-items').innerText = mainStock.length + ' รายการในคลัง';
+            document.getElementById('dash-sub-total').innerText = totalSubVal.toLocaleString('th-TH', {minimumFractionDigits: 2}) + ' บาท';
+            document.getElementById('dash-sub-items').innerText = subStock.length + ' รายการในคลัง';
 
-                if (item.type === 'ยา') sumDrug += value;
-                else if (item.type === 'เวชภัณฑ์') sumSupplies += value;
-                else if (item.type === 'วัสดุการแพทย์') sumEquipment += value;
-            });
-
-            sumDrug = Math.max(0, sumDrug);
-            sumSupplies = Math.max(0, sumSupplies);
-            sumEquipment = Math.max(0, sumEquipment);
-            const totalSum = sumDrug + sumSupplies + sumEquipment;
-
-            document.getElementById(`${storeType}-sum-drug`).textContent = sumDrug.toFixed(2) + ' บาท';
-            document.getElementById(`${storeType}-sum-supplies`).textContent = sumSupplies.toFixed(2) + ' บาท';
-            document.getElementById(`${storeType}-sum-equipment`).textContent = sumEquipment.toFixed(2) + ' บาท';
-            document.getElementById(`${storeType}-sum-total`).textContent = totalSum.toFixed(2) + ' บาท';
-        }
-
-        // --- DASHBOARD VIEW MODULE ---
-        function updateDashboardView() {
-            const yearVal = document.getElementById('dash-year').value;
-            const monthVal = document.getElementById('dash-month').value;
-
-            const filterFn = (item) => {
-                const d = new Date(item.date);
-                if (isNaN(d.getTime())) return false;
-                const thaiYear = String(d.getFullYear() + 543);
-                const month = String(d.getMonth() + 1);
-
-                if (yearVal !== 'all' && thaiYear !== yearVal) return false;
-                if (monthVal !== 'all' && month !== monthVal) return false;
-                return true;
-            };
-
-            const filteredMain = mainStore.filter(filterFn);
-            const filteredSub = subStore.filter(filterFn);
-
-            let mainTotal = filteredMain.reduce((acc, curr) => acc + (curr.action === 'IN' ? curr.totalPrice : -curr.totalPrice), 0);
-            let subTotal = filteredSub.reduce((acc, curr) => acc + (curr.action === 'IN' ? curr.totalPrice : -curr.totalPrice), 0);
-
-            document.getElementById('dash-main-val').textContent = `฿${Math.max(0, mainTotal).toFixed(2)}`;
-            document.getElementById('dash-sub-val').textContent = `฿${Math.max(0, subTotal).toFixed(2)}`;
-
-            // Check Expiring Items within 3 Months
-            const today = new Date();
+            // 3-Month Expiry check
+            const now = new Date();
             const threeMonthsLater = new Date();
-            threeMonthsLater.setMonth(today.getMonth() + 3);
+            threeMonthsLater.setMonth(now.getMonth() + 3);
 
-            const expiringItems = [];
-            [...mainStore.map(i => ({...i, storeName: 'คลังใหญ่'})), ...subStore.map(i => ({...i, storeName: 'คลังย่อย'}))].forEach(item => {
-                if (item.exp) {
-                    const expDate = new Date(item.exp);
-                    if (expDate >= today && expDate <= threeMonthsLater) {
-                        expiringItems.push(item);
-                    }
-                }
+            const expiryTbody = document.getElementById('dash-expiry-tbody');
+            expiryTbody.innerHTML = '';
+            
+            const allCombined = [
+                ...mainStock.map(x => ({...x, warehouse: 'คลังใหญ่'})),
+                ...subStock.map(x => ({...x, warehouse: 'คลังย่อย'}))
+            ].filter(x => {
+                const expDate = new Date(x.exp);
+                return expDate >= now && expDate <= threeMonthsLater;
             });
 
-            document.getElementById('dash-expiring-count').textContent = `${expiringItems.length} รายการ`;
-
-            const expBody = document.getElementById('dash-expiring-list');
-            expBody.innerHTML = '';
-            if (expiringItems.length === 0) {
-                expBody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-gray-400">ไม่มีรายการยาใกล้หมดอายุภายใน 3 เดือน</td></tr>`;
+            if (allCombined.length === 0) {
+                expiryTbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-slate-400">ไม่พบรายการใกล้หมดอายุในระยะเวลา 3 เดือนนี้</td></tr>`;
             } else {
-                expiringItems.forEach(item => {
-                    const tr = document.createElement('tr');
-                    tr.className = 'hover:bg-amber-50/50';
-                    tr.innerHTML = `
-                        <td class="p-2.5 font-semibold text-gray-700">${item.storeName}</td>
-                        <td class="p-2.5"><span class="px-1.5 py-0.5 rounded text-[10px] bg-amber-100 text-amber-800">${item.type}</span></td>
-                        <td class="p-2.5 font-bold text-gray-800">${item.name}</td>
-                        <td class="p-2.5">${item.lot}</td>
-                        <td class="p-2.5 text-center font-bold text-red-600">${formatThaiDate(item.exp)}</td>
-                        <td class="p-2.5 text-right font-medium">${item.qty.toLocaleString()} ${item.unit}</td>
+                allCombined.forEach(x => {
+                    expiryTbody.innerHTML += `
+                        <tr class="border-b border-slate-100 hover:bg-slate-50">
+                            <td class="p-3 font-semibold text-emerald-700">${x.warehouse}</td>
+                            <td class="p-3">${x.name}</td>
+                            <td class="p-3">${x.lot}</td>
+                            <td class="p-3 text-red-600 font-semibold">${x.exp}</td>
+                            <td class="p-3 text-right font-medium">${x.qty} ${x.unit}</td>
+                        </tr>
                     `;
-                    expBody.appendChild(tr);
                 });
             }
         }
 
-        // --- PRINT MODULE ---
-        function triggerPrint() {
-            const activeTab = document.querySelector('.tab-content:not(.hidden)');
-            if (activeTab) {
-                const tabId = activeTab.id;
-                let headerText = 'รายงานระบบเภสัชกรรมปฐมภูมิ';
+        function renderMainStock() {
+            const filterYear = document.getElementById('main-filter-year').value;
+            const filterMonth = document.getElementById('main-filter-month').value;
+            
+            const filtered = mainStock.filter(x => {
+                const d = new Date(x.date);
+                const yearMatch = (d.getFullYear() + 543).toString() === filterYear;
+                const monthMatch = filterMonth === 'all' || (d.getMonth() + 1).toString().padStart(2, '0') === filterMonth;
+                return yearMatch && monthMatch;
+            });
 
-                if (tabId === 'sec-dashboard') {
-                    headerText = 'รายงานสรุปภาพรวมแดชบอร์ดเภสัชกรรม';
-                } else if (tabId === 'sec-main-store') {
-                    const year = document.getElementById('main-filter-year').value;
-                    const month = document.getElementById('main-filter-month').value;
-                    const mText = month !== 'all' ? monthNames[month] : 'ทุกเดือน';
-                    const yText = year !== 'all' ? `พ.ศ. ${year}` : 'ทุกปีงบประมาณ';
-                    headerText = `รายงานการรับ-จ่ายคลังใหญ่ ประจำเดือน ${mText} ${yText}`;
-                } else if (tabId === 'sec-sub-store') {
-                    const year = document.getElementById('sub-filter-year').value;
-                    const month = document.getElementById('sub-filter-month').value;
-                    const mText = month !== 'all' ? monthNames[month] : 'ทุกเดือน';
-                    const yText = year !== 'all' ? `พ.ศ. ${year}` : 'ทุกปีงบประมาณ';
-                    headerText = `รายงานการรับ-จ่ายคลังย่อย ประจำเดือน ${mText} ${yText}`;
-                } else if (tabId === 'sec-stock-card') {
-                    const itemName = document.getElementById('stock-card-selector').value;
-                    headerText = `บัญชีคุมยาและเวชภัณฑ์ (Stock Card) - ${itemName || 'ทุกรายการ'}`;
-                }
+            const monthName = filterMonth === 'all' ? 'ประจำปีงบประมาณ ' + filterYear : `ประจำเดือน ${monthsThai[parseInt(filterMonth)]} พ.ศ. ${filterYear}`;
+            document.getElementById('print-title-main').innerText = `รายงานการรับ-จ่าย คลังใหญ่ ${monthName}`;
 
-                const docTitle = document.getElementById('print-doc-title');
-                if (docTitle) docTitle.textContent = headerText;
+            const start = (mainPage - 1) * rowsPerPage;
+            const paginated = filtered.slice(start, start + rowsPerPage);
+            
+            const tbody = document.getElementById('main-stock-tbody');
+            tbody.innerHTML = '';
+
+            let sDrug = 0, sSupply = 0, sMat = 0;
+            filtered.forEach(x => {
+                const total = x.qty * x.price;
+                if (x.category === 'ยา') sDrug += total;
+                if (x.category === 'เวชภัณฑ์') sSupply += total;
+                if (x.category === 'วัสดุการแพทย์') sMat += total;
+            });
+
+            document.getElementById('sum-main-drug').innerText = sDrug.toLocaleString('th-TH', {minimumFractionDigits: 2}) + ' บาท';
+            document.getElementById('sum-main-supply').innerText = sSupply.toLocaleString('th-TH', {minimumFractionDigits: 2}) + ' บาท';
+            document.getElementById('sum-main-material').innerText = sMat.toLocaleString('th-TH', {minimumFractionDigits: 2}) + ' บาท';
+            document.getElementById('sum-main-total').innerText = (sDrug + sSupply + sMat).toLocaleString('th-TH', {minimumFractionDigits: 2}) + ' บาท';
+
+            if (paginated.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="10" class="p-6 text-center text-slate-400">ไม่พบข้อมูลการเบิก-จ่ายในเงื่อนไขนี้</td></tr>`;
+            } else {
+                paginated.forEach(x => {
+                    tbody.innerHTML += `
+                        <tr class="border-b border-slate-100 hover:bg-slate-50">
+                            <td class="p-3">${x.date}</td>
+                            <td class="p-3"><span class="px-2 py-1 bg-slate-100 rounded-md font-medium">${x.category}</span></td>
+                            <td class="p-3 font-semibold text-slate-900">${x.name}</td>
+                            <td class="p-3 text-center"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${x.action === 'รับเข้า' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}">${x.action}</span></td>
+                            <td class="p-3 text-right font-medium">${x.qty.toLocaleString()}</td>
+                            <td class="p-3">${x.unit}</td>
+                            <td class="p-3 text-right">${parseFloat(x.price).toLocaleString('th-TH', {minimumFractionDigits: 2})}</td>
+                            <td class="p-3 text-right font-semibold">${(x.qty * x.price).toLocaleString('th-TH', {minimumFractionDigits: 2})}</td>
+                            <td class="p-3 text-xs text-slate-500">Lot: ${x.lot}<br>Exp: ${x.exp}</td>
+                            <td class="p-3 text-center no-print"><button onclick="deleteItem('main', ${x.id})" class="text-red-500 hover:text-red-700 font-bold">ลบ</button></td>
+                        </tr>
+                    `;
+                });
             }
-            window.print();
+
+            renderPagination('main', filtered.length, mainPage);
         }
 
-        // --- DEMO DATA LOADER ---
+        function renderSubStock() {
+            const filterYear = document.getElementById('sub-filter-year').value;
+            const filterMonth = document.getElementById('sub-filter-month').value;
+            
+            const filtered = subStock.filter(x => {
+                const d = new Date(x.date);
+                const yearMatch = (d.getFullYear() + 543).toString() === filterYear;
+                const monthMatch = filterMonth === 'all' || (d.getMonth() + 1).toString().padStart(2, '0') === filterMonth;
+                return yearMatch && monthMatch;
+            });
+
+            const monthName = filterMonth === 'all' ? 'ประจำปีงบประมาณ ' + filterYear : `ประจำเดือน ${monthsThai[parseInt(filterMonth)]} พ.ศ. ${filterYear}`;
+            document.getElementById('print-title-sub').innerText = `รายงานการรับ-จ่าย คลังย่อย ${monthName}`;
+
+            const start = (subPage - 1) * rowsPerPage;
+            const paginated = filtered.slice(start, start + rowsPerPage);
+            
+            const tbody = document.getElementById('sub-stock-tbody');
+            tbody.innerHTML = '';
+
+            let sDrug = 0, sSupply = 0, sMat = 0;
+            filtered.forEach(x => {
+                const total = x.qty * x.price;
+                if (x.category === 'ยา') sDrug += total;
+                if (x.category === 'เวชภัณฑ์') sSupply += total;
+                if (x.category === 'วัสดุการแพทย์') sMat += total;
+            });
+
+            document.getElementById('sum-sub-drug').innerText = sDrug.toLocaleString('th-TH', {minimumFractionDigits: 2}) + ' บาท';
+            document.getElementById('sum-sub-supply').innerText = sSupply.toLocaleString('th-TH', {minimumFractionDigits: 2}) + ' บาท';
+            document.getElementById('sum-sub-material').innerText = sMat.toLocaleString('th-TH', {minimumFractionDigits: 2}) + ' บาท';
+            document.getElementById('sum-sub-total').innerText = (sDrug + sSupply + sMat).toLocaleString('th-TH', {minimumFractionDigits: 2}) + ' บาท';
+
+            if (paginated.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="10" class="p-6 text-center text-slate-400">ไม่พบข้อมูลการเบิก-จ่ายในเงื่อนไขนี้</td></tr>`;
+            } else {
+                paginated.forEach(x => {
+                    tbody.innerHTML += `
+                        <tr class="border-b border-slate-100 hover:bg-slate-50">
+                            <td class="p-3">${x.date}</td>
+                            <td class="p-3"><span class="px-2 py-1 bg-slate-100 rounded-md font-medium">${x.category}</span></td>
+                            <td class="p-3 font-semibold text-slate-900">${x.name}</td>
+                            <td class="p-3 text-center"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${x.action === 'รับเข้า' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}">${x.action}</span></td>
+                            <td class="p-3 text-right font-medium">${x.qty.toLocaleString()}</td>
+                            <td class="p-3">${x.unit}</td>
+                            <td class="p-3 text-right">${parseFloat(x.price).toLocaleString('th-TH', {minimumFractionDigits: 2})}</td>
+                            <td class="p-3 text-right font-semibold">${(x.qty * x.price).toLocaleString('th-TH', {minimumFractionDigits: 2})}</td>
+                            <td class="p-3 text-xs text-slate-500">Lot: ${x.lot}<br>Exp: ${x.exp}</td>
+                            <td class="p-3 text-center no-print"><button onclick="deleteItem('sub', ${x.id})" class="text-red-500 hover:text-red-700 font-bold">ลบ</button></td>
+                        </tr>
+                    `;
+                });
+            }
+
+            renderPagination('sub', filtered.length, subPage);
+        }
+
+        function renderStockCard() {
+            // Combine main and sub for stock card tracking
+            const combined = [...mainStock].sort((a,b) => new Date(a.date) - new Date(b.date));
+            const start = (cardPage - 1) * rowsPerPage;
+            const paginated = combined.slice(start, start + rowsPerPage);
+
+            const tbody = document.getElementById('stock-card-tbody');
+            tbody.innerHTML = '';
+
+            let runningBalance = {};
+
+            if (combined.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="p-6 text-center text-slate-400">ยังไม่มีรายการเคลื่อนไหวใน Stock Card</td></tr>`;
+            } else {
+                combined.forEach(x => {
+                    if (!runningBalance[x.name]) runningBalance[x.name] = 0;
+                    if (x.action === 'รับเข้า') runningBalance[x.name] += x.qty;
+                    else runningBalance[x.name] -= x.qty;
+                });
+
+                // Render paginated subset with accumulated balance
+                let tempBal = {};
+                paginated.forEach(x => {
+                    if (!tempBal[x.name]) {
+                        // calculate initial for this page slice
+                        let bal = 0;
+                        combined.forEach(item => {
+                            if (item.name === x.name && item.date <= x.date) {
+                                if (item.action === 'รับเข้า') bal += item.qty; else bal -= item.qty;
+                            }
+                        });
+                        tempBal[x.name] = bal;
+                    }
+
+                    const inQty = x.action === 'รับเข้า' ? x.qty : '-';
+                    const outQty = x.action === 'จ่ายออก' ? x.qty : '-';
+
+                    tbody.innerHTML += `
+                        <tr class="border-b border-slate-100 hover:bg-slate-50">
+                            <td class="p-3">${x.date}</td>
+                            <td class="p-3 font-semibold text-slate-900">${x.name}</td>
+                            <td class="p-3 text-right text-emerald-600 font-medium">${inQty}</td>
+                            <td class="p-3 text-right text-amber-600 font-medium">${outQty}</td>
+                            <td class="p-3 text-right font-bold text-slate-800">${runningBalance[x.name]} ${x.unit}</td>
+                        </tr>
+                    `;
+                });
+            }
+
+            renderPagination('card', combined.length, cardPage);
+        }
+
+        function renderPagination(type, totalCount, currentPage) {
+            const totalPages = Math.ceil(totalCount / rowsPerPage) || 1;
+            const infoEl = document.getElementById(type + '-pagination-info');
+            const btnEl = document.getElementById(type + '-pagination-buttons');
+
+            const startItem = totalCount === 0 ? 0 : (currentPage - 1) * rowsPerPage + 1;
+            const endItem = Math.min(currentPage * rowsPerPage, totalCount);
+            infoEl.innerText = `แสดง ${startItem} ถึง ${endItem} จาก ${totalCount} รายการ`;
+
+            btnEl.innerHTML = '';
+            for (let i = 1; i <= totalPages; i++) {
+                btnEl.innerHTML += `<button onclick="changePage('${type}', ${i})" class="px-3 py-1 rounded-md text-xs font-semibold ${i === currentPage ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}">${i}</button>`;
+            }
+        }
+
+        function changePage(type, p) {
+            if (type === 'main') { mainPage = p; renderMainStock(); }
+            if (type === 'sub') { subPage = p; renderSubStock(); }
+            if (type === 'card') { cardPage = p; renderStockCard(); }
+        }
+
         function loadDemoData() {
-            const today = new Date().toISOString().split('T')[0];
-            const exp1 = new Date(); exp1.setMonth(exp1.getMonth() + 2);
-            const exp2 = new Date(); exp2.setFullYear(exp2.getFullYear() + 2);
-
-            mainStore = [
-                { id: 101, date: today, action: 'IN', type: 'ยา', name: 'Paracetamol 500mg', qty: 100, unit: 'กล่อง', price: 120.00, lot: 'LOT-PAR01', exp: exp2.toISOString().split('T')[0], totalPrice: 12000.00 },
-                { id: 102, date: today, action: 'IN', type: 'เวชภัณฑ์', name: 'Mask N95 Medical', qty: 50, unit: 'กล่อง', price: 250.00, lot: 'LOT-MSK88', exp: exp1.toISOString().split('T')[0], totalPrice: 12500.00 },
-                { id: 103, date: today, action: 'OUT', type: 'ยา', name: 'Paracetamol 500mg', qty: 20, unit: 'กล่อง', price: 120.00, lot: 'LOT-PAR01', exp: exp2.toISOString().split('T')[0], totalPrice: 2400.00 }
+            mainStock = [
+                {id: 1, category: 'ยา', action: 'รับเข้า', name: 'Paracetamol 500mg', qty: 100, unit: 'กล่อง', price: '120.00', date: '2026-03-01', lot: 'LOT2026-01', exp: '2028-03-01'},
+                {id: 2, category: 'ยา', action: 'จ่ายออก', name: 'Paracetamol 500mg', qty: 20, unit: 'กล่อง', price: '120.00', date: '2026-03-05', lot: 'LOT2026-01', exp: '2028-03-01'},
+                {id: 3, category: 'เวชภัณฑ์', action: 'รับเข้า', name: 'Mask Surgical', qty: 50, unit: 'กล่อง', price: '55.50', date: '2026-03-02', lot: 'MSK-99', exp: '2027-10-15'}
             ];
-
-            subStore = [
-                { id: 201, date: today, action: 'IN', type: 'ยา', name: 'Paracetamol 500mg', qty: 20, unit: 'กล่อง', price: 120.00, lot: 'LOT-PAR01', exp: exp2.toISOString().split('T')[0], totalPrice: 2400.00, autoTransferred: true },
-                { id: 202, date: today, action: 'IN', type: 'วัสดุการแพทย์', name: 'Syringe 5ml', qty: 10, unit: 'กล่อง', price: 180.00, lot: 'LOT-SYR05', exp: exp2.toISOString().split('T')[0], totalPrice: 1800.00 }
+            subStock = [
+                {id: 101, category: 'ยา', action: 'รับเข้า', name: 'Paracetamol 500mg', qty: 20, unit: 'กล่อง', price: '120.00', date: '2026-03-05', lot: 'LOT2026-01', exp: '2028-03-01'}
             ];
-
-            itemCatalog = new Set(['Paracetamol 500mg', 'Mask N95 Medical', 'Syringe 5ml']);
-
-            saveData();
-            renderMainStoreTable();
-            renderSubStoreTable();
-            updateDashboardView();
-            showToast('โหลดข้อมูลตัวอย่างเรียบร้อยแล้ว');
-        }
-
-        function showToast(msg, type = 'success') {
-            const toast = document.createElement('div');
-            const bgClass = type === 'error' ? 'bg-red-800' : 'bg-emerald-800';
-            toast.className = `fixed bottom-4 right-4 ${bgClass} text-white px-4 py-2.5 rounded-xl shadow-2xl text-xs z-50 flex items-center space-x-2 transition-all duration-300`;
-            toast.innerHTML = `<i class="fa-solid fa-circle-info text-emerald-300"></i> <span>${msg}</span>`;
-            document.body.appendChild(toast);
-            setTimeout(() => toast.remove(), 3000);
+            localStorage.setItem('nampai_main_stock', JSON.stringify(mainStock));
+            localStorage.setItem('nampai_sub_stock', JSON.stringify(subStock));
+            showToast('โหลดข้อมูลตัวอย่างเรียบร้อย');
+            location.reload();
         }
     </script>
 </body>
