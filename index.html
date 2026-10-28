@@ -158,6 +158,7 @@
                         </div>
                         <div class="flex items-center gap-3 no-print">
                             <select id="dash-year" onchange="renderDashboard()" class="px-4 py-2 rounded-xl border border-slate-200 text-xs font-semibold bg-slate-50 focus:ring-2 focus:ring-emerald-500">
+                                <option value="all">แสดงรวมทุกปี</option>
                                 <option value="2570">ปีงบประมาณ 2570</option>
                                 <option value="2571">ปีงบประมาณ 2571</option>
                                 <option value="2572">ปีงบประมาณ 2572</option>
@@ -232,6 +233,7 @@
                         </div>
                         <div class="flex items-center gap-3 no-print">
                             <select id="main-filter-year" onchange="renderMainStock()" class="px-3 py-2 rounded-xl border border-slate-200 text-xs font-semibold bg-slate-50">
+                                <option value="all">ทุกปีงบประมาณ</option>
                                 <option value="2570">2570</option><option value="2571">2571</option><option value="2572">2572</option><option value="2573">2573</option><option value="2574">2574</option>
                             </select>
                             <select id="main-filter-month" onchange="renderMainStock()" class="px-3 py-2 rounded-xl border border-slate-200 text-xs font-semibold bg-slate-50">
@@ -247,7 +249,7 @@
                     <div class="print-container bg-white rounded-2xl shadow-sm border border-slate-200 p-6 space-y-6">
                         <div class="hidden print:block text-center mb-6">
                             <h2 class="text-lg font-bold">โรงพยาบาลส่งเสริมสุขภาพตำบลน้ำปาย อำเภอแม่จริม จังหวัดน่าน</h2>
-                            <p id="print-title-main" class="text-sm font-semibold text-slate-700 mt-1">รายงานการรับ-จ่าย คลังใหญ่ ประจำเดือน</p>
+                            <p id="print-title-main" class="text-sm font-semibold text-slate-700 mt-1">รายงานการรับ-จ่าย คลังใหญ่</p>
                         </div>
 
                         <div class="overflow-x-auto">
@@ -308,6 +310,7 @@
                         </div>
                         <div class="flex items-center gap-3 no-print">
                             <select id="sub-filter-year" onchange="renderSubStock()" class="px-3 py-2 rounded-xl border border-slate-200 text-xs font-semibold bg-slate-50">
+                                <option value="all">ทุกปีงบประมาณ</option>
                                 <option value="2570">2570</option><option value="2571">2571</option><option value="2572">2572</option><option value="2573">2573</option><option value="2574">2574</option>
                             </select>
                             <select id="sub-filter-month" onchange="renderSubStock()" class="px-3 py-2 rounded-xl border border-slate-200 text-xs font-semibold bg-slate-50">
@@ -323,7 +326,7 @@
                     <div class="print-container bg-white rounded-2xl shadow-sm border border-slate-200 p-6 space-y-6">
                         <div class="hidden print:block text-center mb-6">
                             <h2 class="text-lg font-bold">โรงพยาบาลส่งเสริมสุขภาพตำบลน้ำปาย อำเภอแม่จริม จังหวัดน่าน</h2>
-                            <p id="print-title-sub" class="text-sm font-semibold text-slate-700 mt-1">รายงานการรับ-จ่าย คลังย่อย ประจำเดือน</p>
+                            <p id="print-title-sub" class="text-sm font-semibold text-slate-700 mt-1">รายงานการรับ-จ่าย คลังย่อย</p>
                         </div>
 
                         <div class="overflow-x-auto">
@@ -519,12 +522,12 @@
         const monthsThai = ["", "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
 
         window.onload = function() {
-            const today = new Date().toISOString().split('T')[0];
             document.getElementById('real-current-date').innerText = new Date().toLocaleDateString('th-TH', { year: 'numeric', month: 'long', day: 'numeric' });
             
-            // Check session
+            // Stay logged in on page refresh
             if (localStorage.getItem('nampai_logged_in') === 'true') {
-                showApp();
+                const currentTab = localStorage.getItem('nampai_active_tab') || 'dashboard';
+                showApp(currentTab);
             }
         };
 
@@ -551,7 +554,7 @@
             const found = users.find(x => x.user === u && x.pass === p);
             if (found || (u === 'admin' && p === '1234')) {
                 localStorage.setItem('nampai_logged_in', 'true');
-                showApp();
+                showApp('dashboard');
                 showToast('เข้าสู่ระบบสำเร็จ ยินดีต้อนรับ');
             } else {
                 alert('ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง');
@@ -578,18 +581,20 @@
 
         function handleLogout() {
             localStorage.removeItem('nampai_logged_in');
+            localStorage.removeItem('nampai_active_tab');
             document.getElementById('app-container').classList.add('hidden');
             document.getElementById('auth-screen').classList.remove('hidden');
             showToast('ออกจากระบบแล้ว');
         }
 
-        function showApp() {
+        function showApp(defaultTab = 'dashboard') {
             document.getElementById('auth-screen').classList.add('hidden');
             document.getElementById('app-container').classList.remove('hidden');
-            switchTab('dashboard');
+            switchTab(defaultTab);
         }
 
         function switchTab(tab) {
+            localStorage.setItem('nampai_active_tab', tab);
             ['dashboard', 'main-stock', 'sub-stock', 'stock-card'].forEach(t => {
                 document.getElementById('tab-content-' + t).classList.add('hidden');
                 document.getElementById('nav-' + t).className = "w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all text-emerald-200 hover:bg-emerald-800/50 hover:text-white";
@@ -608,7 +613,7 @@
             document.getElementById('modal-title').innerText = type === 'main' ? 'เพิ่มรายการ คลังใหญ่' : 'เพิ่มรายการ คลังย่อย';
             document.getElementById('form-date').value = new Date().toISOString().split('T')[0];
             
-            // Populate auto-complete suggestions
+            // Auto-complete suggestions
             const datalist = document.getElementById('drug-suggestions');
             datalist.innerHTML = '';
             const allNames = [...new Set([...mainStock.map(x => x.name), ...subStock.map(x => x.name)])];
@@ -645,7 +650,7 @@
                 mainStock.push(item);
                 localStorage.setItem('nampai_main_stock', JSON.stringify(mainStock));
                 
-                // Rule: Automatic Sub-stock intake when Main stock "จ่ายออก"
+                // Transfer rule: Auto add to Sub-stock when Main stock is "จ่ายออก"
                 if (item.action === 'จ่ายออก') {
                     const subItem = {...item, id: Date.now() + 1, action: 'รับเข้า'};
                     subStock.push(subItem);
@@ -686,7 +691,7 @@
             document.getElementById('dash-sub-total').innerText = totalSubVal.toLocaleString('th-TH', {minimumFractionDigits: 2}) + ' บาท';
             document.getElementById('dash-sub-items').innerText = subStock.length + ' รายการในคลัง';
 
-            // 3-Month Expiry check
+            // Expiring alert (3 Months)
             const now = new Date();
             const threeMonthsLater = new Date();
             threeMonthsLater.setMonth(now.getMonth() + 3);
@@ -724,13 +729,22 @@
             const filterMonth = document.getElementById('main-filter-month').value;
             
             const filtered = mainStock.filter(x => {
-                const d = new Date(x.date);
-                const yearMatch = (d.getFullYear() + 543).toString() === filterYear;
-                const monthMatch = filterMonth === 'all' || (d.getMonth() + 1).toString().padStart(2, '0') === filterMonth;
+                if (!x.date) return true;
+                const parts = x.date.split('-');
+                const y = parseInt(parts[0]);
+                const m = parts[1];
+                const thaiYear = (y + 543).toString();
+                
+                const yearMatch = (filterYear === 'all') || (thaiYear === filterYear);
+                const monthMatch = (filterMonth === 'all') || (m === filterMonth);
                 return yearMatch && monthMatch;
             });
 
-            const monthName = filterMonth === 'all' ? 'ประจำปีงบประมาณ ' + filterYear : `ประจำเดือน ${monthsThai[parseInt(filterMonth)]} พ.ศ. ${filterYear}`;
+            let monthName = '';
+            if (filterYear === 'all' && filterMonth === 'all') monthName = 'แสดงทั้งหมดทุกช่วงเวลา';
+            else if (filterMonth === 'all') monthName = 'ประจำปีงบประมาณ ' + filterYear;
+            else monthName = `ประจำเดือน ${monthsThai[parseInt(filterMonth)]} ${filterYear !== 'all' ? 'พ.ศ. ' + filterYear : ''}`;
+            
             document.getElementById('print-title-main').innerText = `รายงานการรับ-จ่าย คลังใหญ่ ${monthName}`;
 
             const start = (mainPage - 1) * rowsPerPage;
@@ -781,13 +795,22 @@
             const filterMonth = document.getElementById('sub-filter-month').value;
             
             const filtered = subStock.filter(x => {
-                const d = new Date(x.date);
-                const yearMatch = (d.getFullYear() + 543).toString() === filterYear;
-                const monthMatch = filterMonth === 'all' || (d.getMonth() + 1).toString().padStart(2, '0') === filterMonth;
+                if (!x.date) return true;
+                const parts = x.date.split('-');
+                const y = parseInt(parts[0]);
+                const m = parts[1];
+                const thaiYear = (y + 543).toString();
+                
+                const yearMatch = (filterYear === 'all') || (thaiYear === filterYear);
+                const monthMatch = (filterMonth === 'all') || (m === filterMonth);
                 return yearMatch && monthMatch;
             });
 
-            const monthName = filterMonth === 'all' ? 'ประจำปีงบประมาณ ' + filterYear : `ประจำเดือน ${monthsThai[parseInt(filterMonth)]} พ.ศ. ${filterYear}`;
+            let monthName = '';
+            if (filterYear === 'all' && filterMonth === 'all') monthName = 'แสดงทั้งหมดทุกช่วงเวลา';
+            else if (filterMonth === 'all') monthName = 'ประจำปีงบประมาณ ' + filterYear;
+            else monthName = `ประจำเดือน ${monthsThai[parseInt(filterMonth)]} ${filterYear !== 'all' ? 'พ.ศ. ' + filterYear : ''}`;
+
             document.getElementById('print-title-sub').innerText = `รายงานการรับ-จ่าย คลังย่อย ${monthName}`;
 
             const start = (subPage - 1) * rowsPerPage;
@@ -834,7 +857,6 @@
         }
 
         function renderStockCard() {
-            // Combine main and sub for stock card tracking
             const combined = [...mainStock].sort((a,b) => new Date(a.date) - new Date(b.date));
             const start = (cardPage - 1) * rowsPerPage;
             const paginated = combined.slice(start, start + rowsPerPage);
@@ -853,20 +875,7 @@
                     else runningBalance[x.name] -= x.qty;
                 });
 
-                // Render paginated subset with accumulated balance
-                let tempBal = {};
                 paginated.forEach(x => {
-                    if (!tempBal[x.name]) {
-                        // calculate initial for this page slice
-                        let bal = 0;
-                        combined.forEach(item => {
-                            if (item.name === x.name && item.date <= x.date) {
-                                if (item.action === 'รับเข้า') bal += item.qty; else bal -= item.qty;
-                            }
-                        });
-                        tempBal[x.name] = bal;
-                    }
-
                     const inQty = x.action === 'รับเข้า' ? x.qty : '-';
                     const outQty = x.action === 'จ่ายออก' ? x.qty : '-';
 
