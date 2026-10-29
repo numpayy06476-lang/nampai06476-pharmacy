@@ -116,10 +116,10 @@
                     <span class="text-lg">📊</span> แดชบอร์ดภาพรวม
                 </button>
                 <button onclick="switchTab('main-stock')" id="nav-main-stock" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all text-emerald-200 hover:bg-emerald-800/50 hover:text-white">
-                    <span class="text-lg">📦</span> คลังใหญ่
+                    <span class="text-lg">📦</span> รายการรับเข้า
                 </button>
                 <button onclick="switchTab('sub-stock')" id="nav-sub-stock" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all text-emerald-200 hover:bg-emerald-800/50 hover:text-white">
-                    <span class="text-lg">💊</span> คลังย่อย
+                    <span class="text-lg">💊</span> รายการเบิกจ่าย
                 </button>
                 <button onclick="switchTab('stock-card')" id="nav-stock-card" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all text-emerald-200 hover:bg-emerald-800/50 hover:text-white">
                     <span class="text-lg">📑</span> Stock Card
@@ -169,29 +169,40 @@
                         </div>
                     </div>
 
-                    <!-- Summary Cards -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Summary Cards (Updated: รับเข้า, จ่ายออก, คงเหลือ) -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div class="bg-gradient-to-br from-emerald-600 to-teal-700 text-white p-6 rounded-2xl shadow-lg">
                             <div class="flex items-center justify-between mb-4">
-                                <span class="text-xs font-semibold uppercase tracking-wider text-emerald-200">มูลค่ารวมคลังใหญ่</span>
+                                <span class="text-xs font-semibold uppercase tracking-wider text-emerald-200">มูลค่ารวมรับเข้า</span>
                                 <span class="p-2.5 bg-white/10 rounded-xl text-xl">📦</span>
                             </div>
                             <div class="text-3xl font-bold" id="dash-main-total">0.00 บาท</div>
                             <div class="mt-4 pt-4 border-t border-white/10 flex justify-between text-xs text-emerald-100">
-                                <span id="dash-main-items">0 รายการในคลัง</span>
-                                <span class="font-medium">อัปเดตแบบเรียลไทม์</span>
+                                <span id="dash-main-items">0 รายการ</span>
+                                <span class="font-medium">รับเข้าสะสม</span>
                             </div>
                         </div>
 
                         <div class="bg-gradient-to-br from-teal-700 to-cyan-800 text-white p-6 rounded-2xl shadow-lg">
                             <div class="flex items-center justify-between mb-4">
-                                <span class="text-xs font-semibold uppercase tracking-wider text-teal-200">มูลค่ารวมคลังย่อย</span>
+                                <span class="text-xs font-semibold uppercase tracking-wider text-teal-200">มูลค่ารวมจ่ายออก</span>
                                 <span class="p-2.5 bg-white/10 rounded-xl text-xl">💊</span>
                             </div>
                             <div class="text-3xl font-bold" id="dash-sub-total">0.00 บาท</div>
                             <div class="mt-4 pt-4 border-t border-white/10 flex justify-between text-xs text-teal-100">
-                                <span id="dash-sub-items">0 รายการในคลัง</span>
-                                <span class="font-medium">อัปเดตแบบเรียลไทม์</span>
+                                <span id="dash-sub-items">0 รายการ</span>
+                                <span class="font-medium">เบิกจ่ายสะสม</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-gradient-to-br from-slate-800 to-emerald-900 text-white p-6 rounded-2xl shadow-lg">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="text-xs font-semibold uppercase tracking-wider text-emerald-300">มูลค่าคงเหลือในคลัง</span>
+                                <span class="p-2.5 bg-white/10 rounded-xl text-xl">💰</span>
+                            </div>
+                            <div class="text-3xl font-bold" id="dash-balance-total">0.00 บาท</div>
+                            <div class="mt-4 pt-4 border-t border-white/10 flex justify-between text-xs text-emerald-200">
+                                <span>ยกมาจากเดือนก่อน + รับเข้า - จ่ายออก</span>
                             </div>
                         </div>
                     </div>
@@ -224,12 +235,12 @@
                     </div>
                 </div>
 
-                <!-- 2. MAIN STOCK TAB -->
+                <!-- 2. MAIN STOCK TAB (รายการรับเข้า) -->
                 <div id="tab-content-main-stock" class="space-y-6 hidden">
                     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
                         <div>
-                            <h2 class="text-xl font-bold text-slate-900">ระบบคลังใหญ่</h2>
-                            <p class="text-xs text-slate-500 mt-0.5">บันทึกรับ-จ่าย รายการยา เวชภัณฑ์ และวัสดุการแพทย์ (ปีงบประมาณ 1 ต.ค. - 30 ก.ย.)</p>
+                            <h2 class="text-xl font-bold text-slate-900">ระบบรายการรับเข้า (คลังใหญ่)</h2>
+                            <p class="text-xs text-slate-500 mt-0.5">บันทึกรับเข้า รายการยา เวชภัณฑ์ และวัสดุการแพทย์ (ปีงบประมาณ 1 ต.ค. - 30 ก.ย.)</p>
                         </div>
                         <div class="flex items-center gap-3 no-print">
                             <select id="main-filter-year" onchange="renderMainStock()" class="px-3 py-2 rounded-xl border border-slate-200 text-xs font-semibold bg-slate-50">
@@ -256,7 +267,7 @@
                     <div class="print-container bg-white rounded-2xl shadow-sm border border-slate-200 p-6 space-y-6">
                         <div class="hidden print:block text-center mb-6">
                             <h2 class="text-lg font-bold">โรงพยาบาลส่งเสริมสุขภาพตำบลน้ำปาย อำเภอแม่จริม จังหวัดน่าน</h2>
-                            <p id="print-title-main" class="text-sm font-semibold text-slate-700 mt-1">รายงานการรับ-จ่าย คลังใหญ่</p>
+                            <p id="print-title-main" class="text-sm font-semibold text-slate-700 mt-1">รายงานการรับเข้า คลังใหญ่</p>
                         </div>
 
                         <div class="overflow-x-auto">
@@ -309,12 +320,12 @@
                     </div>
                 </div>
 
-                <!-- 3. SUB STOCK TAB -->
+                <!-- 3. SUB STOCK TAB (รายการเบิกจ่าย) -->
                 <div id="tab-content-sub-stock" class="space-y-6 hidden">
                     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
                         <div>
-                            <h2 class="text-xl font-bold text-slate-900">ระบบคลังย่อย</h2>
-                            <p class="text-xs text-slate-500 mt-0.5">รายการรับอัตโนมัติจากคลังใหญ่และการเบิกจ่ายใช้งานจริง (ปีงบประมาณ 1 ต.ค. - 30 ก.ย.)</p>
+                            <h2 class="text-xl font-bold text-slate-900">ระบบรายการเบิกจ่าย (คลังย่อย)</h2>
+                            <p class="text-xs text-slate-500 mt-0.5">รายการรับอัตโนมัติที่รอเบิกจ่ายและการเบิกจ่ายใช้งานจริง (ปีงบประมาณ 1 ต.ค. - 30 ก.ย.)</p>
                         </div>
                         <div class="flex items-center gap-3 no-print">
                             <select id="sub-filter-year" onchange="renderSubStock()" class="px-3 py-2 rounded-xl border border-slate-200 text-xs font-semibold bg-slate-50">
@@ -341,7 +352,7 @@
                     <div class="print-container bg-white rounded-2xl shadow-sm border border-slate-200 p-6 space-y-6">
                         <div class="hidden print:block text-center mb-6">
                             <h2 class="text-lg font-bold">โรงพยาบาลส่งเสริมสุขภาพตำบลน้ำปาย อำเภอแม่จริม จังหวัดน่าน</h2>
-                            <p id="print-title-sub" class="text-sm font-semibold text-slate-700 mt-1">รายงานการรับ-จ่าย คลังย่อย</p>
+                            <p id="print-title-sub" class="text-sm font-semibold text-slate-700 mt-1">รายงานการเบิกจ่าย คลังย่อย</p>
                         </div>
 
                         <div class="overflow-x-auto">
@@ -394,14 +405,17 @@
                     </div>
                 </div>
 
-                <!-- 4. STOCK CARD TAB -->
+                <!-- 4. STOCK CARD TAB (Updated: เลือกดู/พิมพ์รายประเภทและตัวยาได้) -->
                 <div id="tab-content-stock-card" class="space-y-6 hidden">
                     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
                         <div>
                             <h2 class="text-xl font-bold text-slate-900">Stock Card คุมยอดคงเหลือรายตัวยา</h2>
-                            <p class="text-xs text-slate-500 mt-0.5">ตารางประวัติการรับเข้า จ่ายออก และคงเหลือสะสม</p>
+                            <p class="text-xs text-slate-500 mt-0.5">เชื่อมโยงรายการรับเข้าและเบิกจ่าย เพื่อคำนวณคงเหลือสะสม</p>
                         </div>
-                        <div class="no-print">
+                        <div class="flex items-center gap-3 no-print">
+                            <select id="card-filter-name" onchange="renderStockCard()" class="px-3 py-2 rounded-xl border border-slate-200 text-xs font-semibold bg-slate-50">
+                                <option value="all">แสดงทุกรายการยา/เวชภัณฑ์</option>
+                            </select>
                             <button onclick="window.print()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold shadow-md flex items-center gap-1.5">🖨️ พิมพ์ Stock Card</button>
                         </div>
                     </div>
@@ -410,7 +424,7 @@
                     <div class="print-container bg-white rounded-2xl shadow-sm border border-slate-200 p-6 space-y-6">
                         <div class="hidden print:block text-center mb-6">
                             <h2 class="text-lg font-bold">โรงพยาบาลส่งเสริมสุขภาพตำบลน้ำปาย อำเภอแม่จริม จังหวัดน่าน</h2>
-                            <p class="text-sm font-semibold text-slate-700 mt-1">Stock Card คุมคลังสินค้าและเวชภัณฑ์</p>
+                            <p id="print-title-card" class="text-sm font-semibold text-slate-700 mt-1">Stock Card คุมคลังสินค้าและเวชภัณฑ์</p>
                         </div>
 
                         <div class="overflow-x-auto">
@@ -440,7 +454,7 @@
                                 <p>ลงชื่อ............................................ผู้รายงาน<br>(น.ส.รัชฎาวรรณ จันทร์สุข)<br>นักวิชาการสาธารณสุขปฏิบัติการ</p>
                             </div>
                             <div class="space-y-12">
-                                <p>ลงชื่อ............................................ผู้ตรวจสอบ<br>(นายปรัชญา วัฒนะ)<br>ผู้อำนวยการ รพ.สต.น้ำปาย</p>
+                                <p>ลงชื่อ............................................ผู้ตรวจสอบ<br>(นายปรัชญา วัฒนะ)<br>ผู้อนุญาต / ผู้อำนวยการ รพ.สต.น้ำปาย</p>
                             </div>
                         </div>
                     </div>
@@ -646,7 +660,7 @@
         function openEntryModal(type, editId = null) {
             document.getElementById('form-stock-type').value = type;
             document.getElementById('form-edit-id').value = editId || '';
-            document.getElementById('modal-title').innerText = editId ? 'แก้ไขรายการบันทึกรับ-จ่าย' : 'บันทึกรับ-จ่าย (' + (type === 'main' ? 'คลังใหญ่' : 'คลังย่อย') + ')';
+            document.getElementById('modal-title').innerText = editId ? 'แก้ไขรายการบันทึกรับ-จ่าย' : 'บันทึกรับ-จ่าย (' + (type === 'main' ? 'รายการรับเข้า' : 'รายการเบิกจ่าย') + ')';
             
             // Auto-complete list from remembered stock
             const datalist = document.getElementById('drug-suggestions');
@@ -674,7 +688,7 @@
                     document.getElementById('form-exp').value = target.exp;
                 }
             } else {
-                // Clear input fields completely after each new save
+                // Clear input fields completely
                 document.getElementById('form-name').value = '';
                 document.getElementById('form-qty').value = '';
                 document.getElementById('form-sub-qty').value = '';
@@ -715,7 +729,7 @@
                     mainStock = mainStock.map(x => x.id === parseInt(editId) ? item : x);
                 } else {
                     mainStock.push(item);
-                    // Transfer rule: Auto add to Sub-stock when Main stock is "จ่ายออก"
+                    // Transfer rule: Auto add to Sub-stock as "รับเข้า" when Main stock is "จ่ายออก"
                     if (item.action === 'จ่ายออก') {
                         const subItem = {...item, id: Date.now() + 1, action: 'รับเข้า'};
                         subStock.push(subItem);
@@ -734,7 +748,6 @@
                 renderSubStock();
             }
 
-            // Reset Form fields completely
             document.getElementById('entry-form').reset();
             closeEntryModal();
             showToast('บันทึกรับ-จ่าย เรียบร้อยแล้ว');
@@ -761,13 +774,20 @@
             const filteredMain = mainStock.filter(x => selectedYear === 'all' || getFiscalYear(x.date) === selectedYear);
             const filteredSub = subStock.filter(x => selectedYear === 'all' || getFiscalYear(x.date) === selectedYear);
 
-            const totalMainVal = filteredMain.reduce((acc, cur) => acc + (cur.action === 'รับเข้า' ? (cur.qty * cur.price) : -(cur.qty * cur.price)), 0);
-            const totalSubVal = filteredSub.reduce((acc, cur) => acc + (cur.action === 'รับเข้า' ? (cur.qty * cur.price) : -(cur.qty * cur.price)), 0);
+            // Total Intake Value (จากคลังใหญ่ - รับเข้า)
+            const totalMainVal = filteredMain.reduce((acc, cur) => acc + (cur.action === 'รับเข้า' ? (cur.qty * cur.price) : 0), 0);
+            
+            // Total Outtake Value (จากคลังย่อย - จ่ายออก)
+            const totalSubVal = filteredSub.reduce((acc, cur) => acc + (cur.action === 'จ่ายออก' ? (cur.qty * cur.price) : 0), 0);
+
+            // Balance Value (คงเหลือ = รับเข้าทั้งหมด - จ่ายออกทั้งหมด)
+            const balanceVal = totalMainVal - totalSubVal;
 
             document.getElementById('dash-main-total').innerText = totalMainVal.toLocaleString('th-TH', {minimumFractionDigits: 2}) + ' บาท';
             document.getElementById('dash-main-items').innerText = filteredMain.length + ' รายการ';
             document.getElementById('dash-sub-total').innerText = totalSubVal.toLocaleString('th-TH', {minimumFractionDigits: 2}) + ' บาท';
             document.getElementById('dash-sub-items').innerText = filteredSub.length + ' รายการ';
+            document.getElementById('dash-balance-total').innerText = balanceVal.toLocaleString('th-TH', {minimumFractionDigits: 2}) + ' บาท';
 
             // Expiring alert (3 Months)
             const now = new Date();
@@ -823,7 +843,7 @@
             else if (filterYear === 'all') monthName = `ประจำเดือน ${monthsThai[filterMonth]}`;
             else monthName = `ประจำเดือน ${monthsThai[filterMonth]} ปีงบประมาณ ${filterYear}`;
             
-            document.getElementById('print-title-main').innerText = `รายงานการรับ-จ่าย คลังใหญ่ (${monthName})`;
+            document.getElementById('print-title-main').innerText = `รายงานการรับเข้า คลังใหญ่ (${monthName})`;
 
             const start = (mainPage - 1) * rowsPerPage;
             const paginated = filtered.slice(start, start + rowsPerPage);
@@ -893,7 +913,7 @@
             else if (filterYear === 'all') monthName = `ประจำเดือน ${monthsThai[filterMonth]}`;
             else monthName = `ประจำเดือน ${monthsThai[filterMonth]} ปีงบประมาณ ${filterYear}`;
 
-            document.getElementById('print-title-sub').innerText = `รายงานการรับ-จ่าย คลังย่อย (${monthName})`;
+            document.getElementById('print-title-sub').innerText = `รายงานการเบิกจ่าย คลังย่อย (${monthName})`;
 
             const start = (subPage - 1) * rowsPerPage;
             const paginated = filtered.slice(start, start + rowsPerPage);
@@ -943,7 +963,26 @@
         }
 
         function renderStockCard() {
-            const combined = [...mainStock].sort((a,b) => new Date(a.date) - new Date(b.date));
+            // Populate drug filter dropdown dynamically
+            const filterDropdown = document.getElementById('card-filter-name');
+            const selectedDrug = filterDropdown.value;
+            const allNames = [...new Set([...mainStock.map(x => x.name), ...subStock.map(x => x.name)])];
+            
+            filterDropdown.innerHTML = `<option value="all">แสดงทุกรายการยา/เวชภัณฑ์</option>`;
+            allNames.forEach(n => {
+                filterDropdown.innerHTML += `<option value="${n}" ${selectedDrug === n ? 'selected' : ''}>${n}</option>`;
+            });
+
+            // Combine both main and sub stock items for complete history
+            let combined = [...mainStock, ...subStock].sort((a,b) => new Date(a.date) - new Date(b.date));
+            
+            if (selectedDrug !== 'all') {
+                combined = combined.filter(x => x.name === selectedDrug);
+                document.getElementById('print-title-card').innerText = `Stock Card คุมคลังสินค้า - ${selectedDrug}`;
+            } else {
+                document.getElementById('print-title-card').innerText = `Stock Card คุมคลังสินค้าและเวชภัณฑ์ (ทุกรายการ)`;
+            }
+
             const start = (cardPage - 1) * rowsPerPage;
             const paginated = combined.slice(start, start + rowsPerPage);
 
