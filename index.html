@@ -158,7 +158,7 @@
                         </div>
                         <div class="flex items-center gap-3 no-print">
                             <select id="dash-year" onchange="renderDashboard()" class="px-4 py-2 rounded-xl border border-slate-200 text-xs font-semibold bg-slate-50 focus:ring-2 focus:ring-emerald-500">
-                                <option value="all">แสดงรวมทุกปี</option>
+                                <option value="all">แสดงรวมทุกปีงบประมาณ</option>
                                 <option value="2570">ปีงบประมาณ 2570</option>
                                 <option value="2571">ปีงบประมาณ 2571</option>
                                 <option value="2572">ปีงบประมาณ 2572</option>
@@ -229,17 +229,23 @@
                     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
                         <div>
                             <h2 class="text-xl font-bold text-slate-900">ระบบเบิก-จ่าย คลังใหญ่</h2>
-                            <p class="text-xs text-slate-500 mt-0.5">บันทึกรับ/จ่าย รายการยา เวชภัณฑ์ และวัสดุการแพทย์</p>
+                            <p class="text-xs text-slate-500 mt-0.5">บันทึกรับ/จ่าย รายการยา เวชภัณฑ์ และวัสดุการแพทย์ (ปีงบประมาณ 1 ต.ค. - 30 ก.ย.)</p>
                         </div>
                         <div class="flex items-center gap-3 no-print">
                             <select id="main-filter-year" onchange="renderMainStock()" class="px-3 py-2 rounded-xl border border-slate-200 text-xs font-semibold bg-slate-50">
                                 <option value="all">ทุกปีงบประมาณ</option>
-                                <option value="2570">2570</option><option value="2571">2571</option><option value="2572">2572</option><option value="2573">2573</option><option value="2574">2574</option>
+                                <option value="2570">ปีงบประมาณ 2570</option>
+                                <option value="2571">ปีงบประมาณ 2571</option>
+                                <option value="2572">ปีงบประมาณ 2572</option>
+                                <option value="2573">ปีงบประมาณ 2573</option>
+                                <option value="2574">ปีงบประมาณ 2574</option>
                             </select>
                             <select id="main-filter-month" onchange="renderMainStock()" class="px-3 py-2 rounded-xl border border-slate-200 text-xs font-semibold bg-slate-50">
                                 <option value="all">ทุกเดือน</option>
-                                <option value="01">มกราคม</option><option value="02">กุมภาพันธ์</option><option value="03">มีนาคม</option><option value="04">เมษายน</option><option value="05">พฤษภาคม</option><option value="06">มิถุนายน</option>
-                                <option value="07">กรกฎาคม</option><option value="08">สิงหาคม</option><option value="09">กันยายน</option><option value="10">ตุลาคม</option><option value="11">พฤศจิกายน</option><option value="12">ธันวาคม</option>
+                                <option value="10">ตุลาคม</option><option value="11">พฤศจิกายน</option><option value="12">ธันวาคม</option>
+                                <option value="01">มกราคม</option><option value="02">กุมภาพันธ์</option><option value="03">มีนาคม</option>
+                                <option value="04">เมษายน</option><option value="05">พฤษภาคม</option><option value="06">มิถุนายน</option>
+                                <option value="07">กรกฎาคม</option><option value="08">สิงหาคม</option><option value="09">กันยายน</option>
                             </select>
                             <button onclick="window.print()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold shadow-md flex items-center gap-1.5">🖨️ พิมพ์เอกสาร A4</button>
                             <button onclick="openEntryModal('main')" class="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-xs font-semibold shadow-md">+ เพิ่มรายการรับ/จ่าย</button>
@@ -307,17 +313,23 @@
                     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
                         <div>
                             <h2 class="text-xl font-bold text-slate-900">ระบบเบิก-จ่าย คลังย่อย</h2>
-                            <p class="text-xs text-slate-500 mt-0.5">รายการรับอัตโนมัติจากคลังใหญ่และการเบิกจ่ายใช้งานจริง</p>
+                            <p class="text-xs text-slate-500 mt-0.5">รายการรับอัตโนมัติจากคลังใหญ่และการเบิกจ่ายใช้งานจริง (ปีงบประมาณ 1 ต.ค. - 30 ก.ย.)</p>
                         </div>
                         <div class="flex items-center gap-3 no-print">
                             <select id="sub-filter-year" onchange="renderSubStock()" class="px-3 py-2 rounded-xl border border-slate-200 text-xs font-semibold bg-slate-50">
                                 <option value="all">ทุกปีงบประมาณ</option>
-                                <option value="2570">2570</option><option value="2571">2571</option><option value="2572">2572</option><option value="2573">2573</option><option value="2574">2574</option>
+                                <option value="2570">ปีงบประมาณ 2570</option>
+                                <option value="2571">ปีงบประมาณ 2571</option>
+                                <option value="2572">ปีงบประมาณ 2572</option>
+                                <option value="2573">ปีงบประมาณ 2573</option>
+                                <option value="2574">ปีงบประมาณ 2574</option>
                             </select>
                             <select id="sub-filter-month" onchange="renderSubStock()" class="px-3 py-2 rounded-xl border border-slate-200 text-xs font-semibold bg-slate-50">
                                 <option value="all">ทุกเดือน</option>
-                                <option value="01">มกราคม</option><option value="02">กุมภาพันธ์</option><option value="03">มีนาคม</option><option value="04">เมษายน</option><option value="05">พฤษภาคม</option><option value="06">มิถุนายน</option>
-                                <option value="07">กรกฎาคม</option><option value="08">สิงหาคม</option><option value="09">กันยายน</option><option value="10">ตุลาคม</option><option value="11">พฤศจิกายน</option><option value="12">ธันวาคม</option>
+                                <option value="10">ตุลาคม</option><option value="11">พฤศจิกายน</option><option value="12">ธันวาคม</option>
+                                <option value="01">มกราคม</option><option value="02">กุมภาพันธ์</option><option value="03">มีนาคม</option>
+                                <option value="04">เมษายน</option><option value="05">พฤษภาคม</option><option value="06">มิถุนายน</option>
+                                <option value="07">กรกฎาคม</option><option value="08">สิงหาคม</option><option value="09">กันยายน</option>
                             </select>
                             <button onclick="window.print()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold shadow-md flex items-center gap-1.5">🖨️ พิมพ์เอกสาร A4</button>
                             <button onclick="openEntryModal('sub')" class="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-xs font-semibold shadow-md">+ เพิ่มรายการเบิกจ่าย</button>
@@ -521,7 +533,21 @@
         let mainPage = 1, subPage = 1, cardPage = 1;
         const rowsPerPage = 10;
 
-        const monthsThai = ["", "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"];
+        const monthsThai = {"10": "ตุลาคม", "11": "พฤศจิกายน", "12": "ธันวาคม", "01": "มกราคม", "02": "กุมภาพันธ์", "03": "มีนาคม", "04": "เมษายน", "05": "พฤษภาคม", "06": "มิถุนายน", "07": "กรกฎาคม", "08": "สิงหาคม", "09": "กันยายน"};
+
+        // Fiscal Year helper: Oct 1 - Sep 30
+        function getFiscalYear(dateStr) {
+            if (!dateStr) return "";
+            const parts = dateStr.split('-');
+            const y = parseInt(parts[0]);
+            const m = parseInt(parts[1]);
+            const thaiYear = y + 543;
+            // If month is Oct, Nov, Dec -> belongs to next fiscal year
+            if (m >= 10) {
+                return (thaiYear + 1).toString();
+            }
+            return thaiYear.toString();
+        }
 
         window.onload = function() {
             document.getElementById('real-current-date').innerText = new Date().toLocaleDateString('th-TH', { year: 'numeric', month: 'long', day: 'numeric' });
@@ -685,13 +711,18 @@
         }
 
         function renderDashboard() {
-            const totalMainVal = mainStock.reduce((acc, cur) => acc + (cur.action === 'รับเข้า' ? (cur.qty * cur.price) : -(cur.qty * cur.price)), 0);
-            const totalSubVal = subStock.reduce((acc, cur) => acc + (cur.action === 'รับเข้า' ? (cur.qty * cur.price) : -(cur.qty * cur.price)), 0);
+            const selectedYear = document.getElementById('dash-year').value;
+            
+            const filteredMain = mainStock.filter(x => selectedYear === 'all' || getFiscalYear(x.date) === selectedYear);
+            const filteredSub = subStock.filter(x => selectedYear === 'all' || getFiscalYear(x.date) === selectedYear);
+
+            const totalMainVal = filteredMain.reduce((acc, cur) => acc + (cur.action === 'รับเข้า' ? (cur.qty * cur.price) : -(cur.qty * cur.price)), 0);
+            const totalSubVal = filteredSub.reduce((acc, cur) => acc + (cur.action === 'รับเข้า' ? (cur.qty * cur.price) : -(cur.qty * cur.price)), 0);
 
             document.getElementById('dash-main-total').innerText = totalMainVal.toLocaleString('th-TH', {minimumFractionDigits: 2}) + ' บาท';
-            document.getElementById('dash-main-items').innerText = mainStock.length + ' รายการในคลัง';
+            document.getElementById('dash-main-items').innerText = filteredMain.length + ' รายการ';
             document.getElementById('dash-sub-total').innerText = totalSubVal.toLocaleString('th-TH', {minimumFractionDigits: 2}) + ' บาท';
-            document.getElementById('dash-sub-items').innerText = subStock.length + ' รายการในคลัง';
+            document.getElementById('dash-sub-items').innerText = filteredSub.length + ' รายการ';
 
             // Expiring alert (3 Months)
             const now = new Date();
@@ -733,11 +764,10 @@
             const filtered = mainStock.filter(x => {
                 if (!x.date) return true;
                 const parts = x.date.split('-');
-                const y = parseInt(parts[0]);
                 const m = parts[1];
-                const thaiYear = (y + 543).toString();
+                const fiscalY = getFiscalYear(x.date);
                 
-                const yearMatch = (filterYear === 'all') || (thaiYear === filterYear);
+                const yearMatch = (filterYear === 'all') || (fiscalY === filterYear);
                 const monthMatch = (filterMonth === 'all') || (m === filterMonth);
                 return yearMatch && monthMatch;
             });
@@ -745,9 +775,10 @@
             let monthName = '';
             if (filterYear === 'all' && filterMonth === 'all') monthName = 'แสดงทั้งหมดทุกช่วงเวลา';
             else if (filterMonth === 'all') monthName = 'ประจำปีงบประมาณ ' + filterYear;
-            else monthName = `ประจำเดือน ${monthsThai[parseInt(filterMonth)]} ${filterYear !== 'all' ? 'พ.ศ. ' + filterYear : ''}`;
+            else if (filterYear === 'all') monthName = `ประจำเดือน ${monthsThai[filterMonth]}`;
+            else monthName = `ประจำเดือน ${monthsThai[filterMonth]} ปีงบประมาณ ${filterYear}`;
             
-            document.getElementById('print-title-main').innerText = `รายงานการรับ-จ่าย คลังใหญ่ ${monthName}`;
+            document.getElementById('print-title-main').innerText = `รายงานการรับ-จ่าย คลังใหญ่ (${monthName})`;
 
             const start = (mainPage - 1) * rowsPerPage;
             const paginated = filtered.slice(start, start + rowsPerPage);
@@ -799,11 +830,10 @@
             const filtered = subStock.filter(x => {
                 if (!x.date) return true;
                 const parts = x.date.split('-');
-                const y = parseInt(parts[0]);
                 const m = parts[1];
-                const thaiYear = (y + 543).toString();
+                const fiscalY = getFiscalYear(x.date);
                 
-                const yearMatch = (filterYear === 'all') || (thaiYear === filterYear);
+                const yearMatch = (filterYear === 'all') || (fiscalY === filterYear);
                 const monthMatch = (filterMonth === 'all') || (m === filterMonth);
                 return yearMatch && monthMatch;
             });
@@ -811,9 +841,10 @@
             let monthName = '';
             if (filterYear === 'all' && filterMonth === 'all') monthName = 'แสดงทั้งหมดทุกช่วงเวลา';
             else if (filterMonth === 'all') monthName = 'ประจำปีงบประมาณ ' + filterYear;
-            else monthName = `ประจำเดือน ${monthsThai[parseInt(filterMonth)]} ${filterYear !== 'all' ? 'พ.ศ. ' + filterYear : ''}`;
+            else if (filterYear === 'all') monthName = `ประจำเดือน ${monthsThai[filterMonth]}`;
+            else monthName = `ประจำเดือน ${monthsThai[filterMonth]} ปีงบประมาณ ${filterYear}`;
 
-            document.getElementById('print-title-sub').innerText = `รายงานการรับ-จ่าย คลังย่อย ${monthName}`;
+            document.getElementById('print-title-sub').innerText = `รายงานการรับ-จ่าย คลังย่อย (${monthName})`;
 
             const start = (subPage - 1) * rowsPerPage;
             const paginated = filtered.slice(start, start + rowsPerPage);
@@ -919,12 +950,12 @@
 
         function loadDemoData() {
             mainStock = [
-                {id: 1, category: 'ยา', action: 'รับเข้า', name: 'Paracetamol 500mg', qty: 100, unit: 'กล่อง', price: '120.00', date: '2026-03-01', lot: 'LOT2026-01', exp: '2028-03-01'},
-                {id: 2, category: 'ยา', action: 'จ่ายออก', name: 'Paracetamol 500mg', qty: 20, unit: 'กล่อง', price: '120.00', date: '2026-03-05', lot: 'LOT2026-01', exp: '2028-03-01'},
-                {id: 3, category: 'เวชภัณฑ์', action: 'รับเข้า', name: 'Mask Surgical', qty: 50, unit: 'กล่อง', price: '55.50', date: '2026-03-02', lot: 'MSK-99', exp: '2027-10-15'}
+                {id: 1, category: 'ยา', action: 'รับเข้า', name: 'Paracetamol 500mg', qty: 100, unit: 'กล่อง', price: '120.00', date: '2026-10-01', lot: 'LOT2026-01', exp: '2028-03-01'},
+                {id: 2, category: 'ยา', action: 'จ่ายออก', name: 'Paracetamol 500mg', qty: 20, unit: 'กล่อง', price: '120.00', date: '2026-10-05', lot: 'LOT2026-01', exp: '2028-03-01'},
+                {id: 3, category: 'เวชภัณฑ์', action: 'รับเข้า', name: 'Mask Surgical', qty: 50, unit: 'กล่อง', price: '55.50', date: '2026-10-02', lot: 'MSK-99', exp: '2027-10-15'}
             ];
             subStock = [
-                {id: 101, category: 'ยา', action: 'รับเข้า', name: 'Paracetamol 500mg', qty: 20, unit: 'กล่อง', price: '120.00', date: '2026-03-05', lot: 'LOT2026-01', exp: '2028-03-01'}
+                {id: 101, category: 'ยา', action: 'รับเข้า', name: 'Paracetamol 500mg', qty: 20, unit: 'กล่อง', price: '120.00', date: '2026-10-05', lot: 'LOT2026-01', exp: '2028-03-01'}
             ];
             localStorage.setItem('nampai_main_stock', JSON.stringify(mainStock));
             localStorage.setItem('nampai_sub_stock', JSON.stringify(subStock));
