@@ -216,10 +216,10 @@
                             <table class="w-full text-left border-collapse text-xs">
                                 <thead>
                                     <tr class="bg-slate-100 text-slate-700 border-b border-slate-200">
-                                        <th class="p-3.5 font-bold">รายการ</th>
-                                        <th class="p-3.5 font-bold text-right text-emerald-700">มูลค่ารับเข้า</th>
-                                        <th class="p-3.5 font-bold text-right text-amber-700">มูลค่าเบิกจ่าย</th>
-                                        <th class="p-3.5 font-bold text-right text-slate-800">มูลค่าคงเหลือ</th>
+                                        <th class="p-3.5 font-bold">1. รายการ</th>
+                                        <th class="p-3.5 font-bold text-right text-emerald-700">2. มูลค่ารับเข้า</th>
+                                        <th class="p-3.5 font-bold text-right text-amber-700">3. มูลค่าเบิกจ่าย</th>
+                                        <th class="p-3.5 font-bold text-right text-slate-800">4. มูลค่าคงเหลือ</th>
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-slate-100">
@@ -303,8 +303,8 @@
                                 <option value="04">เมษายน</option><option value="05">พฤษภาคม</option><option value="06">มิถุนายน</option>
                                 <option value="07">กรกฎาคม</option><option value="08">สิงหาคม</option><option value="09">กันยายน</option>
                             </select>
-                            <button onclick="window.print()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold shadow-md flex items-center gap-1.5">🖨️ พิมพ์เอกสาร A4</button>
-                            <button onclick="openEntryModal('main')" class="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-xs font-semibold shadow-md">+ บันทึกรับ-จ่าย</button>
+                            <button onclick="window.print()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold shadow-md flex items-center gap-1.5">🖨️ พิมพ์เอกสาร</button>
+                            <button onclick="openEntryModal('main')" class="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-xs font-semibold shadow-md">บันทึกรับ</button>
                         </div>
                     </div>
 
@@ -391,8 +391,8 @@
                                 <option value="04">เมษายน</option><option value="05">พฤษภาคม</option><option value="06">มิถุนายน</option>
                                 <option value="07">กรกฎาคม</option><option value="08">สิงหาคม</option><option value="09">กันยายน</option>
                             </select>
-                            <button onclick="window.print()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold shadow-md flex items-center gap-1.5">🖨️ พิมพ์เอกสาร A4</button>
-                            <button onclick="openEntryModal('sub')" class="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-xs font-semibold shadow-md">+ บันทึกรับ-จ่าย</button>
+                            <button onclick="window.print()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold shadow-md flex items-center gap-1.5">🖨️ พิมพ์เอกสาร</button>
+                            <button onclick="openEntryModal('sub')" class="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-xs font-semibold shadow-md">บันทึกจ่าย</button>
                         </div>
                     </div>
 
@@ -502,11 +502,11 @@
                         <!-- Signature Block with Date Row -->
                         <div class="pt-8 grid grid-cols-2 gap-12 text-center text-xs mt-6 break-inside-avoid">
                             <div class="space-y-2">
-                                <p>ลงชื่อ............................................ผู้รายงาน<br>(น.ส.รัชฎาวรรณ จันทร์สุข)<br>นักวิชาการสาธารณสุขปฏิบัติการ</p>
+                                <p>ลงชื่อ......................................................ผู้รายงาน<br>(น.ส.รัชฎาวรรณ จันทร์สุข)<br>นักวิชาการสาธารณสุขปฏิบัติการ</p>
                                 <p class="text-slate-500 pt-1">วันที่......../................/...........</p>
                             </div>
                             <div class="space-y-2">
-                                <p>ลงชื่อ............................................ผู้ตรวจสอบ<br>(นายปรัชญา วัฒนะ)<br>ผู้อนุญาต / ผู้อำนวยการ รพ.สต.น้ำปาย</p>
+                                <p>ลงชื่อ......................................................ผู้ตรวจสอบ<br>(นายปรัชญา วัฒนะ)<br>ผู้อนุญาต / ผู้อำนวยการ รพ.สต.น้ำปาย</p>
                                 <p class="text-slate-500 pt-1">วันที่......../................/...........</p>
                             </div>
                         </div>
@@ -618,7 +618,6 @@
 
         const monthsThai = {"10": "ตุลาคม", "11": "พฤศจิกายน", "12": "ธันวาคม", "01": "มกราคม", "02": "กุมภาพันธ์", "03": "มีนาคม", "04": "เมษายน", "05": "พฤษภาคม", "06": "มิถุนายน", "07": "กรกฎาคม", "08": "สิงหาคม", "09": "กันยายน"};
 
-        // Format Date to Thai Year (พ.ศ.) Format
         function formatThaiDate(dateStr) {
             if (!dateStr) return "-";
             const parts = dateStr.split('-');
@@ -793,8 +792,8 @@
                 document.getElementById('lot-selector-container').classList.remove('hidden');
                 matchedLots.forEach(item => {
                     const opt = document.createElement('option');
-                    opt.value = JSON.stringify({lot: item.lot, exp: item.exp, price: item.price, unit: item.unit, category: item.category});
-                    opt.innerText = `Lot: ${item.lot} | Exp: ${formatThaiDate(item.exp)} | ราคา: ${item.price} บาท (${item.unit})`;
+                    opt.value = JSON.stringify({lot: item.lot, exp: item.exp, price: item.price, unit: item.unit, category: item.category, qty: item.qty, subQty: item.subQty});
+                    opt.innerText = `Lot: ${item.lot} | Exp: ${formatThaiDate(item.exp)} | จำนวนรับ: ${item.qty} ${item.unit} | ราคา: ${item.price} บาท`;
                     selectEl.appendChild(opt);
                 });
             }
@@ -809,6 +808,8 @@
             document.getElementById('form-price').value = parseFloat(data.price).toFixed(2);
             document.getElementById('form-unit').value = data.unit;
             document.getElementById('form-category').value = data.category;
+            document.getElementById('form-qty').value = data.qty;
+            document.getElementById('form-sub-qty').value = data.subQty || 0;
         }
 
         function closeEntryModal() {
@@ -891,7 +892,6 @@
             document.getElementById('dash-sub-items').innerText = filteredSub.length + ' รายการ';
             document.getElementById('dash-balance-total').innerText = balanceVal.toLocaleString('th-TH', {minimumFractionDigits: 2}) + ' บาท';
 
-            // Category breakdown for summary table
             let drugIn = 0, drugOut = 0;
             let supplyIn = 0, supplyOut = 0;
             let matIn = 0, matOut = 0;
@@ -932,7 +932,6 @@
             document.getElementById('dash-table-total-out').innerText = totOut.toLocaleString('th-TH', {minimumFractionDigits: 2}) + ' บาท';
             document.getElementById('dash-table-total-bal').innerText = (totIn - totOut).toLocaleString('th-TH', {minimumFractionDigits: 2}) + ' บาท';
 
-            // Expiring alert (3 Months)
             const now = new Date();
             const threeMonthsLater = new Date();
             threeMonthsLater.setMonth(now.getMonth() + 3);
