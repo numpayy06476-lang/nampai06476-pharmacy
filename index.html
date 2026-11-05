@@ -15,9 +15,23 @@
         @media print {
             body * { visibility: hidden; }
             .print-container, .print-container * { visibility: visible; }
-            .print-container { position: absolute; left: 0; top: 0; width: 100%; }
+            .print-container { 
+                position: absolute; 
+                left: 0; 
+                top: 0; 
+                width: 100%; 
+                padding: 0 !important;
+                margin: 0 !important;
+                box-shadow: none !important;
+                border: none !important;
+                background: white !important;
+            }
             .no-print { display: none !important; }
-            @page { size: A4 portrait; margin: 1cm; }
+            @page { size: A4 portrait; margin: 1.5cm 1cm; }
+            table { font-size: 11pt !important; width: 100% !important; border-collapse: collapse !important; }
+            th, td { padding: 6px 8px !important; }
+            tr { break-inside: avoid; page-break-inside: avoid; }
+            .break-inside-avoid { break-inside: avoid; page-break-inside: avoid; }
         }
     </style>
 </head>
@@ -152,10 +166,71 @@
                         </div>
                     </div>
 
+                    <!-- Alerts Overview Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 no-print">
+                        <div class="bg-gradient-to-r from-amber-500 to-rose-600 text-white p-6 rounded-3xl shadow-lg flex items-center justify-between">
+                            <div>
+                                <div class="text-xs font-bold uppercase tracking-wider text-amber-100">⚠️ รายการยาใกล้หมดอายุ (ภายใน 90 วัน)</div>
+                                <div class="text-3xl font-extrabold mt-1" id="alert-expiring-count">0 รายการ</div>
+                            </div>
+                            <div class="text-4xl">⏳</div>
+                        </div>
+                        <div class="bg-gradient-to-r from-orange-500 to-amber-600 text-white p-6 rounded-3xl shadow-lg flex items-center justify-between">
+                            <div>
+                                <div class="text-xs font-bold uppercase tracking-wider text-amber-100">📦 รายการสินค้าคงเหลือต่ำ (≤ 10 หน่วย)</div>
+                                <div class="text-3xl font-extrabold mt-1" id="alert-low-stock-count">0 รายการ</div>
+                            </div>
+                            <div class="text-4xl">📉</div>
+                        </div>
+                    </div>
+
+                    <!-- Alert Details Section -->
+                    <div class="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 no-print space-y-6">
+                        <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                            <span>🚨 รายการยาและเวชภัณฑ์ที่ต้องเฝ้าระวัง</span>
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="text-xs font-bold text-rose-600 mb-3 flex items-center gap-1.5">
+                                    <span class="w-2 h-2 rounded-full bg-rose-500"></span> ใกล้หมดอายุ
+                                </h4>
+                                <div class="overflow-x-auto border border-slate-100 rounded-2xl">
+                                    <table class="w-full text-left text-xs">
+                                        <thead class="bg-rose-50 text-rose-900">
+                                            <tr>
+                                                <th class="p-2.5 font-semibold">ชื่อรายการ</th>
+                                                <th class="p-2.5 font-semibold">Lot No.</th>
+                                                <th class="p-2.5 font-semibold text-right">วันหมดอายุ</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="alert-expiring-tbody" class="divide-y divide-slate-100"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="text-xs font-bold text-amber-600 mb-3 flex items-center gap-1.5">
+                                    <span class="w-2 h-2 rounded-full bg-amber-500"></span> สินค้าคงเหลือต่ำ
+                                </h4>
+                                <div class="overflow-x-auto border border-slate-100 rounded-2xl">
+                                    <table class="w-full text-left text-xs">
+                                        <thead class="bg-amber-50 text-amber-900">
+                                            <tr>
+                                                <th class="p-2.5 font-semibold">ชื่อรายการ</th>
+                                                <th class="p-2.5 font-semibold">ประเภท</th>
+                                                <th class="p-2.5 font-semibold text-right">คงเหลือสุทธิ</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="alert-low-stock-tbody" class="divide-y divide-slate-100"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Category Summary Table (Printable Section) -->
                     <div id="print-dashboard-section" class="print-container bg-white rounded-3xl shadow-sm border border-slate-200/80 p-8 space-y-8">
-                        <div class="hidden print:block text-center mb-4">
-                            <h2 class="text-lg font-bold">โรงพยาบาลส่งเสริมสุขภาพตำบลน้ำปาย อำเภอแม่จริม จังหวัดน่าน</h2>
+                        <div class="hidden print:block text-center mb-6">
+                            <h2 class="text-base font-bold">โรงพยาบาลส่งเสริมสุขภาพตำบลน้ำปาย อำเภอแม่จริม จังหวัดน่าน</h2>
                             <p class="text-sm font-semibold text-slate-700 mt-1">รายงานสรุปมูลค่ารวมจำแนกตามประเภทเวชภัณฑ์และวัสดุ</p>
                         </div>
 
@@ -276,8 +351,8 @@
                     </div>
 
                     <div class="print-container bg-white rounded-3xl shadow-sm border border-slate-200/80 p-8 space-y-6">
-                        <div class="hidden print:block text-center mb-4">
-                            <h2 class="text-lg font-bold">โรงพยาบาลส่งเสริมสุขภาพตำบลน้ำปาย อำเภอแม่จริม จังหวัดน่าน</h2>
+                        <div class="hidden print:block text-center mb-6">
+                            <h2 class="text-base font-bold">โรงพยาบาลส่งเสริมสุขภาพตำบลน้ำปาย อำเภอแม่จริม จังหวัดน่าน</h2>
                             <p id="print-title-main" class="text-sm font-semibold text-slate-700 mt-1">รายงานการรับเข้า (ทุกรายการทั้งหมด)</p>
                         </div>
 
@@ -297,6 +372,13 @@
                                     </tr>
                                 </thead>
                                 <tbody id="main-stock-tbody"></tbody>
+                                <tfoot class="bg-emerald-50/80 border-t-2 border-emerald-200 font-bold">
+                                    <tr>
+                                        <td colspan="6" class="p-4 text-emerald-950 text-right">รวมมูลค่ารับเข้าทั้งสิ้น (ตามเงื่อนไขที่เลือก):</td>
+                                        <td class="p-4 text-right text-emerald-700 text-sm font-extrabold" id="main-total-sum-value">0.00 บาท</td>
+                                        <td colspan="2" class="no-print"></td>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
 
@@ -307,15 +389,15 @@
 
                         <div class="pt-8 grid grid-cols-3 gap-6 text-center text-xs mt-6 break-inside-avoid">
                             <div class="space-y-2">
-                                <p>ลงชื่อ.......................ผู้รับ<br>(น.ส.รัชฎาวรรณ จันทร์สุข)<br>นักวิชาการสาธารณสุขปฏิบัติการ</p>
+                                <p>ลงชื่อ.........................ผู้รับ<br>(น.ส.รัชฎาวรรณ จันทร์สุข)<br>นักวิชาการสาธารณสุขปฏิบัติการ</p>
                                 <p class="text-slate-500 pt-1">วันที่......../................/...........</p>
                             </div>
                             <div class="space-y-2">
-                                <p>ลงชื่อ.......................ผู้ตรวจสอบ<br>(น.ส.วรรณิสา จอยสุข)<br>นักวิชาการสาธารณสุข</p>
+                                <p>ลงชื่อ.........................ผู้ตรวจสอบ<br>(น.ส.วรรณิสา จอยสุข)<br>นักวิชาการสาธารณสุข</p>
                                 <p class="text-slate-500 pt-1">วันที่......../................/...........</p>
                             </div>
                             <div class="space-y-2">
-                                <p>ลงชื่อ.......................ผู้รับรองความถูกต้อง<br>(นายปรัชญา วัฒนะ)<br>ผู้อำนวยการ รพ.สต.น้ำปาย</p>
+                                <p>ลงชื่อ.........................ผู้รับรองความถูกต้อง<br>(นายปรัชญา วัฒนะ)<br>ผู้อำนวยการ รพ.สต.น้ำปาย</p>
                                 <p class="text-slate-500 pt-1">วันที่......../................/...........</p>
                             </div>
                         </div>
@@ -357,8 +439,8 @@
                     </div>
 
                     <div class="print-container bg-white rounded-3xl shadow-sm border border-slate-200/80 p-8 space-y-6">
-                        <div class="hidden print:block text-center mb-4">
-                            <h2 class="text-lg font-bold">โรงพยาบาลส่งเสริมสุขภาพตำบลน้ำปาย อำเภอแม่จริม จังหวัดน่าน</h2>
+                        <div class="hidden print:block text-center mb-6">
+                            <h2 class="text-base font-bold">โรงพยาบาลส่งเสริมสุขภาพตำบลน้ำปาย อำเภอแม่จริม จังหวัดน่าน</h2>
                             <p id="print-title-sub" class="text-sm font-semibold text-slate-700 mt-1">รายงานการเบิกจ่าย (ทุกรายการทั้งหมด)</p>
                         </div>
 
@@ -378,6 +460,13 @@
                                     </tr>
                                 </thead>
                                 <tbody id="sub-stock-tbody"></tbody>
+                                <tfoot class="bg-amber-50/80 border-t-2 border-amber-200 font-bold">
+                                    <tr>
+                                        <td colspan="6" class="p-4 text-amber-950 text-right">รวมมูลค่าเบิกจ่ายทั้งสิ้น (ตามเงื่อนไขที่เลือก):</td>
+                                        <td class="p-4 text-right text-amber-700 text-sm font-extrabold" id="sub-total-sum-value">0.00 บาท</td>
+                                        <td colspan="2" class="no-print"></td>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
 
@@ -408,7 +497,7 @@
                     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-3xl shadow-sm border border-slate-200/80 no-print">
                         <div>
                             <h2 class="text-xl font-bold text-slate-900">Stock Card คุมยอดคงเหลือรายตัวยา</h2>
-                            <p class="text-xs text-slate-500 mt-0.5">รวมรายการตามชื่อยา คำนวณรับเข้า จ่ายออก คงเหลืออัตโนมัติ</p>
+                            <p class="text-xs text-slate-500 mt-0.5">แสดงรายละเอียดการรับเข้าและเบิกจ่ายเรียงตามวัน/เดือน/ปี แยกคนละบรรทัดชัดเจน</p>
                         </div>
                         <div class="flex items-center gap-3">
                             <select id="card-filter-name" onchange="renderStockCard()" class="px-3.5 py-2 rounded-xl border border-slate-200 text-xs font-semibold bg-slate-50">
@@ -420,16 +509,16 @@
 
                     <div class="print-container bg-white rounded-3xl shadow-sm border border-slate-200/80 p-8 space-y-6">
                         <div class="hidden print:block text-center mb-6">
-                            <h2 class="text-lg font-bold">โรงพยาบาลส่งเสริมสุขภาพตำบลน้ำปาย อำเภอแม่จริม จังหวัดน่าน</h2>
-                            <p id="print-title-card" class="text-sm font-semibold text-slate-700 mt-1">Stock Card คุมคลังสินค้าและเวชภัณฑ์ (ทุกรายการทั้งหมด)</p>
+                            <h2 class="text-base font-bold">โรงพยาบาลส่งเสริมสุขภาพตำบลน้ำปาย อำเภอแม่จริม จังหวัดน่าน</h2>
+                            <p id="print-title-card" class="text-sm font-semibold text-slate-700 mt-1">Stock Card คุมคลังยาและเวชภัณฑ์</p>
                         </div>
 
                         <div class="overflow-x-auto">
                             <table class="w-full text-left border-collapse text-xs">
                                 <thead>
                                     <tr class="bg-slate-100/80 text-slate-700 border-b border-slate-200">
-                                        <th class="p-3.5 font-semibold">ชื่อรายการ</th>
-                                        <th class="p-3.5 font-semibold">ประเภท</th>
+                                        <th class="p-3.5 font-semibold">วัน/เดือน/ปี (พ.ศ.)</th>
+                                        <th class="p-3.5 font-semibold">ชื่อรายการ / ประเภท</th>
                                         <th class="p-3.5 font-semibold text-right">รับเข้า</th>
                                         <th class="p-3.5 font-semibold text-right">จ่ายออก</th>
                                         <th class="p-3.5 font-semibold text-right">คงเหลือสุทธิ</th>
@@ -450,7 +539,7 @@
                                 <p class="text-slate-500 pt-1">วันที่......../................/...........</p>
                             </div>
                             <div class="space-y-2">
-                                <p>ลงชื่อ......................................................ผู้ตรวจสอบ<br>(นายปรัชญา วัฒนะ)<br>ผู้อนุญาต / ผู้อำนวยการ รพ.สต.น้ำปาย</p>
+                                <p>ลงชื่อ......................................................ผู้ตรวจสอบ<br>(นายปรัชญา วัฒนะ)<br>ผู้อำนวยการ รพ.สต.น้ำปาย</p>
                                 <p class="text-slate-500 pt-1">วันที่......../................/...........</p>
                             </div>
                         </div>
@@ -498,7 +587,7 @@
 
                 <div id="lot-selector-container" class="hidden p-3.5 bg-emerald-50 rounded-2xl border border-emerald-200 space-y-2">
                     <label class="block font-semibold text-emerald-800 uppercase mb-1">เลือก Lot No. ที่มีในคลัง</label>
-                    <select id="form-lot-exp-select" onchange="onSelectLotExp()" class="w-full px-3 py-2.5 rounded-xl border border-emerald-300 text-xs bg-white font-medium">
+                    <select id="form-lot-exp-select" onchange="onSelectLotExp()" class="w-full px-3.5 py-2.5 rounded-xl border border-emerald-300 text-xs bg-white font-medium">
                         <option value="">-- เลือก Lot ที่พร้อมเบิกจ่าย --</option>
                     </select>
                 </div>
@@ -846,6 +935,68 @@
             }
         }
 
+        // --- EXPIRATION & LOW STOCK ALERT RENDERER ---
+        function renderAlerts() {
+            const today = new Date();
+            const targetExpDate = new Date();
+            targetExpDate.setDate(today.getDate() + 90);
+
+            const expiringItems = mainStock.filter(x => {
+                if (!x.exp) return false;
+                const expDate = new Date(x.exp);
+                return expDate <= targetExpDate;
+            });
+
+            document.getElementById('alert-expiring-count').innerText = `${expiringItems.length} รายการ`;
+            const expTbody = document.getElementById('alert-expiring-tbody');
+            expTbody.innerHTML = '';
+
+            if (expiringItems.length === 0) {
+                expTbody.innerHTML = `<tr><td colspan="3" class="p-3 text-center text-slate-400">ไม่มีรายการใกล้หมดอายุ</td></tr>`;
+            } else {
+                expiringItems.forEach(item => {
+                    expTbody.innerHTML += `
+                        <tr class="hover:bg-slate-50/50">
+                            <td class="p-2.5 font-semibold text-slate-800">${item.name}</td>
+                            <td class="p-2.5 text-slate-600">${item.lot}</td>
+                            <td class="p-2.5 text-right font-bold text-rose-600">${formatThaiDate(item.exp)}</td>
+                        </tr>
+                    `;
+                });
+            }
+
+            let aggregated = {};
+            mainStock.forEach(x => {
+                if (!aggregated[x.name]) aggregated[x.name] = { name: x.name, category: x.category, unit: x.unit, totalIn: 0, totalOut: 0 };
+                aggregated[x.name].totalIn += x.qty;
+            });
+            subStock.forEach(x => {
+                if (!aggregated[x.name]) aggregated[x.name] = { name: x.name, category: x.category, unit: x.unit, totalIn: 0, totalOut: 0 };
+                aggregated[x.name].totalOut += x.qty;
+            });
+
+            const lowStockItems = Object.values(aggregated).filter(x => (x.totalIn - x.totalOut) <= 10);
+
+            document.getElementById('alert-low-stock-count').innerText = `${lowStockItems.length} รายการ`;
+            const lowTbody = document.getElementById('alert-low-stock-tbody');
+            lowTbody.innerHTML = '';
+
+            if (lowStockItems.length === 0) {
+                lowTbody.innerHTML = `<tr><td colspan="3" class="p-3 text-center text-slate-400">ไม่มีรายการสินค้าคงเหลือต่ำ</td></tr>`;
+            } else {
+                lowStockItems.forEach(item => {
+                    const netBal = item.totalIn - item.totalOut;
+                    lowTbody.innerHTML += `
+                        <tr class="hover:bg-slate-50/50">
+                            <td class="p-2.5 font-semibold text-slate-800">${item.name}</td>
+                            <td class="p-2.5 text-slate-500">${item.category}</td>
+                            <td class="p-2.5 text-right font-bold text-amber-600">${netBal.toLocaleString()} ${item.unit}</td>
+                        </tr>
+                    `;
+                });
+            }
+        }
+
         function renderDashboard() {
             const filterYear = document.getElementById('dash-filter-year').value;
             const filterMonth = document.getElementById('dash-filter-month').value;
@@ -932,6 +1083,7 @@
             document.getElementById('dash-table-total-bal').innerText = totBal.toLocaleString('th-TH', {minimumFractionDigits: 2}) + ' บาท';
 
             renderMonthlyOutflowTable(filterYear);
+            renderAlerts();
         }
 
         function renderMonthlyOutflowTable(filterYear) {
@@ -999,6 +1151,9 @@
                 return catMatch && yearMatch && monthMatch;
             });
 
+            let totalSum = filtered.reduce((acc, curr) => acc + (curr.qty * curr.price), 0);
+            document.getElementById('main-total-sum-value').innerText = totalSum.toLocaleString('th-TH', {minimumFractionDigits: 2}) + ' บาท';
+
             const start = (mainPage - 1) * rowsPerPage;
             const paginated = filtered.slice(start, start + rowsPerPage);
             
@@ -1044,6 +1199,9 @@
                 return catMatch && yearMatch && monthMatch;
             });
 
+            let totalSum = filtered.reduce((acc, curr) => acc + (curr.qty * curr.price), 0);
+            document.getElementById('sub-total-sum-value').innerText = totalSum.toLocaleString('th-TH', {minimumFractionDigits: 2}) + ' บาท';
+
             const start = (subPage - 1) * rowsPerPage;
             const paginated = filtered.slice(start, start + rowsPerPage);
             
@@ -1085,50 +1243,68 @@
                 filterDropdown.innerHTML += `<option value="${n}" ${selectedDrug === n ? 'selected' : ''}>${n}</option>`;
             });
 
-            let aggregated = {};
-
-            mainStock.forEach(x => {
-                if (!aggregated[x.name]) {
-                    aggregated[x.name] = { name: x.name, category: x.category, unit: x.unit, totalIn: 0, totalOut: 0 };
-                }
-                aggregated[x.name].totalIn += x.qty;
+            let movements = [];
+            
+            let targetMains = selectedDrug === 'all' ? mainStock : mainStock.filter(x => x.name === selectedDrug);
+            targetMains.forEach(x => {
+                movements.push({
+                    date: x.date || '0000-00-00',
+                    name: x.name,
+                    category: x.category,
+                    unit: x.unit,
+                    inQty: x.qty,
+                    outQty: 0,
+                    lot: x.lot
+                });
             });
 
-            subStock.forEach(x => {
-                if (!aggregated[x.name]) {
-                    aggregated[x.name] = { name: x.name, category: x.category, unit: x.unit, totalIn: 0, totalOut: 0 };
-                }
-                aggregated[x.name].totalOut += x.qty;
+            let targetSubs = selectedDrug === 'all' ? subStock : subStock.filter(x => x.name === selectedDrug);
+            targetSubs.forEach(x => {
+                movements.push({
+                    date: x.date || '0000-00-00',
+                    name: x.name,
+                    category: x.category,
+                    unit: x.unit,
+                    inQty: 0,
+                    outQty: x.qty,
+                    lot: x.lot
+                });
             });
 
-            let list = Object.values(aggregated);
-            if (selectedDrug !== 'all') {
-                list = list.filter(x => x.name === selectedDrug);
-            }
+            movements.sort((a, b) => new Date(a.date) - new Date(b.date));
 
             const start = (cardPage - 1) * rowsPerPage;
-            const paginated = list.slice(start, start + rowsPerPage);
+            const paginated = movements.slice(start, start + rowsPerPage);
 
             const tbody = document.getElementById('stock-card-tbody');
             tbody.innerHTML = '';
 
-            if (list.length === 0) {
+            if (movements.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="5" class="p-6 text-center text-slate-400">ยังไม่มีรายการเคลื่อนไหว</td></tr>`;
             } else {
+                let runningBalances = {};
+                movements.forEach(m => {
+                    if (!runningBalances[m.name]) runningBalances[m.name] = 0;
+                    runningBalances[m.name] += (m.inQty - m.outQty);
+                    m.balance = runningBalances[m.name];
+                });
+
                 paginated.forEach(row => {
-                    const balance = row.totalIn - row.totalOut;
                     tbody.innerHTML += `
                         <tr class="border-b border-slate-100 hover:bg-slate-50/50">
-                            <td class="p-3.5 font-semibold text-slate-900">${row.name}</td>
-                            <td class="p-3.5"><span class="px-2.5 py-1 bg-slate-100 rounded-lg font-medium text-slate-700">${row.category}</span></td>
-                            <td class="p-3.5 text-right text-emerald-600 font-medium">${row.totalIn.toLocaleString()} ${row.unit}</td>
-                            <td class="p-3.5 text-right text-amber-600 font-medium">${row.totalOut.toLocaleString()} ${row.unit}</td>
-                            <td class="p-3.5 text-right font-bold text-slate-800">${balance.toLocaleString()} ${row.unit}</td>
+                            <td class="p-3.5 font-medium text-slate-700">${formatThaiDate(row.date)}</td>
+                            <td class="p-3.5">
+                                <div class="font-semibold text-slate-900">${row.name}</div>
+                                <div class="text-[11px] text-slate-500">ประเภท: ${row.category} | Lot: ${row.lot}</div>
+                            </td>
+                            <td class="p-3.5 text-right text-emerald-600 font-semibold">${row.inQty > 0 ? row.inQty.toLocaleString() + ' ' + row.unit : '-'}</td>
+                            <td class="p-3.5 text-right text-amber-600 font-semibold">${row.outQty > 0 ? row.outQty.toLocaleString() + ' ' + row.unit : '-'}</td>
+                            <td class="p-3.5 text-right font-bold text-slate-900">${row.balance.toLocaleString()} ${row.unit}</td>
                         </tr>
                     `;
                 });
             }
-            renderPagination('card', list.length, cardPage);
+            renderPagination('card', movements.length, cardPage);
         }
 
         function printAllPages(type) {
@@ -1145,6 +1321,9 @@
                     return catMatch && yearMatch && monthMatch;
                 });
                 
+                let totalSum = filtered.reduce((acc, curr) => acc + (curr.qty * curr.price), 0);
+                document.getElementById('main-total-sum-value').innerText = totalSum.toLocaleString('th-TH', {minimumFractionDigits: 2}) + ' บาท';
+
                 const tbody = document.getElementById('main-stock-tbody');
                 tbody.innerHTML = '';
                 filtered.forEach(x => {
@@ -1180,6 +1359,9 @@
                     return catMatch && yearMatch && monthMatch;
                 });
 
+                let totalSum = filtered.reduce((acc, curr) => acc + (curr.qty * curr.price), 0);
+                document.getElementById('sub-total-sum-value').innerText = totalSum.toLocaleString('th-TH', {minimumFractionDigits: 2}) + ' บาท';
+
                 const tbody = document.getElementById('sub-stock-tbody');
                 tbody.innerHTML = '';
                 filtered.forEach(x => {
@@ -1204,29 +1386,37 @@
 
             } else if (type === 'card') {
                 const selectedDrug = document.getElementById('card-filter-name').value;
-                let aggregated = {};
-                mainStock.forEach(x => {
-                    if (!aggregated[x.name]) aggregated[x.name] = { name: x.name, category: x.category, unit: x.unit, totalIn: 0, totalOut: 0 };
-                    aggregated[x.name].totalIn += x.qty;
+                let movements = [];
+                let targetMains = selectedDrug === 'all' ? mainStock : mainStock.filter(x => x.name === selectedDrug);
+                targetMains.forEach(x => {
+                    movements.push({ date: x.date || '0000-00-00', name: x.name, category: x.category, unit: x.unit, inQty: x.qty, outQty: 0, lot: x.lot });
                 });
-                subStock.forEach(x => {
-                    if (!aggregated[x.name]) aggregated[x.name] = { name: x.name, category: x.category, unit: x.unit, totalIn: 0, totalOut: 0 };
-                    aggregated[x.name].totalOut += x.qty;
+                let targetSubs = selectedDrug === 'all' ? subStock : subStock.filter(x => x.name === selectedDrug);
+                targetSubs.forEach(x => {
+                    movements.push({ date: x.date || '0000-00-00', name: x.name, category: x.category, unit: x.unit, inQty: 0, outQty: x.qty, lot: x.lot });
                 });
-                let list = Object.values(aggregated);
-                if (selectedDrug !== 'all') list = list.filter(x => x.name === selectedDrug);
+                movements.sort((a, b) => new Date(a.date) - new Date(b.date));
 
                 const tbody = document.getElementById('stock-card-tbody');
                 tbody.innerHTML = '';
-                list.forEach(row => {
-                    const balance = row.totalIn - row.totalOut;
+                let runningBalances = {};
+                movements.forEach(m => {
+                    if (!runningBalances[m.name]) runningBalances[m.name] = 0;
+                    runningBalances[m.name] += (m.inQty - m.outQty);
+                    m.balance = runningBalances[m.name];
+                });
+
+                movements.forEach(row => {
                     tbody.innerHTML += `
                         <tr class="border-b border-slate-100">
-                            <td class="p-3.5 font-semibold text-slate-900">${row.name}</td>
-                            <td class="p-3.5"><span class="px-2.5 py-1 bg-slate-100 rounded-lg font-medium text-slate-700">${row.category}</span></td>
-                            <td class="p-3.5 text-right text-emerald-600 font-medium">${row.totalIn.toLocaleString()} ${row.unit}</td>
-                            <td class="p-3.5 text-right text-amber-600 font-medium">${row.totalOut.toLocaleString()} ${row.unit}</td>
-                            <td class="p-3.5 text-right font-bold text-slate-800">${balance.toLocaleString()} ${row.unit}</td>
+                            <td class="p-3.5 font-medium text-slate-700">${formatThaiDate(row.date)}</td>
+                            <td class="p-3.5">
+                                <div class="font-semibold text-slate-900">${row.name}</div>
+                                <div class="text-[11px] text-slate-500">ประเภท: ${row.category} | Lot: ${row.lot}</div>
+                            </td>
+                            <td class="p-3.5 text-right text-emerald-600 font-semibold">${row.inQty > 0 ? row.inQty.toLocaleString() + ' ' + row.unit : '-'}</td>
+                            <td class="p-3.5 text-right text-amber-600 font-semibold">${row.outQty > 0 ? row.outQty.toLocaleString() + ' ' + row.unit : '-'}</td>
+                            <td class="p-3.5 text-right font-bold text-slate-900">${row.balance.toLocaleString()} ${row.unit}</td>
                         </tr>
                     `;
                 });
@@ -1265,11 +1455,11 @@
 
         function loadDemoData() {
             mainStock = [
-                {id: 1, category: 'ยา', action: 'รับเข้า', name: 'Paracetamol 500mg', qty: 100, unit: 'กล่อง', price: '120.00', date: '2026-10-01', lot: 'LOT2026-01', exp: '2028-03-01'},
-                {id: 2, category: 'เวชภัณฑ์มิใช่ยา', action: 'รับเข้า', name: 'Mask Surgical', qty: 50, unit: 'กล่อง', price: '55.00', date: '2026-10-02', lot: 'MSK-01', exp: '2028-01-01'}
+                {id: 1, category: 'ยา', action: 'รับเข้า', name: 'Paracetamol 500mg', qty: 100, unit: 'กล่อง', price: '120.00', date: '2026-10-01', lot: 'LOT2026-01', exp: '2026-12-01'},
+                {id: 2, category: 'เวชภัณฑ์มิใช่ยา', action: 'รับเข้า', name: 'Mask Surgical', qty: 8, unit: 'กล่อง', price: '55.00', date: '2026-10-02', lot: 'MSK-01', exp: '2028-01-01'}
             ];
             subStock = [
-                {id: 101, category: 'ยา', action: 'จ่ายออก', name: 'Paracetamol 500mg', qty: 10, unit: 'กล่อง', price: '120.00', date: '2026-10-05', lot: 'LOT2026-01', exp: '2028-03-01'}
+                {id: 101, category: 'ยา', action: 'จ่ายออก', name: 'Paracetamol 500mg', qty: 10, unit: 'กล่อง', price: '120.00', date: '2026-10-05', lot: 'LOT2026-01', exp: '2026-12-01'}
             ];
             localStorage.setItem('nampai_main_stock', JSON.stringify(mainStock));
             localStorage.setItem('nampai_sub_stock', JSON.stringify(subStock));
