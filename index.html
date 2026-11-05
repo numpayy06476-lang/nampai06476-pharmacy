@@ -21,35 +21,38 @@
         }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col">
+<body class="bg-slate-100/70 text-slate-800 antialiased min-h-screen flex flex-col">
 
     <!-- Toast Notification -->
-    <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-emerald-600 text-white px-6 py-3 rounded-xl shadow-2xl flex items-center gap-3">
+    <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-emerald-700 text-white px-6 py-3.5 rounded-2xl shadow-xl flex items-center gap-3 border border-emerald-500/30">
         <svg class="w-6 h-6 text-emerald-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
         <span id="toast-message" class="font-medium text-sm">บันทึกข้อมูลสำเร็จ</span>
     </div>
 
+    <!-- Hidden File Input for Restore -->
+    <input type="file" id="restore-file-input" accept=".json" class="hidden" onchange="handleFileRestore(event)">
+
     <!-- Login Screen -->
-    <div id="auth-screen" class="fixed inset-0 z-50 bg-gradient-to-br from-emerald-900 via-teal-900 to-slate-900 flex items-center justify-center p-4">
-        <div class="bg-white/95 backdrop-blur-md rounded-3xl shadow-2xl w-full max-w-md p-8 border border-emerald-100">
+    <div id="auth-screen" class="fixed inset-0 z-50 bg-gradient-to-br from-emerald-950 via-teal-900 to-slate-900 flex items-center justify-center p-4">
+        <div class="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl w-full max-w-md p-8 border border-emerald-100">
             <div class="text-center mb-8">
-                <div class="inline-flex items-center justify-center w-16 h-16 bg-emerald-100 rounded-2xl text-emerald-600 mb-4 shadow-inner">
+                <div class="inline-flex items-center justify-center w-16 h-16 bg-emerald-100/80 rounded-2xl text-emerald-700 mb-4 shadow-inner">
                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
                 </div>
                 <h1 class="text-2xl font-bold text-slate-900">ระบบเภสัชกรรมปฐมภูมิ</h1>
-                <p class="text-sm text-emerald-700 font-medium mt-1">รพ.สต.น้ำปาย อ.แม่จริม จ.น่าน</p>
+                <p class="text-xs text-emerald-700 font-semibold mt-1 tracking-wide">โรงพยาบาลส่งเสริมสุขภาพตำบลน้ำปาย จ.น่าน</p>
             </div>
 
             <form id="login-form" onsubmit="handleLogin(event)" class="space-y-4">
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">ชื่อผู้ใช้งาน (Username)</label>
-                    <input type="text" id="login-user" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-emerald-500 text-sm bg-slate-50" placeholder="ระบุชื่อผู้ใช้งาน">
+                    <input type="text" id="login-user" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-emerald-500 text-sm bg-slate-50/50" placeholder="ระบุชื่อผู้ใช้งาน">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">รหัสผ่าน (Password)</label>
-                    <input type="password" id="login-pass" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-emerald-500 text-sm bg-slate-50" placeholder="••••••••">
+                    <input type="password" id="login-pass" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-emerald-500 text-sm bg-slate-50/50" placeholder="••••••••">
                 </div>
-                <button type="submit" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl shadow-lg transition-all text-sm">เข้าสู่ระบบ</button>
+                <button type="submit" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl shadow-lg shadow-emerald-600/20 transition-all text-sm">เข้าสู่ระบบ</button>
                 <div class="pt-2 text-center">
                     <button type="button" onclick="loadDemoData()" class="text-xs text-slate-400 hover:text-emerald-600 underline">โหลดข้อมูลตัวอย่างเพื่อทดลองใช้</button>
                 </div>
@@ -59,49 +62,58 @@
 
     <!-- Main Layout -->
     <div id="app-container" class="flex flex-1 hidden">
-        <aside class="w-72 bg-emerald-900 text-white flex flex-col shadow-xl no-print z-20">
-            <div class="p-6 border-b border-emerald-800/60 flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-emerald-800 flex items-center justify-center text-emerald-300 font-bold shadow-inner">🏥</div>
+        <aside class="w-72 bg-emerald-950 text-white flex flex-col shadow-2xl no-print z-20 border-r border-emerald-900/40">
+            <div class="p-6 border-b border-emerald-900/60 flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-emerald-800/80 flex items-center justify-center text-emerald-300 font-bold shadow-inner">🏥</div>
                 <div>
-                    <h2 class="font-bold text-sm tracking-wide">รพ.สต.น้ำปาย</h2>
+                    <h2 class="font-bold text-sm tracking-wide text-emerald-50">รพ.สต.น้ำปาย</h2>
                     <p class="text-[11px] text-emerald-300 font-medium">ระบบเภสัชกรรมปฐมภูมิ</p>
                 </div>
             </div>
             
-            <nav class="flex-1 p-4 space-y-1.5 overflow-y-auto">
-                <button onclick="switchTab('dashboard')" id="nav-dashboard" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all bg-emerald-800 text-white shadow-md">📊 แดชบอร์ดภาพรวม</button>
-                <button onclick="switchTab('main-stock')" id="nav-main-stock" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all text-emerald-200 hover:bg-emerald-800/50 hover:text-white">📦 รายการรับเข้า</button>
-                <button onclick="switchTab('sub-stock')" id="nav-sub-stock" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all text-emerald-200 hover:bg-emerald-800/50 hover:text-white">💊 รายการเบิกจ่าย</button>
-                <button onclick="switchTab('stock-card')" id="nav-stock-card" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all text-emerald-200 hover:bg-emerald-800/50 hover:text-white">📑 Stock Card</button>
+            <nav class="flex-1 p-4 space-y-2 overflow-y-auto">
+                <button onclick="switchTab('dashboard')" id="nav-dashboard" class="w-full flex items-center gap-3 px-4 py-3 rounded-2xl font-medium text-sm transition-all bg-emerald-800 text-white shadow-md">📊 แดชบอร์ดภาพรวม</button>
+                <button onclick="switchTab('main-stock')" id="nav-main-stock" class="w-full flex items-center gap-3 px-4 py-3 rounded-2xl font-medium text-sm transition-all text-emerald-200 hover:bg-emerald-900/60 hover:text-white">📦 รายการรับเข้า</button>
+                <button onclick="switchTab('sub-stock')" id="nav-sub-stock" class="w-full flex items-center gap-3 px-4 py-3 rounded-2xl font-medium text-sm transition-all text-emerald-200 hover:bg-emerald-900/60 hover:text-white">💊 รายการเบิกจ่าย</button>
+                <button onclick="switchTab('stock-card')" id="nav-stock-card" class="w-full flex items-center gap-3 px-4 py-3 rounded-2xl font-medium text-sm transition-all text-emerald-200 hover:bg-emerald-900/60 hover:text-white">📑 Stock Card</button>
             </nav>
 
-            <div class="p-4 border-t border-emerald-800/60">
-                <button onclick="handleLogout()" class="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-800/50 hover:bg-red-600/80 text-emerald-200 hover:text-white text-xs font-semibold transition-all">ออกจากระบบ</button>
+            <!-- Backup & Restore Actions -->
+            <div class="p-4 border-t border-emerald-900/60 space-y-2 bg-emerald-950/80">
+                <div class="grid grid-cols-2 gap-2">
+                    <button onclick="backupDataJSON()" class="flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-emerald-900/80 hover:bg-emerald-800 text-emerald-100 text-xs font-semibold transition-all shadow-xs border border-emerald-700/30" title="สำรองข้อมูลเป็นไฟล์ JSON">
+                        📥 สำรองข้อมูล
+                    </button>
+                    <button onclick="triggerRestoreJSON()" class="flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-emerald-900/80 hover:bg-emerald-800 text-emerald-100 text-xs font-semibold transition-all shadow-xs border border-emerald-700/30" title="กู้คืนข้อมูลจากไฟล์ JSON">
+                        📤 กู้คืนข้อมูล
+                    </button>
+                </div>
+                <button onclick="handleLogout()" class="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-slate-900/60 hover:bg-red-600/80 text-emerald-200 hover:text-white text-xs font-semibold transition-all">ออกจากระบบ</button>
             </div>
         </aside>
 
-        <main class="flex-1 flex flex-col min-w-0 overflow-y-auto bg-slate-50">
+        <main class="flex-1 flex flex-col min-w-0 overflow-y-auto bg-slate-100/70">
             <header class="bg-white border-b border-slate-200 h-16 flex items-center justify-between px-8 no-print shadow-xs z-10">
                 <div class="flex items-center gap-3 text-slate-600 text-sm font-medium">
                     <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
                     อำเภอแม่จริม จังหวัดน่าน
                 </div>
-                <div class="flex items-center gap-4 text-xs font-semibold text-slate-700 bg-slate-100 px-4 py-2 rounded-xl border border-slate-200">
+                <div class="flex items-center gap-4 text-xs font-semibold text-slate-700 bg-slate-50 px-4 py-2 rounded-xl border border-slate-200">
                     📅 วันที่ปัจจุบัน: <span id="real-current-date" class="text-emerald-700 font-bold"></span>
                 </div>
             </header>
 
-            <div class="p-8 max-w-7xl w-full mx-auto flex-1">
+            <div class="p-8 max-w-7xl w-full mx-auto flex-1 space-y-6">
                 
                 <!-- 1. DASHBOARD TAB -->
                 <div id="tab-content-dashboard" class="space-y-6">
-                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-3xl shadow-sm border border-slate-200 no-print">
                         <div>
                             <h2 class="text-xl font-bold text-slate-900">แดชบอร์ดสรุปภาพรวมระบบยาและเวชภัณฑ์</h2>
                             <p class="text-xs text-slate-500 mt-0.5">โรงพยาบาลส่งเสริมสุขภาพตำบลน้ำปาย</p>
                         </div>
-                        <div class="flex items-center gap-3 no-print">
-                            <select id="dash-filter-year" onchange="renderDashboard()" class="px-3 py-2 rounded-xl border border-slate-200 text-xs font-semibold bg-slate-50">
+                        <div class="flex items-center gap-3">
+                            <select id="dash-filter-year" onchange="renderDashboard()" class="px-3.5 py-2 rounded-xl border border-slate-200 text-xs font-semibold bg-slate-50">
                                 <option value="all">ทุกปีงบประมาณ</option>
                                 <option value="2570">ปีงบประมาณ 2570</option>
                                 <option value="2571">ปีงบประมาณ 2571</option>
@@ -109,122 +121,141 @@
                                 <option value="2573">ปีงบประมาณ 2573</option>
                                 <option value="2574">ปีงบประมาณ 2574</option>
                             </select>
-                            <select id="dash-filter-month" onchange="renderDashboard()" class="px-3 py-2 rounded-xl border border-slate-200 text-xs font-semibold bg-slate-50">
+                            <select id="dash-filter-month" onchange="renderDashboard()" class="px-3.5 py-2 rounded-xl border border-slate-200 text-xs font-semibold bg-slate-50">
                                 <option value="all">ทุกเดือน</option>
                                 <option value="10">ตุลาคม</option><option value="11">พฤศจิกายน</option><option value="12">ธันวาคม</option>
                                 <option value="01">มกราคม</option><option value="02">กุมภาพันธ์</option><option value="03">มีนาคม</option>
                                 <option value="04">เมษายน</option><option value="05">พฤษภาคม</option><option value="06">มิถุนายน</option>
                                 <option value="07">กรกฎาคม</option><option value="08">สิงหาคม</option><option value="09">กันยายน</option>
                             </select>
-                            <button onclick="window.print()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold shadow-md">🖨️ พิมพ์หน้านี้</button>
+                            <button onclick="printDashboard()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold shadow-md shadow-emerald-600/20">🖨️ พิมพ์ตารางสรุป</button>
                         </div>
                     </div>
 
                     <!-- Summary Cards -->
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                        <div class="bg-gradient-to-br from-slate-700 to-slate-800 text-white p-5 rounded-2xl shadow-lg">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 no-print">
+                        <div class="bg-gradient-to-br from-slate-700 to-slate-800 text-white p-6 rounded-3xl shadow-xl shadow-slate-700/10">
                             <div class="text-[11px] font-semibold uppercase tracking-wider text-slate-300 mb-1">มูลค่ารวมยอดยกมา</div>
                             <div class="text-2xl font-bold" id="dash-carry-total">0.00 บาท</div>
                         </div>
-                        <div class="bg-gradient-to-br from-emerald-600 to-teal-700 text-white p-5 rounded-2xl shadow-lg">
-                            <div class="text-[11px] font-semibold uppercase tracking-wider text-emerald-200 mb-1">มูลค่ารวมรับเข้า</div>
+                        <div class="bg-gradient-to-br from-emerald-600 to-teal-700 text-white p-6 rounded-3xl shadow-xl shadow-emerald-600/15">
+                            <div class="text-[11px] font-semibold uppercase tracking-wider text-emerald-100 mb-1">มูลค่ารวมรับเข้า</div>
                             <div class="text-2xl font-bold" id="dash-main-total">0.00 บาท</div>
                         </div>
-                        <div class="bg-gradient-to-br from-teal-700 to-cyan-800 text-white p-5 rounded-2xl shadow-lg">
-                            <div class="text-[11px] font-semibold uppercase tracking-wider text-teal-200 mb-1">มูลค่ารวมจ่ายออก</div>
+                        <div class="bg-gradient-to-br from-teal-700 to-cyan-800 text-white p-6 rounded-3xl shadow-xl shadow-teal-700/15">
+                            <div class="text-[11px] font-semibold uppercase tracking-wider text-teal-100 mb-1">มูลค่ารวมจ่ายออก</div>
                             <div class="text-2xl font-bold" id="dash-sub-total">0.00 บาท</div>
                         </div>
-                        <div class="bg-gradient-to-br from-emerald-900 to-slate-900 text-white p-5 rounded-2xl shadow-lg">
+                        <div class="bg-gradient-to-br from-emerald-900 to-slate-900 text-white p-6 rounded-3xl shadow-xl shadow-emerald-950/20">
                             <div class="text-[11px] font-semibold uppercase tracking-wider text-emerald-300 mb-1">มูลค่าคงเหลือในคลัง</div>
                             <div class="text-2xl font-bold" id="dash-balance-total">0.00 บาท</div>
                         </div>
                     </div>
 
-                    <!-- Category Summary Table -->
-                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
-                        <h3 class="font-bold text-slate-900 text-sm mb-4">📊 ตารางสรุปมูลค่ารวมจำแนกตามประเภท</h3>
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left border-collapse text-xs">
-                                <thead>
-                                    <tr class="bg-slate-100 text-slate-700 border-b border-slate-200">
-                                        <th class="p-3.5 font-bold">รายการ</th>
-                                        <th class="p-3.5 font-bold text-right text-slate-700">ยอดยกมา</th>
-                                        <th class="p-3.5 font-bold text-right text-emerald-700">มูลค่ารับเข้า</th>
-                                        <th class="p-3.5 font-bold text-right text-amber-700">มูลค่าเบิกจ่าย</th>
-                                        <th class="p-3.5 font-bold text-right text-slate-800">มูลค่าคงเหลือ</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y divide-slate-100">
-                                    <tr class="hover:bg-slate-50">
-                                        <td class="p-3.5 font-medium">ค่ายา</td>
-                                        <td class="p-3.5 text-right font-semibold text-slate-600" id="dash-table-drug-carry">0.00 บาท</td>
-                                        <td class="p-3.5 text-right font-semibold text-emerald-600" id="dash-table-drug-in">0.00 บาท</td>
-                                        <td class="p-3.5 text-right font-semibold text-amber-600" id="dash-table-drug-out">0.00 บาท</td>
-                                        <td class="p-3.5 text-right font-bold text-slate-900" id="dash-table-drug-bal">0.00 บาท</td>
-                                    </tr>
-                                    <tr class="hover:bg-slate-50">
-                                        <td class="p-3.5 font-medium">ค่าเวชภัณฑ์มิใช่ยา</td>
-                                        <td class="p-3.5 text-right font-semibold text-slate-600" id="dash-table-supply-carry">0.00 บาท</td>
-                                        <td class="p-3.5 text-right font-semibold text-emerald-600" id="dash-table-supply-in">0.00 บาท</td>
-                                        <td class="p-3.5 text-right font-semibold text-amber-600" id="dash-table-supply-out">0.00 บาท</td>
-                                        <td class="p-3.5 text-right font-bold text-slate-900" id="dash-table-supply-bal">0.00 บาท</td>
-                                    </tr>
-                                    <tr class="hover:bg-slate-50">
-                                        <td class="p-3.5 font-medium">ค่าวัสดุทางการแพทย์</td>
-                                        <td class="p-3.5 text-right font-semibold text-slate-600" id="dash-table-mat-carry">0.00 บาท</td>
-                                        <td class="p-3.5 text-right font-semibold text-emerald-600" id="dash-table-mat-in">0.00 บาท</td>
-                                        <td class="p-3.5 text-right font-semibold text-amber-600" id="dash-table-mat-out">0.00 บาท</td>
-                                        <td class="p-3.5 text-right font-bold text-slate-900" id="dash-table-mat-bal">0.00 บาท</td>
-                                    </tr>
-                                    <tr class="bg-emerald-50/70 border-t-2 border-emerald-200 font-bold">
-                                        <td class="p-4 text-emerald-900 text-sm">รวมมูลค่าทั้งหมด</td>
-                                        <td class="p-4 text-right text-slate-800 text-sm" id="dash-table-total-carry">0.00 บาท</td>
-                                        <td class="p-4 text-right text-emerald-700 text-sm" id="dash-table-total-in">0.00 บาท</td>
-                                        <td class="p-4 text-right text-amber-700 text-sm" id="dash-table-total-out">0.00 บาท</td>
-                                        <td class="p-4 text-right text-emerald-900 text-base font-extrabold" id="dash-table-total-bal">0.00 บาท</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                    <!-- Category Summary Table (Printable Section) -->
+                    <div id="print-dashboard-section" class="print-container bg-white rounded-3xl shadow-sm border border-slate-200/80 p-8 space-y-8">
+                        <div class="hidden print:block text-center mb-4">
+                            <h2 class="text-lg font-bold">โรงพยาบาลส่งเสริมสุขภาพตำบลน้ำปาย อำเภอแม่จริม จังหวัดน่าน</h2>
+                            <p class="text-sm font-semibold text-slate-700 mt-1">รายงานสรุปมูลค่ารวมจำแนกตามประเภทเวชภัณฑ์และวัสดุ</p>
                         </div>
-                    </div>
 
-                    <!-- Monthly Outflow Summary Table -->
-                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
-                        <h3 class="font-bold text-slate-900 text-sm mb-4">📈 รายงานสรุปยอดจ่ายออกรายเดือนแยกตามประเภท</h3>
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left border-collapse text-xs">
-                                <thead>
-                                    <tr class="bg-slate-100 text-slate-700 border-b border-slate-200">
-                                        <th class="p-3.5 font-bold">ประจำเดือน</th>
-                                        <th class="p-3.5 font-bold text-right text-slate-700">ค่ายา</th>
-                                        <th class="p-3.5 font-bold text-right text-slate-700">ค่าเวชภัณฑ์มิใช่ยา</th>
-                                        <th class="p-3.5 font-bold text-right text-slate-700">ค่าวัสดุทางการแพทย์</th>
-                                        <th class="p-3.5 font-bold text-right text-emerald-700">รวมมูลค่าจ่ายออก</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="dash-monthly-out-tbody" class="divide-y divide-slate-100">
-                                    <!-- Populated dynamically -->
-                                </tbody>
-                            </table>
+                        <div>
+                            <h3 class="font-bold text-slate-900 text-sm mb-4">📊 ตารางสรุปมูลค่ารวมจำแนกตามประเภท</h3>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left border-collapse text-xs">
+                                    <thead>
+                                        <tr class="bg-slate-100/80 text-slate-700 border-b border-slate-200">
+                                            <th class="p-3.5 font-bold">รายการ</th>
+                                            <th class="p-3.5 font-bold text-right text-slate-700">ยอดยกมา</th>
+                                            <th class="p-3.5 font-bold text-right text-emerald-700">มูลค่ารับเข้า</th>
+                                            <th class="p-3.5 font-bold text-right text-amber-700">มูลค่าเบิกจ่าย</th>
+                                            <th class="p-3.5 font-bold text-right text-slate-800">มูลค่าคงเหลือ</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-slate-100">
+                                        <tr class="hover:bg-slate-50/50">
+                                            <td class="p-3.5 font-medium">ค่ายา</td>
+                                            <td class="p-3.5 text-right font-semibold text-slate-600" id="dash-table-drug-carry">0.00 บาท</td>
+                                            <td class="p-3.5 text-right font-semibold text-emerald-600" id="dash-table-drug-in">0.00 บาท</td>
+                                            <td class="p-3.5 text-right font-semibold text-amber-600" id="dash-table-drug-out">0.00 บาท</td>
+                                            <td class="p-3.5 text-right font-bold text-slate-900" id="dash-table-drug-bal">0.00 บาท</td>
+                                        </tr>
+                                        <tr class="hover:bg-slate-50/50">
+                                            <td class="p-3.5 font-medium">ค่าเวชภัณฑ์มิใช่ยา</td>
+                                            <td class="p-3.5 text-right font-semibold text-slate-600" id="dash-table-supply-carry">0.00 บาท</td>
+                                            <td class="p-3.5 text-right font-semibold text-emerald-600" id="dash-table-supply-in">0.00 บาท</td>
+                                            <td class="p-3.5 text-right font-semibold text-amber-600" id="dash-table-supply-out">0.00 บาท</td>
+                                            <td class="p-3.5 text-right font-bold text-slate-900" id="dash-table-supply-bal">0.00 บาท</td>
+                                        </tr>
+                                        <tr class="hover:bg-slate-50/50">
+                                            <td class="p-3.5 font-medium">ค่าวัสดุทางการแพทย์</td>
+                                            <td class="p-3.5 text-right font-semibold text-slate-600" id="dash-table-mat-carry">0.00 บาท</td>
+                                            <td class="p-3.5 text-right font-semibold text-emerald-600" id="dash-table-mat-in">0.00 บาท</td>
+                                            <td class="p-3.5 text-right font-semibold text-amber-600" id="dash-table-mat-out">0.00 บาท</td>
+                                            <td class="p-3.5 text-right font-bold text-slate-900" id="dash-table-mat-bal">0.00 บาท</td>
+                                        </tr>
+                                        <tr class="bg-emerald-50/80 border-t-2 border-emerald-200 font-bold">
+                                            <td class="p-4 text-emerald-950 text-sm">รวมมูลค่าทั้งหมด</td>
+                                            <td class="p-4 text-right text-slate-800 text-sm" id="dash-table-total-carry">0.00 บาท</td>
+                                            <td class="p-4 text-right text-emerald-700 text-sm" id="dash-table-total-in">0.00 บาท</td>
+                                            <td class="p-4 text-right text-amber-700 text-sm" id="dash-table-total-out">0.00 บาท</td>
+                                            <td class="p-4 text-right text-emerald-950 text-base font-extrabold" id="dash-table-total-bal">0.00 บาท</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Monthly Outflow Summary Table -->
+                        <div class="pt-2">
+                            <h3 class="font-bold text-slate-900 text-sm mb-4">📈 รายงานสรุปยอดจ่ายออกรายเดือนแยกตามประเภท</h3>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left border-collapse text-xs">
+                                    <thead>
+                                        <tr class="bg-slate-100/80 text-slate-700 border-b border-slate-200">
+                                            <th class="p-3.5 font-bold">ประจำเดือน</th>
+                                            <th class="p-3.5 font-bold text-right text-slate-700">ค่ายา</th>
+                                            <th class="p-3.5 font-bold text-right text-slate-700">ค่าเวชภัณฑ์มิใช่ยา</th>
+                                            <th class="p-3.5 font-bold text-right text-slate-700">ค่าวัสดุทางการแพทย์</th>
+                                            <th class="p-3.5 font-bold text-right text-emerald-700">รวมมูลค่าจ่ายออก</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="dash-monthly-out-tbody" class="divide-y divide-slate-100">
+                                        <!-- Populated dynamically -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Signature Block for Print -->
+                        <div class="hidden print:grid pt-12 grid-cols-2 gap-12 text-center text-xs break-inside-avoid">
+                            <div class="space-y-2">
+                                <p>ลงชื่อ......................................................ผู้รายงาน<br>(น.ส.รัชฎาวรรณ จันทร์สุข)<br>นักวิชาการสาธารณสุขปฏิบัติการ</p>
+                                <p class="text-slate-500 pt-1">วันที่......../................/...........</p>
+                            </div>
+                            <div class="space-y-2">
+                                <p>ลงชื่อ......................................................ผู้ตรวจสอบ<br>(นายปรัชญา วัฒนะ)<br>ผู้อำนวยการ รพ.สต.น้ำปาย</p>
+                                <p class="text-slate-500 pt-1">วันที่......../................/...........</p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- 2. MAIN STOCK TAB -->
                 <div id="tab-content-main-stock" class="space-y-6 hidden">
-                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-3xl shadow-sm border border-slate-200/80 no-print">
                         <div>
                             <h2 class="text-xl font-bold text-slate-900">ระบบรายการรับเข้า</h2>
                             <p class="text-xs text-slate-500 mt-0.5">บันทึกรับเข้า รายการยา เวชภัณฑ์ และวัสดุการแพทย์</p>
                         </div>
-                        <div class="flex items-center gap-3 no-print">
-                            <select id="main-filter-category" onchange="renderMainStock()" class="px-3 py-2 rounded-xl border border-slate-200 text-xs font-semibold bg-slate-50">
+                        <div class="flex items-center gap-3">
+                            <select id="main-filter-category" onchange="renderMainStock()" class="px-3.5 py-2 rounded-xl border border-slate-200 text-xs font-semibold bg-slate-50">
                                 <option value="all">ทุกประเภท</option>
                                 <option value="ยา">ยา</option>
                                 <option value="เวชภัณฑ์มิใช่ยา">เวชภัณฑ์มิใช่ยา</option>
                                 <option value="วัสดุการแพทย์">วัสดุการแพทย์</option>
                             </select>
-                            <select id="main-filter-year" onchange="renderMainStock()" class="px-3 py-2 rounded-xl border border-slate-200 text-xs font-semibold bg-slate-50">
+                            <select id="main-filter-year" onchange="renderMainStock()" class="px-3.5 py-2 rounded-xl border border-slate-200 text-xs font-semibold bg-slate-50">
                                 <option value="all">ทุกปีงบประมาณ</option>
                                 <option value="2570">ปีงบประมาณ 2570</option>
                                 <option value="2571">ปีงบประมาณ 2571</option>
@@ -232,37 +263,37 @@
                                 <option value="2573">ปีงบประมาณ 2573</option>
                                 <option value="2574">ปีงบประมาณ 2574</option>
                             </select>
-                            <select id="main-filter-month" onchange="renderMainStock()" class="px-3 py-2 rounded-xl border border-slate-200 text-xs font-semibold bg-slate-50">
+                            <select id="main-filter-month" onchange="renderMainStock()" class="px-3.5 py-2 rounded-xl border border-slate-200 text-xs font-semibold bg-slate-50">
                                 <option value="all">ทุกเดือน</option>
                                 <option value="10">ตุลาคม</option><option value="11">พฤศจิกายน</option><option value="12">ธันวาคม</option>
                                 <option value="01">มกราคม</option><option value="02">กุมภาพันธ์</option><option value="03">มีนาคม</option>
                                 <option value="04">เมษายน</option><option value="05">พฤษภาคม</option><option value="06">มิถุนายน</option>
                                 <option value="07">กรกฎาคม</option><option value="08">สิงหาคม</option><option value="09">กันยายน</option>
                             </select>
-                            <button onclick="window.print()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold shadow-md">🖨️ พิมพ์</button>
-                            <button onclick="openEntryModal('main')" class="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-xs font-semibold shadow-md">รับเข้า</button>
+                            <button onclick="printAllPages('main')" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold shadow-md shadow-emerald-600/20">🖨️ พิมพ์ทั้งหมด</button>
+                            <button onclick="openEntryModal('main')" class="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-xs font-semibold shadow-md shadow-teal-600/20">รับเข้า</button>
                         </div>
                     </div>
 
-                    <div class="print-container bg-white rounded-2xl shadow-sm border border-slate-200 p-6 space-y-6">
+                    <div class="print-container bg-white rounded-3xl shadow-sm border border-slate-200/80 p-8 space-y-6">
                         <div class="hidden print:block text-center mb-4">
                             <h2 class="text-lg font-bold">โรงพยาบาลส่งเสริมสุขภาพตำบลน้ำปาย อำเภอแม่จริม จังหวัดน่าน</h2>
-                            <p id="print-title-main" class="text-sm font-semibold text-slate-700 mt-1">รายงานการรับเข้า</p>
+                            <p id="print-title-main" class="text-sm font-semibold text-slate-700 mt-1">รายงานการรับเข้า (ทุกรายการทั้งหมด)</p>
                         </div>
 
                         <div class="overflow-x-auto">
                             <table class="w-full text-left border-collapse text-xs">
                                 <thead>
-                                    <tr class="bg-slate-100 text-slate-700 border-b border-slate-200">
-                                        <th class="p-3 font-semibold">วัน/เดือน/ปี (พ.ศ.)</th>
-                                        <th class="p-3 font-semibold">ประเภท</th>
-                                        <th class="p-3 font-semibold">ชื่อรายการ</th>
-                                        <th class="p-3 font-semibold text-right">จำนวนคงเหลือ</th>
-                                        <th class="p-3 font-semibold">หน่วยนับ</th>
-                                        <th class="p-3 font-semibold text-right">ราคา/หน่วย</th>
-                                        <th class="p-3 font-semibold text-right">มูลค่ารวม</th>
-                                        <th class="p-3 font-semibold">Lot No. / Exp. (พ.ศ.)</th>
-                                        <th class="p-3 font-semibold text-center no-print">จัดการ</th>
+                                    <tr class="bg-slate-100/80 text-slate-700 border-b border-slate-200">
+                                        <th class="p-3.5 font-semibold">วัน/เดือน/ปี (พ.ศ.)</th>
+                                        <th class="p-3.5 font-semibold">ประเภท</th>
+                                        <th class="p-3.5 font-semibold">ชื่อรายการ</th>
+                                        <th class="p-3.5 font-semibold text-right">จำนวนคงเหลือ</th>
+                                        <th class="p-3.5 font-semibold">หน่วยนับ</th>
+                                        <th class="p-3.5 font-semibold text-right">ราคา/หน่วย</th>
+                                        <th class="p-3.5 font-semibold text-right">มูลค่ารวม</th>
+                                        <th class="p-3.5 font-semibold">Lot No. / Exp. (พ.ศ.)</th>
+                                        <th class="p-3.5 font-semibold text-center no-print">จัดการ</th>
                                     </tr>
                                 </thead>
                                 <tbody id="main-stock-tbody"></tbody>
@@ -276,15 +307,15 @@
 
                         <div class="pt-8 grid grid-cols-3 gap-6 text-center text-xs mt-6 break-inside-avoid">
                             <div class="space-y-2">
-                                <p>ลงชื่อ........................ผู้รับ<br>(น.ส.รัชฎาวรรณ จันทร์สุข)<br>นักวิชาการสาธารณสุขปฏิบัติการ</p>
+                                <p>ลงชื่อ.......................ผู้รับ<br>(น.ส.รัชฎาวรรณ จันทร์สุข)<br>นักวิชาการสาธารณสุขปฏิบัติการ</p>
                                 <p class="text-slate-500 pt-1">วันที่......../................/...........</p>
                             </div>
                             <div class="space-y-2">
-                                <p>ลงชื่อ........................ผู้ตรวจสอบ<br>(น.ส.วรรณิสา จอยสุข)<br>นักวิชาการสาธารณสุข</p>
+                                <p>ลงชื่อ.......................ผู้ตรวจสอบ<br>(น.ส.วรรณิสา จอยสุข)<br>นักวิชาการสาธารณสุข</p>
                                 <p class="text-slate-500 pt-1">วันที่......../................/...........</p>
                             </div>
                             <div class="space-y-2">
-                                <p>ลงชื่อ.........................ผู้รับรองความถูกต้อง<br>(นายปรัชญา วัฒนะ)<br>ผู้อำนวยการ รพ.สต.น้ำปาย</p>
+                                <p>ลงชื่อ.......................ผู้รับรองความถูกต้อง<br>(นายปรัชญา วัฒนะ)<br>ผู้อำนวยการ รพ.สต.น้ำปาย</p>
                                 <p class="text-slate-500 pt-1">วันที่......../................/...........</p>
                             </div>
                         </div>
@@ -293,19 +324,19 @@
 
                 <!-- 3. SUB STOCK TAB -->
                 <div id="tab-content-sub-stock" class="space-y-6 hidden">
-                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-3xl shadow-sm border border-slate-200/80 no-print">
                         <div>
                             <h2 class="text-xl font-bold text-slate-900">ระบบรายการเบิกจ่าย</h2>
                             <p class="text-xs text-slate-500 mt-0.5">บันทึกการเบิกจ่ายใช้งานจริง (ปีงบประมาณ 1 ต.ค. - 30 ก.ย.)</p>
                         </div>
-                        <div class="flex items-center gap-3 no-print">
-                            <select id="sub-filter-category" onchange="renderSubStock()" class="px-3 py-2 rounded-xl border border-slate-200 text-xs font-semibold bg-slate-50">
+                        <div class="flex items-center gap-3">
+                            <select id="sub-filter-category" onchange="renderSubStock()" class="px-3.5 py-2 rounded-xl border border-slate-200 text-xs font-semibold bg-slate-50">
                                 <option value="all">ทุกประเภท</option>
                                 <option value="ยา">ยา</option>
                                 <option value="เวชภัณฑ์มิใช่ยา">เวชภัณฑ์มิใช่ยา</option>
                                 <option value="วัสดุการแพทย์">วัสดุการแพทย์</option>
                             </select>
-                            <select id="sub-filter-year" onchange="renderSubStock()" class="px-3 py-2 rounded-xl border border-slate-200 text-xs font-semibold bg-slate-50">
+                            <select id="sub-filter-year" onchange="renderSubStock()" class="px-3.5 py-2 rounded-xl border border-slate-200 text-xs font-semibold bg-slate-50">
                                 <option value="all">ทุกปีงบประมาณ</option>
                                 <option value="2570">ปีงบประมาณ 2570</option>
                                 <option value="2571">ปีงบประมาณ 2571</option>
@@ -313,37 +344,37 @@
                                 <option value="2573">ปีงบประมาณ 2573</option>
                                 <option value="2574">ปีงบประมาณ 2574</option>
                             </select>
-                            <select id="sub-filter-month" onchange="renderSubStock()" class="px-3 py-2 rounded-xl border border-slate-200 text-xs font-semibold bg-slate-50">
+                            <select id="sub-filter-month" onchange="renderSubStock()" class="px-3.5 py-2 rounded-xl border border-slate-200 text-xs font-semibold bg-slate-50">
                                 <option value="all">ทุกเดือน</option>
                                 <option value="10">ตุลาคม</option><option value="11">พฤศจิกายน</option><option value="12">ธันวาคม</option>
                                 <option value="01">มกราคม</option><option value="02">กุมภาพันธ์</option><option value="03">มีนาคม</option>
                                 <option value="04">เมษายน</option><option value="05">พฤษภาคม</option><option value="06">มิถุนายน</option>
                                 <option value="07">กรกฎาคม</option><option value="08">สิงหาคม</option><option value="09">กันยายน</option>
                             </select>
-                            <button onclick="window.print()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold shadow-md">🖨️ พิมพ์</button>
-                            <button onclick="openEntryModal('sub')" class="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-xs font-semibold shadow-md">เบิกจ่าย</button>
+                            <button onclick="printAllPages('sub')" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold shadow-md shadow-emerald-600/20">🖨️ พิมพ์ทั้งหมด</button>
+                            <button onclick="openEntryModal('sub')" class="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-xs font-semibold shadow-md shadow-teal-600/20">เบิกจ่าย</button>
                         </div>
                     </div>
 
-                    <div class="print-container bg-white rounded-2xl shadow-sm border border-slate-200 p-6 space-y-6">
+                    <div class="print-container bg-white rounded-3xl shadow-sm border border-slate-200/80 p-8 space-y-6">
                         <div class="hidden print:block text-center mb-4">
                             <h2 class="text-lg font-bold">โรงพยาบาลส่งเสริมสุขภาพตำบลน้ำปาย อำเภอแม่จริม จังหวัดน่าน</h2>
-                            <p id="print-title-sub" class="text-sm font-semibold text-slate-700 mt-1">รายงานการเบิกจ่าย</p>
+                            <p id="print-title-sub" class="text-sm font-semibold text-slate-700 mt-1">รายงานการเบิกจ่าย (ทุกรายการทั้งหมด)</p>
                         </div>
 
                         <div class="overflow-x-auto">
                             <table class="w-full text-left border-collapse text-xs">
                                 <thead>
-                                    <tr class="bg-slate-100 text-slate-700 border-b border-slate-200">
-                                        <th class="p-3 font-semibold">วัน/เดือน/ปี (พ.ศ.)</th>
-                                        <th class="p-3 font-semibold">ประเภท</th>
-                                        <th class="p-3 font-semibold">ชื่อรายการ</th>
-                                        <th class="p-3 font-semibold text-right">จำนวนเบิกจ่าย</th>
-                                        <th class="p-3 font-semibold">หน่วยนับ</th>
-                                        <th class="p-3 font-semibold text-right">ราคา/หน่วย</th>
-                                        <th class="p-3 font-semibold text-right">มูลค่ารวม</th>
-                                        <th class="p-3 font-semibold">Lot No. / Exp. (พ.ศ.)</th>
-                                        <th class="p-3 font-semibold text-center no-print">จัดการ</th>
+                                    <tr class="bg-slate-100/80 text-slate-700 border-b border-slate-200">
+                                        <th class="p-3.5 font-semibold">วัน/เดือน/ปี (พ.ศ.)</th>
+                                        <th class="p-3.5 font-semibold">ประเภท</th>
+                                        <th class="p-3.5 font-semibold">ชื่อรายการ</th>
+                                        <th class="p-3.5 font-semibold text-right">จำนวนเบิกจ่าย</th>
+                                        <th class="p-3.5 font-semibold">หน่วยนับ</th>
+                                        <th class="p-3.5 font-semibold text-right">ราคา/หน่วย</th>
+                                        <th class="p-3.5 font-semibold text-right">มูลค่ารวม</th>
+                                        <th class="p-3.5 font-semibold">Lot No. / Exp. (พ.ศ.)</th>
+                                        <th class="p-3.5 font-semibold text-center no-print">จัดการ</th>
                                     </tr>
                                 </thead>
                                 <tbody id="sub-stock-tbody"></tbody>
@@ -357,15 +388,15 @@
 
                         <div class="pt-8 grid grid-cols-3 gap-6 text-center text-xs mt-6 break-inside-avoid">
                             <div class="space-y-2">
-                                <p>ลงชื่อ................................ผู้เบิก<br>(นางกิตติกา วัฒนะ)<br>พยาบาลวิชาชีพชำนาญการ</p>
+                                <p>ลงชื่อ..........................ผู้เบิก<br>(นางกิตติกา วัฒนะ)<br>พยาบาลวิชาชีพชำนาญการ</p>
                                 <p class="text-slate-500 pt-1">วันที่......../................/...........</p>
                             </div>
                             <div class="space-y-2">
-                                <p>ลงชื่อ................................ผู้จ่าย<br>(น.ส.รัชฎาวรรณ จันทร์สุข)<br>นักวิชาการสาธารณสุขปฏิบัติการ</p>
+                                <p>ลงชื่อ..........................ผู้จ่าย<br>(น.ส.รัชฎาวรรณ จันทร์สุข)<br>นักวิชาการสาธารณสุขปฏิบัติการ</p>
                                 <p class="text-slate-500 pt-1">วันที่......../................/...........</p>
                             </div>
                             <div class="space-y-2">
-                                <p>ลงชื่อ................................ผู้อนุมัติ<br>(นายปรัชญา วัฒนะ)<br>ผู้อำนวยการ รพ.สต.น้ำปาย</p>
+                                <p>ลงชื่อ..........................ผู้อนุมัติ<br>(นายปรัชญา วัฒนะ)<br>ผู้อำนวยการ รพ.สต.น้ำปาย</p>
                                 <p class="text-slate-500 pt-1">วันที่......../................/...........</p>
                             </div>
                         </div>
@@ -374,34 +405,34 @@
 
                 <!-- 4. STOCK CARD TAB -->
                 <div id="tab-content-stock-card" class="space-y-6 hidden">
-                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-3xl shadow-sm border border-slate-200/80 no-print">
                         <div>
                             <h2 class="text-xl font-bold text-slate-900">Stock Card คุมยอดคงเหลือรายตัวยา</h2>
                             <p class="text-xs text-slate-500 mt-0.5">รวมรายการตามชื่อยา คำนวณรับเข้า จ่ายออก คงเหลืออัตโนมัติ</p>
                         </div>
-                        <div class="flex items-center gap-3 no-print">
-                            <select id="card-filter-name" onchange="renderStockCard()" class="px-3 py-2 rounded-xl border border-slate-200 text-xs font-semibold bg-slate-50">
+                        <div class="flex items-center gap-3">
+                            <select id="card-filter-name" onchange="renderStockCard()" class="px-3.5 py-2 rounded-xl border border-slate-200 text-xs font-semibold bg-slate-50">
                                 <option value="all">แสดงทุกรายการยา/เวชภัณฑ์</option>
                             </select>
-                            <button onclick="window.print()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold shadow-md">🖨️ พิมพ์ Stock Card</button>
+                            <button onclick="printAllPages('card')" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold shadow-md shadow-emerald-600/20">🖨️ พิมพ์ทั้งหมด</button>
                         </div>
                     </div>
 
-                    <div class="print-container bg-white rounded-2xl shadow-sm border border-slate-200 p-6 space-y-6">
+                    <div class="print-container bg-white rounded-3xl shadow-sm border border-slate-200/80 p-8 space-y-6">
                         <div class="hidden print:block text-center mb-6">
                             <h2 class="text-lg font-bold">โรงพยาบาลส่งเสริมสุขภาพตำบลน้ำปาย อำเภอแม่จริม จังหวัดน่าน</h2>
-                            <p id="print-title-card" class="text-sm font-semibold text-slate-700 mt-1">Stock Card คุมคลังสินค้าและเวชภัณฑ์</p>
+                            <p id="print-title-card" class="text-sm font-semibold text-slate-700 mt-1">Stock Card คุมคลังสินค้าและเวชภัณฑ์ (ทุกรายการทั้งหมด)</p>
                         </div>
 
                         <div class="overflow-x-auto">
                             <table class="w-full text-left border-collapse text-xs">
                                 <thead>
-                                    <tr class="bg-slate-100 text-slate-700 border-b border-slate-200">
-                                        <th class="p-3 font-semibold">ชื่อรายการ</th>
-                                        <th class="p-3 font-semibold">ประเภท</th>
-                                        <th class="p-3 font-semibold text-right">รับเข้า</th>
-                                        <th class="p-3 font-semibold text-right">จ่ายออก</th>
-                                        <th class="p-3 font-semibold text-right">คงเหลือสุทธิ</th>
+                                    <tr class="bg-slate-100/80 text-slate-700 border-b border-slate-200">
+                                        <th class="p-3.5 font-semibold">ชื่อรายการ</th>
+                                        <th class="p-3.5 font-semibold">ประเภท</th>
+                                        <th class="p-3.5 font-semibold text-right">รับเข้า</th>
+                                        <th class="p-3.5 font-semibold text-right">จ่ายออก</th>
+                                        <th class="p-3.5 font-semibold text-right">คงเหลือสุทธิ</th>
                                     </tr>
                                 </thead>
                                 <tbody id="stock-card-tbody"></tbody>
@@ -431,9 +462,9 @@
     </div>
 
     <!-- Modal Form -->
-    <div id="entry-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-lg p-6 border border-slate-200">
-            <div class="flex justify-between items-center mb-4 pb-2 border-b border-slate-100">
+    <div id="entry-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-lg p-8 border border-slate-200">
+            <div class="flex justify-between items-center mb-6 pb-3 border-b border-slate-100">
                 <h3 id="modal-title" class="font-bold text-slate-900 text-base">บันทึกรับ-จ่าย</h3>
                 <button onclick="closeEntryModal()" class="text-slate-400 hover:text-slate-600 text-xl font-bold">&times;</button>
             </div>
@@ -444,7 +475,7 @@
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="block font-semibold text-slate-600 uppercase mb-1">ประเภท</label>
-                        <select id="form-category" required class="w-full px-3 py-2.5 rounded-xl border border-slate-200 bg-slate-50">
+                        <select id="form-category" required class="w-full px-3.5 py-3 rounded-2xl border border-slate-200 bg-slate-50">
                             <option value="ยา">ยา</option>
                             <option value="เวชภัณฑ์มิใช่ยา">เวชภัณฑ์มิใช่ยา</option>
                             <option value="วัสดุการแพทย์">วัสดุการแพทย์</option>
@@ -452,7 +483,7 @@
                     </div>
                     <div>
                         <label class="block font-semibold text-slate-600 uppercase mb-1">ช่องรายการ</label>
-                        <select id="form-action-type" required class="w-full px-3 py-2.5 rounded-xl border border-slate-200 bg-slate-50" disabled>
+                        <select id="form-action-type" required class="w-full px-3.5 py-3 rounded-2xl border border-slate-200 bg-slate-50" disabled>
                             <option value="รับเข้า">รับเข้า</option>
                             <option value="จ่ายออก">จ่ายออก</option>
                         </select>
@@ -461,13 +492,13 @@
 
                 <div>
                     <label class="block font-semibold text-slate-600 uppercase mb-1">ชื่อรายการ</label>
-                    <input type="text" id="form-name" list="drug-suggestions" required oninput="onDrugNameInput()" class="w-full px-3 py-2.5 rounded-xl border border-slate-200 bg-slate-50" placeholder="พิมพ์ชื่อยา หรือเลือกจากรายการ">
+                    <input type="text" id="form-name" list="drug-suggestions" required oninput="onDrugNameInput()" class="w-full px-3.5 py-3 rounded-2xl border border-slate-200 bg-slate-50" placeholder="พิมพ์ชื่อยา หรือเลือกจากรายการ">
                     <datalist id="drug-suggestions"></datalist>
                 </div>
 
-                <div id="lot-selector-container" class="hidden p-3 bg-emerald-50 rounded-xl border border-emerald-200 space-y-2">
+                <div id="lot-selector-container" class="hidden p-3.5 bg-emerald-50 rounded-2xl border border-emerald-200 space-y-2">
                     <label class="block font-semibold text-emerald-800 uppercase mb-1">เลือก Lot No. ที่มีในคลัง</label>
-                    <select id="form-lot-exp-select" onchange="onSelectLotExp()" class="w-full px-3 py-2 rounded-xl border border-emerald-300 text-xs bg-white font-medium">
+                    <select id="form-lot-exp-select" onchange="onSelectLotExp()" class="w-full px-3 py-2.5 rounded-xl border border-emerald-300 text-xs bg-white font-medium">
                         <option value="">-- เลือก Lot ที่พร้อมเบิกจ่าย --</option>
                     </select>
                 </div>
@@ -475,11 +506,11 @@
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="block font-semibold text-slate-600 uppercase mb-1">จำนวน</label>
-                        <input type="number" id="form-qty" min="1" required class="w-full px-3 py-2.5 rounded-xl border border-slate-200 bg-slate-50" placeholder="0">
+                        <input type="number" id="form-qty" min="1" required class="w-full px-3.5 py-3 rounded-2xl border border-slate-200 bg-slate-50" placeholder="0">
                     </div>
                     <div>
                         <label class="block font-semibold text-slate-600 uppercase mb-1">หน่วยนับ</label>
-                        <select id="form-unit" required class="w-full px-3 py-2.5 rounded-xl border border-slate-200 bg-slate-50">
+                        <select id="form-unit" required class="w-full px-3.5 py-3 rounded-2xl border border-slate-200 bg-slate-50">
                             <option value="กล่อง">กล่อง</option><option value="กระปุก">กระปุก</option><option value="ขวด">ขวด</option><option value="เม็ด">เม็ด</option><option value="อัน">อัน</option><option value="ชิ้น">ชิ้น</option><option value="เส้น">เส้น</option><option value="ชุด">ชุด</option><option value="ม้วน">ม้วน</option>
                         </select>
                     </div>
@@ -488,28 +519,28 @@
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="block font-semibold text-slate-600 uppercase mb-1">ราคาต่อหน่วย</label>
-                        <input type="number" step="0.01" id="form-price" min="0" required onblur="formatPriceInput(this)" class="w-full px-3 py-2.5 rounded-xl border border-slate-200 bg-slate-50" placeholder="0.00">
+                        <input type="number" step="0.01" id="form-price" min="0" required onblur="formatPriceInput(this)" class="w-full px-3.5 py-3 rounded-2xl border border-slate-200 bg-slate-50" placeholder="0.00">
                     </div>
                     <div>
                         <label class="block font-semibold text-slate-600 uppercase mb-1">วันที่บันทึก</label>
-                        <input type="date" id="form-date" required class="w-full px-3 py-2.5 rounded-xl border border-slate-200 bg-slate-50">
+                        <input type="date" id="form-date" required class="w-full px-3.5 py-3 rounded-2xl border border-slate-200 bg-slate-50">
                     </div>
                 </div>
 
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="block font-semibold text-slate-600 uppercase mb-1">Lot No.</label>
-                        <input type="text" id="form-lot" required class="w-full px-3 py-2.5 rounded-xl border border-slate-200 bg-slate-50" placeholder="เลขล็อต">
+                        <input type="text" id="form-lot" required class="w-full px-3.5 py-3 rounded-2xl border border-slate-200 bg-slate-50" placeholder="เลขล็อต">
                     </div>
                     <div>
                         <label class="block font-semibold text-slate-600 uppercase mb-1">วันหมดอายุ (Exp.)</label>
-                        <input type="date" id="form-exp" required class="w-full px-3 py-2.5 rounded-xl border border-slate-200 bg-slate-50">
+                        <input type="date" id="form-exp" required class="w-full px-3.5 py-3 rounded-2xl border border-slate-200 bg-slate-50">
                     </div>
                 </div>
 
                 <div class="flex justify-end gap-3 pt-4 border-t border-slate-100">
-                    <button type="button" onclick="closeEntryModal()" class="px-4 py-2.5 rounded-xl border border-slate-200 text-slate-600 font-semibold">ยกเลิก</button>
-                    <button type="submit" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl shadow-md">บันทึกข้อมูล</button>
+                    <button type="button" onclick="closeEntryModal()" class="px-5 py-3 rounded-2xl border border-slate-200 text-slate-600 font-semibold hover:bg-slate-50">ยกเลิก</button>
+                    <button type="submit" class="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-2xl shadow-lg shadow-emerald-600/20">บันทึกข้อมูล</button>
                 </div>
             </form>
         </div>
@@ -597,16 +628,68 @@
             localStorage.setItem('nampai_active_tab', tab);
             ['dashboard', 'main-stock', 'sub-stock', 'stock-card'].forEach(t => {
                 document.getElementById('tab-content-' + t).classList.add('hidden');
-                document.getElementById('nav-' + t).className = "w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all text-emerald-200 hover:bg-emerald-800/50 hover:text-white";
+                document.getElementById('nav-' + t).className = "w-full flex items-center gap-3 px-4 py-3 rounded-2xl font-medium text-sm transition-all text-emerald-200 hover:bg-emerald-900/60 hover:text-white";
             });
             document.getElementById('tab-content-' + tab).classList.remove('hidden');
-            document.getElementById('nav-' + tab).className = "w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-sm transition-all bg-emerald-800 text-white shadow-md";
+            document.getElementById('nav-' + tab).className = "w-full flex items-center gap-3 px-4 py-3 rounded-2xl font-medium text-sm transition-all bg-emerald-800 text-white shadow-md";
             
             if (tab === 'dashboard') renderDashboard();
             if (tab === 'main-stock') renderMainStock();
             if (tab === 'sub-stock') renderSubStock();
             if (tab === 'stock-card') renderStockCard();
         }
+
+        // --- BACKUP & RESTORE JSON FUNCTIONS ---
+        function backupDataJSON() {
+            const dataToBackup = {
+                version: "1.0",
+                backupDate: new Date().toISOString(),
+                mainStock: mainStock,
+                subStock: subStock
+            };
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(dataToBackup, null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            const dateStr = new Date().toISOString().split('T')[0];
+            downloadAnchor.setAttribute("download", `nampai_pharmacy_backup_${dateStr}.json`);
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+            showToast('สำรองข้อมูลเป็นไฟล์ JSON สำเร็จ');
+        }
+
+        function triggerRestoreJSON() {
+            if (confirm('การกู้คืนข้อมูลจะแทนที่ข้อมูลปัจจุบันทั้งหมดด้วยข้อมูลในไฟล์สำรอง คุณต้องการดำเนินการต่อหรือไม่?')) {
+                document.getElementById('restore-file-input').click();
+            }
+        }
+
+        function handleFileRestore(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const parsedData = JSON.parse(e.target.result);
+                    if (parsedData && Array.isArray(parsedData.mainStock) && Array.isArray(parsedData.subStock)) {
+                        mainStock = parsedData.mainStock;
+                        subStock = parsedData.subStock;
+                        localStorage.setItem('nampai_main_stock', JSON.stringify(mainStock));
+                        localStorage.setItem('nampai_sub_stock', JSON.stringify(subStock));
+                        showToast('กู้คืนข้อมูลสำเร็จ');
+                        location.reload();
+                    } else {
+                        alert('รูปแบบไฟล์ JSON ไม่ถูกต้องสำหรับระบบนี้');
+                    }
+                } catch (err) {
+                    alert('เกิดข้อผิดพลาดในการอ่านไฟล์ JSON: ' + err.message);
+                }
+            };
+            reader.readAsText(file);
+            event.target.value = '';
+        }
+        // ----------------------------------------
 
         function openEntryModal(type, editId = null) {
             document.getElementById('form-stock-type').value = type;
@@ -848,7 +931,6 @@
             document.getElementById('dash-table-total-out').innerText = totOut.toLocaleString('th-TH', {minimumFractionDigits: 2}) + ' บาท';
             document.getElementById('dash-table-total-bal').innerText = totBal.toLocaleString('th-TH', {minimumFractionDigits: 2}) + ' บาท';
 
-            // Render Monthly Outflow Table
             renderMonthlyOutflowTable(filterYear);
         }
 
@@ -863,7 +945,7 @@
 
                 subStock.forEach(x => {
                     if (!x.date) return;
-                    const parts = x.date.split('-'); // [YYYY, MM, DD]
+                    const parts = x.date.split('-');
                     const yearMatch = (filterYear === 'all') || (getFiscalYear(x.date) === filterYear);
                     const monthMatch = (parts[1] === m.num);
 
@@ -882,7 +964,7 @@
                 sumTotal += mTotal;
 
                 tbody.innerHTML += `
-                    <tr class="hover:bg-slate-50">
+                    <tr class="hover:bg-slate-50/50">
                         <td class="p-3.5 font-medium text-slate-700">${m.name}</td>
                         <td class="p-3.5 text-right font-semibold text-slate-600">${mDrug.toLocaleString('th-TH', {minimumFractionDigits: 2})} บาท</td>
                         <td class="p-3.5 text-right font-semibold text-slate-600">${mSupply.toLocaleString('th-TH', {minimumFractionDigits: 2})} บาท</td>
@@ -892,14 +974,13 @@
                 `;
             });
 
-            // Total row
             tbody.innerHTML += `
-                <tr class="bg-emerald-50/70 border-t-2 border-emerald-200 font-bold">
-                    <td class="p-4 text-emerald-900 text-sm">รวมทั้งสิ้น</td>
+                <tr class="bg-emerald-50/80 border-t-2 border-emerald-200 font-bold">
+                    <td class="p-4 text-emerald-950 text-sm">รวมทั้งสิ้น</td>
                     <td class="p-4 text-right text-slate-800 text-xs">${sumDrug.toLocaleString('th-TH', {minimumFractionDigits: 2})} บาท</td>
                     <td class="p-4 text-right text-slate-800 text-xs">${sumSupply.toLocaleString('th-TH', {minimumFractionDigits: 2})} บาท</td>
                     <td class="p-4 text-right text-slate-800 text-xs">${sumMat.toLocaleString('th-TH', {minimumFractionDigits: 2})} บาท</td>
-                    <td class="p-4 text-right text-emerald-900 text-sm font-extrabold">${sumTotal.toLocaleString('th-TH', {minimumFractionDigits: 2})} บาท</td>
+                    <td class="p-4 text-right text-emerald-950 text-sm font-extrabold">${sumTotal.toLocaleString('th-TH', {minimumFractionDigits: 2})} บาท</td>
                 </tr>
             `;
         }
@@ -929,18 +1010,18 @@
             } else {
                 paginated.forEach(x => {
                     tbody.innerHTML += `
-                        <tr class="border-b border-slate-100 hover:bg-slate-50">
-                            <td class="p-3 font-medium">${formatThaiDate(x.date)}</td>
-                            <td class="p-3"><span class="px-2 py-1 bg-slate-100 rounded-md font-medium">${x.category}</span></td>
-                            <td class="p-3 font-semibold text-slate-900">${x.name}</td>
-                            <td class="p-3 text-right font-medium text-emerald-700">${x.qty.toLocaleString()}</td>
-                            <td class="p-3">${x.unit}</td>
-                            <td class="p-3 text-right">${parseFloat(x.price).toLocaleString('th-TH', {minimumFractionDigits: 2})}</td>
-                            <td class="p-3 text-right font-semibold">${(x.qty * x.price).toLocaleString('th-TH', {minimumFractionDigits: 2})}</td>
-                            <td class="p-3 text-xs text-slate-500">Lot: ${x.lot}<br>Exp: ${formatThaiDate(x.exp)}</td>
-                            <td class="p-3 text-center no-print flex items-center justify-center gap-2">
-                                <button onclick="openEntryModal('main', ${x.id})" class="text-amber-600 font-bold">แก้ไข</button>
-                                <button onclick="deleteItem('main', ${x.id})" class="text-red-500 font-bold">ลบ</button>
+                        <tr class="border-b border-slate-100 hover:bg-slate-50/50">
+                            <td class="p-3.5 font-medium">${formatThaiDate(x.date)}</td>
+                            <td class="p-3.5"><span class="px-2.5 py-1 bg-slate-100 rounded-lg font-medium text-slate-700">${x.category}</span></td>
+                            <td class="p-3.5 font-semibold text-slate-900">${x.name}</td>
+                            <td class="p-3.5 text-right font-medium text-emerald-700">${x.qty.toLocaleString()}</td>
+                            <td class="p-3.5">${x.unit}</td>
+                            <td class="p-3.5 text-right">${parseFloat(x.price).toLocaleString('th-TH', {minimumFractionDigits: 2})}</td>
+                            <td class="p-3.5 text-right font-semibold">${(x.qty * x.price).toLocaleString('th-TH', {minimumFractionDigits: 2})}</td>
+                            <td class="p-3.5 text-xs text-slate-500">Lot: ${x.lot}<br>Exp: ${formatThaiDate(x.exp)}</td>
+                            <td class="p-3.5 text-center no-print flex items-center justify-center gap-2">
+                                <button onclick="openEntryModal('main', ${x.id})" class="text-amber-600 font-bold hover:underline">แก้ไข</button>
+                                <button onclick="deleteItem('main', ${x.id})" class="text-red-500 font-bold hover:underline">ลบ</button>
                             </td>
                         </tr>
                     `;
@@ -974,18 +1055,18 @@
             } else {
                 paginated.forEach(x => {
                     tbody.innerHTML += `
-                        <tr class="border-b border-slate-100 hover:bg-slate-50">
-                            <td class="p-3 font-medium">${formatThaiDate(x.date)}</td>
-                            <td class="p-3"><span class="px-2 py-1 bg-slate-100 rounded-md font-medium">${x.category}</span></td>
-                            <td class="p-3 font-semibold text-slate-900">${x.name}</td>
-                            <td class="p-3 text-right font-medium text-amber-700">${x.qty.toLocaleString()}</td>
-                            <td class="p-3">${x.unit}</td>
-                            <td class="p-3 text-right">${parseFloat(x.price).toLocaleString('th-TH', {minimumFractionDigits: 2})}</td>
-                            <td class="p-3 text-right font-semibold">${(x.qty * x.price).toLocaleString('th-TH', {minimumFractionDigits: 2})}</td>
-                            <td class="p-3 text-xs text-slate-500">Lot: ${x.lot}<br>Exp: ${formatThaiDate(x.exp)}</td>
-                            <td class="p-3 text-center no-print flex items-center justify-center gap-2">
-                                <button onclick="openEntryModal('sub', ${x.id})" class="text-amber-600 font-bold">แก้ไข</button>
-                                <button onclick="deleteItem('sub', ${x.id})" class="text-red-500 font-bold">ลบ</button>
+                        <tr class="border-b border-slate-100 hover:bg-slate-50/50">
+                            <td class="p-3.5 font-medium">${formatThaiDate(x.date)}</td>
+                            <td class="p-3.5"><span class="px-2.5 py-1 bg-slate-100 rounded-lg font-medium text-slate-700">${x.category}</span></td>
+                            <td class="p-3.5 font-semibold text-slate-900">${x.name}</td>
+                            <td class="p-3.5 text-right font-medium text-amber-700">${x.qty.toLocaleString()}</td>
+                            <td class="p-3.5">${x.unit}</td>
+                            <td class="p-3.5 text-right">${parseFloat(x.price).toLocaleString('th-TH', {minimumFractionDigits: 2})}</td>
+                            <td class="p-3.5 text-right font-semibold">${(x.qty * x.price).toLocaleString('th-TH', {minimumFractionDigits: 2})}</td>
+                            <td class="p-3.5 text-xs text-slate-500">Lot: ${x.lot}<br>Exp: ${formatThaiDate(x.exp)}</td>
+                            <td class="p-3.5 text-center no-print flex items-center justify-center gap-2">
+                                <button onclick="openEntryModal('sub', ${x.id})" class="text-amber-600 font-bold hover:underline">แก้ไข</button>
+                                <button onclick="deleteItem('sub', ${x.id})" class="text-red-500 font-bold hover:underline">ลบ</button>
                             </td>
                         </tr>
                     `;
@@ -1037,17 +1118,127 @@
                 paginated.forEach(row => {
                     const balance = row.totalIn - row.totalOut;
                     tbody.innerHTML += `
-                        <tr class="border-b border-slate-100 hover:bg-slate-50">
-                            <td class="p-3 font-semibold text-slate-900">${row.name}</td>
-                            <td class="p-3"><span class="px-2 py-1 bg-slate-100 rounded-md font-medium">${row.category}</span></td>
-                            <td class="p-3 text-right text-emerald-600 font-medium">${row.totalIn.toLocaleString()} ${row.unit}</td>
-                            <td class="p-3 text-right text-amber-600 font-medium">${row.totalOut.toLocaleString()} ${row.unit}</td>
-                            <td class="p-3 text-right font-bold text-slate-800">${balance.toLocaleString()} ${row.unit}</td>
+                        <tr class="border-b border-slate-100 hover:bg-slate-50/50">
+                            <td class="p-3.5 font-semibold text-slate-900">${row.name}</td>
+                            <td class="p-3.5"><span class="px-2.5 py-1 bg-slate-100 rounded-lg font-medium text-slate-700">${row.category}</span></td>
+                            <td class="p-3.5 text-right text-emerald-600 font-medium">${row.totalIn.toLocaleString()} ${row.unit}</td>
+                            <td class="p-3.5 text-right text-amber-600 font-medium">${row.totalOut.toLocaleString()} ${row.unit}</td>
+                            <td class="p-3.5 text-right font-bold text-slate-800">${balance.toLocaleString()} ${row.unit}</td>
                         </tr>
                     `;
                 });
             }
             renderPagination('card', list.length, cardPage);
+        }
+
+        function printAllPages(type) {
+            if (type === 'main') {
+                const filterCat = document.getElementById('main-filter-category').value;
+                const filterYear = document.getElementById('main-filter-year').value;
+                const filterMonth = document.getElementById('main-filter-month').value;
+                const filtered = mainStock.filter(x => {
+                    if (!x.date) return true;
+                    const parts = x.date.split('-');
+                    const catMatch = (filterCat === 'all') || (x.category === filterCat);
+                    const yearMatch = (filterYear === 'all') || (getFiscalYear(x.date) === filterYear);
+                    const monthMatch = (filterMonth === 'all') || (parts[1] === filterMonth);
+                    return catMatch && yearMatch && monthMatch;
+                });
+                
+                const tbody = document.getElementById('main-stock-tbody');
+                tbody.innerHTML = '';
+                filtered.forEach(x => {
+                    tbody.innerHTML += `
+                        <tr class="border-b border-slate-100">
+                            <td class="p-3.5 font-medium">${formatThaiDate(x.date)}</td>
+                            <td class="p-3.5"><span class="px-2.5 py-1 bg-slate-100 rounded-lg font-medium text-slate-700">${x.category}</span></td>
+                            <td class="p-3.5 font-semibold text-slate-900">${x.name}</td>
+                            <td class="p-3.5 text-right font-medium text-emerald-700">${x.qty.toLocaleString()}</td>
+                            <td class="p-3.5">${x.unit}</td>
+                            <td class="p-3.5 text-right">${parseFloat(x.price).toLocaleString('th-TH', {minimumFractionDigits: 2})}</td>
+                            <td class="p-3.5 text-right font-semibold">${(x.qty * x.price).toLocaleString('th-TH', {minimumFractionDigits: 2})}</td>
+                            <td class="p-3.5 text-xs text-slate-500">Lot: ${x.lot}<br>Exp: ${formatThaiDate(x.exp)}</td>
+                            <td class="p-3.5 text-center no-print"></td>
+                        </tr>
+                    `;
+                });
+                setTimeout(() => {
+                    window.print();
+                    renderMainStock();
+                }, 300);
+
+            } else if (type === 'sub') {
+                const filterCat = document.getElementById('sub-filter-category').value;
+                const filterYear = document.getElementById('sub-filter-year').value;
+                const filterMonth = document.getElementById('sub-filter-month').value;
+                const filtered = subStock.filter(x => {
+                    if (!x.date) return true;
+                    const parts = x.date.split('-');
+                    const catMatch = (filterCat === 'all') || (x.category === filterCat);
+                    const yearMatch = (filterYear === 'all') || (getFiscalYear(x.date) === filterYear);
+                    const monthMatch = (filterMonth === 'all') || (parts[1] === filterMonth);
+                    return catMatch && yearMatch && monthMatch;
+                });
+
+                const tbody = document.getElementById('sub-stock-tbody');
+                tbody.innerHTML = '';
+                filtered.forEach(x => {
+                    tbody.innerHTML += `
+                        <tr class="border-b border-slate-100">
+                            <td class="p-3.5 font-medium">${formatThaiDate(x.date)}</td>
+                            <td class="p-3.5"><span class="px-2.5 py-1 bg-slate-100 rounded-lg font-medium text-slate-700">${x.category}</span></td>
+                            <td class="p-3.5 font-semibold text-slate-900">${x.name}</td>
+                            <td class="p-3.5 text-right font-medium text-amber-700">${x.qty.toLocaleString()}</td>
+                            <td class="p-3.5">${x.unit}</td>
+                            <td class="p-3.5 text-right">${parseFloat(x.price).toLocaleString('th-TH', {minimumFractionDigits: 2})}</td>
+                            <td class="p-3.5 text-right font-semibold">${(x.qty * x.price).toLocaleString('th-TH', {minimumFractionDigits: 2})}</td>
+                            <td class="p-3.5 text-xs text-slate-500">Lot: ${x.lot}<br>Exp: ${formatThaiDate(x.exp)}</td>
+                            <td class="p-3.5 text-center no-print"></td>
+                        </tr>
+                    `;
+                });
+                setTimeout(() => {
+                    window.print();
+                    renderSubStock();
+                }, 300);
+
+            } else if (type === 'card') {
+                const selectedDrug = document.getElementById('card-filter-name').value;
+                let aggregated = {};
+                mainStock.forEach(x => {
+                    if (!aggregated[x.name]) aggregated[x.name] = { name: x.name, category: x.category, unit: x.unit, totalIn: 0, totalOut: 0 };
+                    aggregated[x.name].totalIn += x.qty;
+                });
+                subStock.forEach(x => {
+                    if (!aggregated[x.name]) aggregated[x.name] = { name: x.name, category: x.category, unit: x.unit, totalIn: 0, totalOut: 0 };
+                    aggregated[x.name].totalOut += x.qty;
+                });
+                let list = Object.values(aggregated);
+                if (selectedDrug !== 'all') list = list.filter(x => x.name === selectedDrug);
+
+                const tbody = document.getElementById('stock-card-tbody');
+                tbody.innerHTML = '';
+                list.forEach(row => {
+                    const balance = row.totalIn - row.totalOut;
+                    tbody.innerHTML += `
+                        <tr class="border-b border-slate-100">
+                            <td class="p-3.5 font-semibold text-slate-900">${row.name}</td>
+                            <td class="p-3.5"><span class="px-2.5 py-1 bg-slate-100 rounded-lg font-medium text-slate-700">${row.category}</span></td>
+                            <td class="p-3.5 text-right text-emerald-600 font-medium">${row.totalIn.toLocaleString()} ${row.unit}</td>
+                            <td class="p-3.5 text-right text-amber-600 font-medium">${row.totalOut.toLocaleString()} ${row.unit}</td>
+                            <td class="p-3.5 text-right font-bold text-slate-800">${balance.toLocaleString()} ${row.unit}</td>
+                        </tr>
+                    `;
+                });
+                setTimeout(() => {
+                    window.print();
+                    renderStockCard();
+                }, 300);
+            }
+        }
+
+        function printDashboard() {
+            window.print();
         }
 
         function renderPagination(type, totalCount, currentPage) {
@@ -1062,7 +1253,7 @@
 
             btnEl.innerHTML = '';
             for (let i = 1; i <= totalPages; i++) {
-                btnEl.innerHTML += `<button onclick="changePage('${type}', ${i})" class="px-3 py-1 rounded-md text-xs font-semibold ${i === currentPage ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}">${i}</button>`;
+                btnEl.innerHTML += `<button onclick="changePage('${type}', ${i})" class="px-3 py-1 rounded-xl text-xs font-semibold ${i === currentPage ? 'bg-emerald-600 text-white shadow-xs' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}">${i}</button>`;
             }
         }
 
