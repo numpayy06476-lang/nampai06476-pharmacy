@@ -166,64 +166,27 @@
                         </div>
                     </div>
 
-                    <!-- Alerts Overview Cards -->
+                    <!-- Alerts Clickable Cards (Modal Triggers) -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 no-print">
-                        <div class="bg-gradient-to-r from-amber-500 to-rose-600 text-white p-6 rounded-3xl shadow-lg flex items-center justify-between">
+                        <div onclick="openAlertModal('expiring')" class="bg-gradient-to-r from-amber-500 to-rose-600 text-white p-6 rounded-3xl shadow-lg flex items-center justify-between cursor-pointer hover:scale-[1.01] transition-transform" title="คลิกเพื่อดูรายละเอียดรายการยาใกล้หมดอายุ">
                             <div>
-                                <div class="text-xs font-bold uppercase tracking-wider text-amber-100">⚠️ รายการยาใกล้หมดอายุ (ภายใน 90 วัน)</div>
+                                <div class="text-xs font-bold uppercase tracking-wider text-amber-100 flex items-center gap-1.5">
+                                    <span>⚠️ รายการยาใกล้หมดอายุ (ภายใน 90 วัน)</span>
+                                    <span class="text-[10px] bg-white/20 px-2 py-0.5 rounded-full font-normal">คลิกดูข้อมูล 🔍</span>
+                                </div>
                                 <div class="text-3xl font-extrabold mt-1" id="alert-expiring-count">0 รายการ</div>
                             </div>
                             <div class="text-4xl">⏳</div>
                         </div>
-                        <div class="bg-gradient-to-r from-orange-500 to-amber-600 text-white p-6 rounded-3xl shadow-lg flex items-center justify-between">
+                        <div onclick="openAlertModal('low-stock')" class="bg-gradient-to-r from-orange-500 to-amber-600 text-white p-6 rounded-3xl shadow-lg flex items-center justify-between cursor-pointer hover:scale-[1.01] transition-transform" title="คลิกเพื่อดูรายละเอียดรายการคงเหลือต่ำ">
                             <div>
-                                <div class="text-xs font-bold uppercase tracking-wider text-amber-100">📦 รายการสินค้าคงเหลือต่ำ (≤ 10 หน่วย)</div>
+                                <div class="text-xs font-bold uppercase tracking-wider text-amber-100 flex items-center gap-1.5">
+                                    <span>📦 รายการคงเหลือต่ำ (≤ 10 หน่วย)</span>
+                                    <span class="text-[10px] bg-white/20 px-2 py-0.5 rounded-full font-normal">คลิกดูข้อมูล 🔍</span>
+                                </div>
                                 <div class="text-3xl font-extrabold mt-1" id="alert-low-stock-count">0 รายการ</div>
                             </div>
                             <div class="text-4xl">📉</div>
-                        </div>
-                    </div>
-
-                    <!-- Alert Details Section -->
-                    <div class="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 no-print space-y-6">
-                        <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
-                            <span>🚨 รายการยาและเวชภัณฑ์ที่ต้องเฝ้าระวัง</span>
-                        </h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <h4 class="text-xs font-bold text-rose-600 mb-3 flex items-center gap-1.5">
-                                    <span class="w-2 h-2 rounded-full bg-rose-500"></span> ใกล้หมดอายุ
-                                </h4>
-                                <div class="overflow-x-auto border border-slate-100 rounded-2xl">
-                                    <table class="w-full text-left text-xs">
-                                        <thead class="bg-rose-50 text-rose-900">
-                                            <tr>
-                                                <th class="p-2.5 font-semibold">ชื่อรายการ</th>
-                                                <th class="p-2.5 font-semibold">Lot No.</th>
-                                                <th class="p-2.5 font-semibold text-right">วันหมดอายุ</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="alert-expiring-tbody" class="divide-y divide-slate-100"></tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div>
-                                <h4 class="text-xs font-bold text-amber-600 mb-3 flex items-center gap-1.5">
-                                    <span class="w-2 h-2 rounded-full bg-amber-500"></span> สินค้าคงเหลือต่ำ
-                                </h4>
-                                <div class="overflow-x-auto border border-slate-100 rounded-2xl">
-                                    <table class="w-full text-left text-xs">
-                                        <thead class="bg-amber-50 text-amber-900">
-                                            <tr>
-                                                <th class="p-2.5 font-semibold">ชื่อรายการ</th>
-                                                <th class="p-2.5 font-semibold">ประเภท</th>
-                                                <th class="p-2.5 font-semibold text-right">คงเหลือสุทธิ</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="alert-low-stock-tbody" class="divide-y divide-slate-100"></tbody>
-                                    </table>
-                                </div>
-                            </div>
                         </div>
                     </div>
 
@@ -353,7 +316,7 @@
                     <div class="print-container bg-white rounded-3xl shadow-sm border border-slate-200/80 p-8 space-y-6">
                         <div class="hidden print:block text-center mb-6">
                             <h2 class="text-base font-bold">โรงพยาบาลส่งเสริมสุขภาพตำบลน้ำปาย อำเภอแม่จริม จังหวัดน่าน</h2>
-                            <p id="print-title-main" class="text-sm font-semibold text-slate-700 mt-1">รายงานการรับเข้า</p>
+                            <p id="print-title-main" class="text-sm font-semibold text-slate-700 mt-1">รายงานการรับเข้า (ทุกรายการทั้งหมด)</p>
                         </div>
 
                         <div class="overflow-x-auto">
@@ -374,7 +337,7 @@
                                 <tbody id="main-stock-tbody"></tbody>
                                 <tfoot class="bg-emerald-50/80 border-t-2 border-emerald-200 font-bold">
                                     <tr>
-                                        <td colspan="6" class="p-4 text-emerald-950 text-right">รวมมูลค่ารับเข้าทั้งสิ้น:</td>
+                                        <td colspan="6" class="p-4 text-emerald-950 text-right">รวมมูลค่ารับเข้าทั้งสิ้น (ตามเงื่อนไขที่เลือก):</td>
                                         <td class="p-4 text-right text-emerald-700 text-sm font-extrabold" id="main-total-sum-value">0.00 บาท</td>
                                         <td colspan="2" class="no-print"></td>
                                     </tr>
@@ -389,15 +352,15 @@
 
                         <div class="pt-8 grid grid-cols-3 gap-6 text-center text-xs mt-6 break-inside-avoid">
                             <div class="space-y-2">
-                                <p>ลงชื่อ.........................ผู้รับ<br>(น.ส.รัชฎาวรรณ จันทร์สุข)<br>นักวิชาการสาธารณสุขปฏิบัติการ</p>
+                                <p>ลงชื่อ.......................ผู้รับ<br>(น.ส.รัชฎาวรรณ จันทร์สุข)<br>นักวิชาการสาธารณสุขปฏิบัติการ</p>
                                 <p class="text-slate-500 pt-1">วันที่......../................/...........</p>
                             </div>
                             <div class="space-y-2">
-                                <p>ลงชื่อ.........................ผู้ตรวจสอบ<br>(น.ส.วรรณิสา จอยสุข)<br>นักวิชาการสาธารณสุข</p>
+                                <p>ลงชื่อ.......................ผู้ตรวจสอบ<br>(น.ส.วรรณิสา จอยสุข)<br>นักวิชาการสาธารณสุข</p>
                                 <p class="text-slate-500 pt-1">วันที่......../................/...........</p>
                             </div>
                             <div class="space-y-2">
-                                <p>ลงชื่อ.........................ผู้รับรองความถูกต้อง<br>(นายปรัชญา วัฒนะ)<br>ผู้อำนวยการ รพ.สต.น้ำปาย</p>
+                                <p>ลงชื่อ.......................ผู้รับรองความถูกต้อง<br>(นายปรัชญา วัฒนะ)<br>ผู้อำนวยการ รพ.สต.น้ำปาย</p>
                                 <p class="text-slate-500 pt-1">วันที่......../................/...........</p>
                             </div>
                         </div>
@@ -441,7 +404,7 @@
                     <div class="print-container bg-white rounded-3xl shadow-sm border border-slate-200/80 p-8 space-y-6">
                         <div class="hidden print:block text-center mb-6">
                             <h2 class="text-base font-bold">โรงพยาบาลส่งเสริมสุขภาพตำบลน้ำปาย อำเภอแม่จริม จังหวัดน่าน</h2>
-                            <p id="print-title-sub" class="text-sm font-semibold text-slate-700 mt-1">รายงานการเบิกจ่าย</p>
+                            <p id="print-title-sub" class="text-sm font-semibold text-slate-700 mt-1">รายงานการเบิกจ่าย (ทุกรายการทั้งหมด)</p>
                         </div>
 
                         <div class="overflow-x-auto">
@@ -462,7 +425,7 @@
                                 <tbody id="sub-stock-tbody"></tbody>
                                 <tfoot class="bg-amber-50/80 border-t-2 border-amber-200 font-bold">
                                     <tr>
-                                        <td colspan="6" class="p-4 text-amber-950 text-right">รวมมูลค่าเบิกจ่ายทั้งสิ้น:</td>
+                                        <td colspan="6" class="p-4 text-amber-950 text-right">รวมมูลค่าเบิกจ่ายทั้งสิ้น (ตามเงื่อนไขที่เลือก):</td>
                                         <td class="p-4 text-right text-amber-700 text-sm font-extrabold" id="sub-total-sum-value">0.00 บาท</td>
                                         <td colspan="2" class="no-print"></td>
                                     </tr>
@@ -477,11 +440,11 @@
 
                         <div class="pt-8 grid grid-cols-3 gap-6 text-center text-xs mt-6 break-inside-avoid">
                             <div class="space-y-2">
-                                <p>ลงชื่อ..........................ผู้เบิก<br>(นางกิตติกา วัฒนะ)<br>พยาบาลวิชาชีพชำนาญการ</p>
+                                <p>ลงชื่อ.........................ผู้เบิก<br>(นางกิตติกา วัฒนะ)<br>พยาบาลวิชาชีพชำนาญการ</p>
                                 <p class="text-slate-500 pt-1">วันที่......../................/...........</p>
                             </div>
                             <div class="space-y-2">
-                                <p>ลงชื่อ..........................ผู้จ่าย<br>(น.ส.รัชฎาวรรณ จันทร์สุข)<br>นักวิชาการสาธารณสุขปฏิบัติการ</p>
+                                <p>ลงชื่อ.........................ผู้จ่าย<br>(น.ส.รัชฎาวรรณ จันทร์สุข)<br>นักวิชาการสาธารณสุขปฏิบัติการ</p>
                                 <p class="text-slate-500 pt-1">วันที่......../................/...........</p>
                             </div>
                             <div class="space-y-2">
@@ -494,55 +457,71 @@
 
                 <!-- 4. STOCK CARD TAB -->
                 <div id="tab-content-stock-card" class="space-y-6 hidden">
-                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-3xl shadow-sm border border-slate-200/80 no-print">
-                        <div>
-                            <h2 class="text-xl font-bold text-slate-900">Stock Card คุมยอดคงเหลือรายตัวยา</h2>
-                            <p class="text-xs text-slate-500 mt-0.5">แสดงรายละเอียดการรับเข้าและเบิกจ่ายเรียงตามวัน/เดือน/ปี แยกคนละบรรทัดชัดเจน</p>
+                    <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200/80 space-y-6">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 no-print border-b border-slate-100 pb-4">
+                            <div>
+                                <h2 class="text-xl font-bold text-slate-900">Stock Card คุมยอดคงเหลือรายตัวยา</h2>
+                                <p class="text-xs text-slate-500 mt-0.5">เลือกชื่อรายการยาหรือเวชภัณฑ์เพื่อดูประวัติการรับเข้าและเบิกจ่าย</p>
+                            </div>
+                            <button id="card-print-btn" onclick="printAllPages('card')" class="hidden px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold shadow-md shadow-emerald-600/20">🖨️ พิมพ์ Stock Card</button>
                         </div>
-                        <div class="flex items-center gap-3">
-                            <select id="card-filter-name" onchange="renderStockCard()" class="px-3.5 py-2 rounded-xl border border-slate-200 text-xs font-semibold bg-slate-50">
-                                <option value="all">แสดงทุกรายการยา/เวชภัณฑ์</option>
+
+                        <!-- Prominent Big Search Selector Box -->
+                        <div class="no-print bg-slate-50/80 p-6 rounded-2xl border border-slate-200/80 flex flex-col md:flex-row items-center gap-4">
+                            <label for="card-filter-name" class="font-bold text-base text-slate-700 whitespace-nowrap flex items-center gap-2">
+                                <span class="text-xl">🔍</span> ค้นหา / เลือกรายการยา:
+                            </label>
+                            <select id="card-filter-name" onchange="renderStockCard()" class="w-full px-5 py-3.5 rounded-2xl border-2 border-emerald-500/80 text-base font-semibold bg-white text-slate-800 shadow-sm focus:outline-none focus:ring-4 focus:ring-emerald-500/20">
+                                <option value="none">-- กรุณาเลือกรายการยาหรือเวชภัณฑ์เพื่อดู Stock Card --</option>
                             </select>
-                            <button onclick="printAllPages('card')" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-semibold shadow-md shadow-emerald-600/20">🖨️ พิมพ์ทั้งหมด</button>
-                        </div>
-                    </div>
-
-                    <div class="print-container bg-white rounded-3xl shadow-sm border border-slate-200/80 p-8 space-y-6">
-                        <div class="hidden print:block text-center mb-6">
-                            <h2 class="text-base font-bold">โรงพยาบาลส่งเสริมสุขภาพตำบลน้ำปาย อำเภอแม่จริม จังหวัดน่าน</h2>
-                            <p id="print-title-card" class="text-sm font-semibold text-slate-700 mt-1">Stock Card คุมคลังยาและเวชภัณฑ์</p>
                         </div>
 
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left border-collapse text-xs">
-                                <thead>
-                                    <tr class="bg-slate-100/80 text-slate-700 border-b border-slate-200">
-                                        <th class="p-3.5 font-semibold">วัน/เดือน/ปี (พ.ศ.)</th>
-                                        <th class="p-3.5 font-semibold">ชื่อรายการ / ประเภท</th>
-                                        <th class="p-3.5 font-semibold text-right">รับเข้า</th>
-                                        <th class="p-3.5 font-semibold text-right">จ่ายออก</th>
-                                        <th class="p-3.5 font-semibold text-right">คงเหลือสุทธิ</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="stock-card-tbody"></tbody>
-                            </table>
+                        <!-- Empty Prompt View (Show when no drug selected) -->
+                        <div id="card-empty-prompt" class="py-16 text-center text-slate-400 space-y-3 no-print">
+                            <div class="text-5xl">📑</div>
+                            <p class="text-base font-medium text-slate-600">กรุณาเลือกชื่อรายการยาหรือเวชภัณฑ์จากช่องค้นหาด้านบน</p>
+                            <p class="text-xs text-slate-400">ประวัติความเคลื่อนไหว ยอดรับเข้า จ่ายออก และคงเหลือสะสม</p>
                         </div>
 
-                        <div class="flex items-center justify-between pt-2 border-t border-slate-100 text-xs text-slate-500 no-print">
-                            <span id="card-pagination-info">แสดง 0 ถึง 0 จาก 0 รายการ</span>
-                            <div class="flex gap-1" id="card-pagination-buttons"></div>
-                        </div>
-
-                        <div class="pt-8 grid grid-cols-2 gap-12 text-center text-xs mt-6 break-inside-avoid">
-                            <div class="space-y-2">
-                                <p>ลงชื่อ......................................................ผู้รายงาน<br>(น.ส.รัชฎาวรรณ จันทร์สุข)<br>นักวิชาการสาธารณสุขปฏิบัติการ</p>
-                                <p class="text-slate-500 pt-1">วันที่......../................/...........</p>
+                        <!-- Stock Card Data Table Container (Shown only when drug is selected) -->
+                        <div id="card-table-container" class="print-container space-y-6 hidden">
+                            <div class="hidden print:block text-center mb-6">
+                                <h2 class="text-base font-bold">โรงพยาบาลส่งเสริมสุขภาพตำบลน้ำปาย อำเภอแม่จริม จังหวัดน่าน</h2>
+                                <p id="print-title-card" class="text-sm font-semibold text-slate-700 mt-1">Stock Card คุมคลังสินค้าและเวชภัณฑ์</p>
                             </div>
-                            <div class="space-y-2">
-                                <p>ลงชื่อ......................................................ผู้ตรวจสอบ<br>(นายปรัชญา วัฒนะ)<br>ผู้อำนวยการ รพ.สต.น้ำปาย</p>
-                                <p class="text-slate-500 pt-1">วันที่......../................/...........</p>
+
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left border-collapse text-xs">
+                                    <thead>
+                                        <tr class="bg-slate-100/80 text-slate-700 border-b border-slate-200">
+                                            <th class="p-3.5 font-semibold">วัน/เดือน/ปี (พ.ศ.)</th>
+                                            <th class="p-3.5 font-semibold">ชื่อรายการ / ประเภท</th>
+                                            <th class="p-3.5 font-semibold text-right">รับเข้า</th>
+                                            <th class="p-3.5 font-semibold text-right">จ่ายออก</th>
+                                            <th class="p-3.5 font-semibold text-right">คงเหลือสุทธิ</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="stock-card-tbody"></tbody>
+                                </table>
+                            </div>
+
+                            <div class="flex items-center justify-between pt-2 border-t border-slate-100 text-xs text-slate-500 no-print">
+                                <span id="card-pagination-info">แสดง 0 ถึง 0 จาก 0 รายการ</span>
+                                <div class="flex gap-1" id="card-pagination-buttons"></div>
+                            </div>
+
+                            <div class="pt-8 grid grid-cols-2 gap-12 text-center text-xs mt-6 break-inside-avoid">
+                                <div class="space-y-2">
+                                    <p>ลงชื่อ......................................................ผู้รายงาน<br>(น.ส.รัชฎาวรรณ จันทร์สุข)<br>นักวิชาการสาธารณสุขปฏิบัติการ</p>
+                                    <p class="text-slate-500 pt-1">วันที่......../................/...........</p>
+                                </div>
+                                <div class="space-y-2">
+                                    <p>ลงชื่อ......................................................ผู้ตรวจสอบ<br>(นายปรัชญา วัฒนะ)<br>ผู้อำนวยการ รพ.สต.น้ำปาย</p>
+                                    <p class="text-slate-500 pt-1">วันที่......../................/...........</p>
+                                </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
 
@@ -550,7 +529,30 @@
         </main>
     </div>
 
-    <!-- Modal Form -->
+    <!-- Alert Modal (Expiring & Low Stock Details) -->
+    <div id="alert-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-2xl p-6 border border-slate-200 max-h-[85vh] flex flex-col">
+            <div class="flex justify-between items-center pb-4 border-b border-slate-100">
+                <h3 id="alert-modal-title" class="font-bold text-slate-900 text-base flex items-center gap-2"></h3>
+                <button onclick="closeAlertModal()" class="text-slate-400 hover:text-slate-600 text-xl font-bold">&times;</button>
+            </div>
+            
+            <div class="flex-1 overflow-y-auto py-4">
+                <div class="overflow-x-auto border border-slate-100 rounded-2xl">
+                    <table class="w-full text-left text-xs border-collapse">
+                        <thead id="alert-modal-thead" class="bg-slate-50 text-slate-700 border-b border-slate-200"></thead>
+                        <tbody id="alert-modal-tbody" class="divide-y divide-slate-100"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="flex justify-end pt-4 border-t border-slate-100">
+                <button type="button" onclick="closeAlertModal()" class="px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs">ปิดหน้าต่าง</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Modal Form (Add / Edit Entry) -->
     <div id="entry-modal" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
         <div class="bg-white rounded-3xl shadow-2xl w-full max-w-lg p-8 border border-slate-200">
             <div class="flex justify-between items-center mb-6 pb-3 border-b border-slate-100">
@@ -619,7 +621,7 @@
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="block font-semibold text-slate-600 uppercase mb-1">Lot No.</label>
-                        <input type="text" id="form-lot" required class="w-full px-3.5 py-3 rounded-2xl border border-slate-200 bg-slate-50" placeholder="เลขล็อต">
+                        <input type="text" id="form-lot" required class="w-full px-3.5 py-3 rounded-2xl border border-slate-200 bg-slate-50" placeholder="เลข Lot no.">
                     </div>
                     <div>
                         <label class="block font-semibold text-slate-600 uppercase mb-1">วันหมดอายุ (Exp.)</label>
@@ -725,7 +727,7 @@
             if (tab === 'dashboard') renderDashboard();
             if (tab === 'main-stock') renderMainStock();
             if (tab === 'sub-stock') renderSubStock();
-            if (tab === 'stock-card') renderStockCard();
+            if (tab === 'stock-card') populateStockCardDropdown();
         }
 
         // --- BACKUP & RESTORE JSON FUNCTIONS ---
@@ -935,8 +937,8 @@
             }
         }
 
-        // --- EXPIRATION & LOW STOCK ALERT RENDERER ---
-        function renderAlerts() {
+        // --- EXPIRATION & LOW STOCK ALERT CALCULATIONS & MODAL POPUPS ---
+        function updateAlertCounts() {
             const today = new Date();
             const targetExpDate = new Date();
             targetExpDate.setDate(today.getDate() + 90);
@@ -946,24 +948,7 @@
                 const expDate = new Date(x.exp);
                 return expDate <= targetExpDate;
             });
-
             document.getElementById('alert-expiring-count').innerText = `${expiringItems.length} รายการ`;
-            const expTbody = document.getElementById('alert-expiring-tbody');
-            expTbody.innerHTML = '';
-
-            if (expiringItems.length === 0) {
-                expTbody.innerHTML = `<tr><td colspan="3" class="p-3 text-center text-slate-400">ไม่มีรายการใกล้หมดอายุ</td></tr>`;
-            } else {
-                expiringItems.forEach(item => {
-                    expTbody.innerHTML += `
-                        <tr class="hover:bg-slate-50/50">
-                            <td class="p-2.5 font-semibold text-slate-800">${item.name}</td>
-                            <td class="p-2.5 text-slate-600">${item.lot}</td>
-                            <td class="p-2.5 text-right font-bold text-rose-600">${formatThaiDate(item.exp)}</td>
-                        </tr>
-                    `;
-                });
-            }
 
             let aggregated = {};
             mainStock.forEach(x => {
@@ -976,25 +961,101 @@
             });
 
             const lowStockItems = Object.values(aggregated).filter(x => (x.totalIn - x.totalOut) <= 10);
-
             document.getElementById('alert-low-stock-count').innerText = `${lowStockItems.length} รายการ`;
-            const lowTbody = document.getElementById('alert-low-stock-tbody');
-            lowTbody.innerHTML = '';
+        }
 
-            if (lowStockItems.length === 0) {
-                lowTbody.innerHTML = `<tr><td colspan="3" class="p-3 text-center text-slate-400">ไม่มีรายการสินค้าคงเหลือต่ำ</td></tr>`;
-            } else {
-                lowStockItems.forEach(item => {
-                    const netBal = item.totalIn - item.totalOut;
-                    lowTbody.innerHTML += `
-                        <tr class="hover:bg-slate-50/50">
-                            <td class="p-2.5 font-semibold text-slate-800">${item.name}</td>
-                            <td class="p-2.5 text-slate-500">${item.category}</td>
-                            <td class="p-2.5 text-right font-bold text-amber-600">${netBal.toLocaleString()} ${item.unit}</td>
-                        </tr>
-                    `;
+        function openAlertModal(type) {
+            const modal = document.getElementById('alert-modal');
+            const titleEl = document.getElementById('alert-modal-title');
+            const theadEl = document.getElementById('alert-modal-thead');
+            const tbodyEl = document.getElementById('alert-modal-tbody');
+
+            tbodyEl.innerHTML = '';
+
+            if (type === 'expiring') {
+                titleEl.innerHTML = `<span>⏳ รายการยาใกล้หมดอายุ (ภายใน 90 วัน)</span>`;
+                theadEl.innerHTML = `
+                    <tr>
+                        <th class="p-3 font-bold">ชื่อรายการ</th>
+                        <th class="p-3 font-bold">ประเภท</th>
+                        <th class="p-3 font-bold">Lot No.</th>
+                        <th class="p-3 font-bold text-right">จำนวนคงเหลือ</th>
+                        <th class="p-3 font-bold text-right">วันหมดอายุ</th>
+                    </tr>
+                `;
+
+                const today = new Date();
+                const targetExpDate = new Date();
+                targetExpDate.setDate(today.getDate() + 90);
+
+                const expiringItems = mainStock.filter(x => {
+                    if (!x.exp) return false;
+                    const expDate = new Date(x.exp);
+                    return expDate <= targetExpDate;
                 });
+
+                if (expiringItems.length === 0) {
+                    tbodyEl.innerHTML = `<tr><td colspan="5" class="p-6 text-center text-slate-400">ไม่มีรายการยาใกล้หมดอายุในขณะนี้</td></tr>`;
+                } else {
+                    expiringItems.forEach(item => {
+                        tbodyEl.innerHTML += `
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-semibold text-slate-900">${item.name}</td>
+                                <td class="p-3 text-slate-600">${item.category}</td>
+                                <td class="p-3 text-slate-600 font-mono">${item.lot}</td>
+                                <td class="p-3 text-right font-medium text-emerald-700">${item.qty.toLocaleString()} ${item.unit}</td>
+                                <td class="p-3 text-right font-bold text-rose-600">${formatThaiDate(item.exp)}</td>
+                            </tr>
+                        `;
+                    });
+                }
+            } else if (type === 'low-stock') {
+                titleEl.innerHTML = `<span>📉 รายการคงเหลือต่ำ (≤ 10 หน่วย)</span>`;
+                theadEl.innerHTML = `
+                    <tr>
+                        <th class="p-3 font-bold">ชื่อรายการ</th>
+                        <th class="p-3 font-bold">ประเภท</th>
+                        <th class="p-3 font-bold text-right">รับเข้าทั้งหมด</th>
+                        <th class="p-3 font-bold text-right">จ่ายออกทั้งหมด</th>
+                        <th class="p-3 font-bold text-right">คงเหลือสุทธิ</th>
+                    </tr>
+                `;
+
+                let aggregated = {};
+                mainStock.forEach(x => {
+                    if (!aggregated[x.name]) aggregated[x.name] = { name: x.name, category: x.category, unit: x.unit, totalIn: 0, totalOut: 0 };
+                    aggregated[x.name].totalIn += x.qty;
+                });
+                subStock.forEach(x => {
+                    if (!aggregated[x.name]) aggregated[x.name] = { name: x.name, category: x.category, unit: x.unit, totalIn: 0, totalOut: 0 };
+                    aggregated[x.name].totalOut += x.qty;
+                });
+
+                const lowStockItems = Object.values(aggregated).filter(x => (x.totalIn - x.totalOut) <= 10);
+
+                if (lowStockItems.length === 0) {
+                    tbodyEl.innerHTML = `<tr><td colspan="5" class="p-6 text-center text-slate-400">ไม่มีรายการที่มีจำนวนคงเหลือต่ำกว่าเกณฑ์</td></tr>`;
+                } else {
+                    lowStockItems.forEach(item => {
+                        const netBal = item.totalIn - item.totalOut;
+                        tbodyEl.innerHTML += `
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 font-semibold text-slate-900">${item.name}</td>
+                                <td class="p-3 text-slate-600">${item.category}</td>
+                                <td class="p-3 text-right font-medium text-slate-600">${item.totalIn.toLocaleString()} ${item.unit}</td>
+                                <td class="p-3 text-right font-medium text-slate-600">${item.totalOut.toLocaleString()} ${item.unit}</td>
+                                <td class="p-3 text-right font-bold text-amber-600">${netBal.toLocaleString()} ${item.unit}</td>
+                            </tr>
+                        `;
+                    });
+                }
             }
+
+            modal.classList.remove('hidden');
+        }
+
+        function closeAlertModal() {
+            document.getElementById('alert-modal').classList.add('hidden');
         }
 
         function renderDashboard() {
@@ -1083,7 +1144,7 @@
             document.getElementById('dash-table-total-bal').innerText = totBal.toLocaleString('th-TH', {minimumFractionDigits: 2}) + ' บาท';
 
             renderMonthlyOutflowTable(filterYear);
-            renderAlerts();
+            updateAlertCounts();
         }
 
         function renderMonthlyOutflowTable(filterYear) {
@@ -1233,19 +1294,43 @@
             renderPagination('sub', filtered.length, subPage);
         }
 
+        // --- STOCK CARD FUNCTIONS ---
+        function populateStockCardDropdown() {
+            const filterDropdown = document.getElementById('card-filter-name');
+            const selectedValue = filterDropdown.value;
+            const allNames = [...new Set([...mainStock.map(x => x.name), ...subStock.map(x => x.name)])];
+            
+            filterDropdown.innerHTML = `<option value="none">-- กรุณาเลือกรายการยาหรือเวชภัณฑ์เพื่อดู Stock Card --</option>`;
+            allNames.forEach(n => {
+                filterDropdown.innerHTML += `<option value="${n}" ${selectedValue === n ? 'selected' : ''}>${n}</option>`;
+            });
+
+            if (selectedValue && selectedValue !== 'none' && allNames.includes(selectedValue)) {
+                renderStockCard();
+            } else {
+                document.getElementById('card-empty-prompt').classList.remove('hidden');
+                document.getElementById('card-table-container').classList.add('hidden');
+                document.getElementById('card-print-btn').classList.add('hidden');
+            }
+        }
+
         function renderStockCard() {
             const filterDropdown = document.getElementById('card-filter-name');
             const selectedDrug = filterDropdown.value;
-            const allNames = [...new Set([...mainStock.map(x => x.name), ...subStock.map(x => x.name)])];
-            
-            filterDropdown.innerHTML = `<option value="all">แสดงทุกรายการยา/เวชภัณฑ์</option>`;
-            allNames.forEach(n => {
-                filterDropdown.innerHTML += `<option value="${n}" ${selectedDrug === n ? 'selected' : ''}>${n}</option>`;
-            });
+
+            if (!selectedDrug || selectedDrug === 'none') {
+                document.getElementById('card-empty-prompt').classList.remove('hidden');
+                document.getElementById('card-table-container').classList.add('hidden');
+                document.getElementById('card-print-btn').classList.add('hidden');
+                return;
+            }
+
+            document.getElementById('card-empty-prompt').classList.add('hidden');
+            document.getElementById('card-table-container').classList.remove('hidden');
+            document.getElementById('card-print-btn').classList.remove('hidden');
 
             let movements = [];
-            
-            let targetMains = selectedDrug === 'all' ? mainStock : mainStock.filter(x => x.name === selectedDrug);
+            let targetMains = mainStock.filter(x => x.name === selectedDrug);
             targetMains.forEach(x => {
                 movements.push({
                     date: x.date || '0000-00-00',
@@ -1258,7 +1343,7 @@
                 });
             });
 
-            let targetSubs = selectedDrug === 'all' ? subStock : subStock.filter(x => x.name === selectedDrug);
+            let targetSubs = subStock.filter(x => x.name === selectedDrug);
             targetSubs.forEach(x => {
                 movements.push({
                     date: x.date || '0000-00-00',
@@ -1280,7 +1365,7 @@
             tbody.innerHTML = '';
 
             if (movements.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" class="p-6 text-center text-slate-400">ยังไม่มีรายการเคลื่อนไหว</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="5" class="p-6 text-center text-slate-400">ไม่พบรายการเคลื่อนไหวสำหรับยานี้</td></tr>`;
             } else {
                 let runningBalances = {};
                 movements.forEach(m => {
@@ -1386,12 +1471,14 @@
 
             } else if (type === 'card') {
                 const selectedDrug = document.getElementById('card-filter-name').value;
+                if (!selectedDrug || selectedDrug === 'none') return;
+
                 let movements = [];
-                let targetMains = selectedDrug === 'all' ? mainStock : mainStock.filter(x => x.name === selectedDrug);
+                let targetMains = mainStock.filter(x => x.name === selectedDrug);
                 targetMains.forEach(x => {
                     movements.push({ date: x.date || '0000-00-00', name: x.name, category: x.category, unit: x.unit, inQty: x.qty, outQty: 0, lot: x.lot });
                 });
-                let targetSubs = selectedDrug === 'all' ? subStock : subStock.filter(x => x.name === selectedDrug);
+                let targetSubs = subStock.filter(x => x.name === selectedDrug);
                 targetSubs.forEach(x => {
                     movements.push({ date: x.date || '0000-00-00', name: x.name, category: x.category, unit: x.unit, inQty: 0, outQty: x.qty, lot: x.lot });
                 });
